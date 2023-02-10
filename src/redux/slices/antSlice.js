@@ -1,0 +1,77 @@
+import { createSlice } from '@reduxjs/toolkit'
+import { layerInfo } from '../../utils/ant-utils/antInfo'
+import { staticLayerInfo } from '../../utils/ant-utils/staticAntInfo'
+import { getAntIds, getAntPrices, getPartInventories } from '../thunks/antThunks'
+
+const initialState = {
+  antStatus: 'idle',
+  antIds: [],
+  rarityPrices: [null, null, null, null],
+  antPartsInfo: [...layerInfo],
+  discountIndex: 0,
+  coinId: null,
+  antErrMsg: "",
+}
+
+export const antSlice = createSlice({
+  name: 'antSlice',
+  initialState,
+  reducers: {
+    updateAntStatus: (state, action) => {
+      state.antStatus = action.payload.status
+    },
+    updateAntIds: (state, action) => {
+      for (let i = 0; i < action.payload.antIds.length; i++) {
+        state.antIds.push(action.payload.antIds[i])
+      }
+    },
+    updateRarityPrices: (state, action) => {
+      for (let i = 0; i < 4; i++) {
+        state.rarityPrices[i] = action.payload.prices[i]
+      }
+    },
+    updatePartAvailability: (state, action) => {
+      state.antPartsInfo[action.payload.layerIndex].partStocks[action.payload.elementIndex] = action.payload.available
+    },
+    selectAntFile: (state, action) => {
+      state.antPartsInfo[action.payload.layerIndex].selectedIndex = action.payload.elementIndex
+    },
+    removeAntFile: (state, action) => {
+      state.antPartsInfo[action.payload.layerIndex].selectedIndex = staticLayerInfo[action.payload.layerIndex].defaultIndex
+    },
+    updateCoinInfo: (state, action) => {
+      state.discountIndex = action.payload.discountIndex
+      state.coinId = action.payload.coinId
+    },
+    antError: (state, action) => {
+      state.antStatus = 'failed'
+      state.antErrMsg = "Error: " + action.payload.error
+    },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getPartInventories.fulfilled, state => {
+        if (state.antStatus !== 'failed') state.antStatus = 'succeeded'
+      })
+      .addCase(getAntIds.fulfilled, state => {
+        if (state.antStatus !== 'failed') state.antStatus = 'succeeded'
+      })
+      .addCase(getAntPrices.pending, state => {
+        state.antStatus = 'Loading prices...'
+      })
+      .addCase(getAntPrices.fulfilled, state => {
+        if (state.antStatus !== 'failed') state.antStatus = 'succeeded'
+      })
+  }
+})
+
+export const { updateAntIds, updateAntStatus, updateRarityPrices, updatePartAvailability, selectAntFile, removeAntFile, updateCoinInfo, antError } = antSlice.actions
+export default antSlice.reducer
+
+export const selectAntStatus = state => state.antSlice.antStatus
+export const selectAntIds = state => state.antSlice.antIds
+export const selectRarityPrices = state => state.antSlice.rarityPrices
+export const selectDiscountInfo = state => [state.antSlice.discountIndex, state.antSlice.coinId]
+export const selectAntErrMsg = state => state.antSlice.antErrMsg
+export const selectSelectedIndexes = state => state.antSlice.antPartsInfo.map(layer => layer.selectedIndex)
+export const selectPartStocks = state => state.antSlice.antPartsInfo.map(layer => layer.partStocks)
