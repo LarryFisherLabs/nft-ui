@@ -14,6 +14,9 @@ export const connectSlice = createSlice({
   name: 'connectSlice',
   initialState,
   reducers: {
+    updateStatus: (state, action) => {
+      state.status = action.payload.status
+    },
     error: (state, action) => {
       state.errMsg = "Error: " + action.payload.error
     }
@@ -42,7 +45,7 @@ export const connectSlice = createSlice({
   },
 })
 
-export const { error } = connectSlice.actions
+export const { updateStatus, error } = connectSlice.actions
 export default connectSlice.reducer
 
 export const selectStatus = state => state.connectSlice.status

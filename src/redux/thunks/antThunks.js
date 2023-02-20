@@ -84,7 +84,6 @@ export const buyAntThunk = createAsyncThunk(
       const discountIndex = getState().antSlice.discountIndex
       const coinId = getState().antSlice.coinId
       const dnaPrice = await getDnaPrice(selectedIndexes, discountIndex)
-      console.log(discountIndex)
       if (dnaPrice.toString() !== totalPrice.toString()) throw new Error("Price does not match!" + dnaPrice.toString() + " " + totalPrice.toString())
       const tx = discountIndex === 0 ? await createAnt(selectedIndexes, totalPrice) : await createDiscountAnt(coinId, selectedIndexes, totalPrice)
       const receipt = await tx.wait()

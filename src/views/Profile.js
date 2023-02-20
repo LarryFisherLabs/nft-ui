@@ -30,6 +30,8 @@ export const MappedCoins = () => {
                 }</NftGrid>
             )
         }
+    } else if (coinStatus === 'idle') {
+        return(<Text>Please Connect</Text>)
     } else if (coinStatus === 'failed') {
         return (
             <Text>{coinErrMsg}</Text>
@@ -59,6 +61,8 @@ export const MappedAnts = () => {
                 )
             })}</NftGrid>)
         }
+    } else if (antStatus === 'idle') {
+        return(<Text>Please Connect</Text>)
     } else if (antStatus === 'failed') {
         return (
             <Text>{antErrMsg}</Text>
@@ -83,14 +87,13 @@ export const Profile = () => {
     const isAdmin = useSelector(selectIsCoinAdmin)
     const antStatus = useSelector(selectAntStatus)
 
-    const [buttonLabel, updateLabel] = useState()
-    const [antButtonLabel, updateAntLabel] = useState()
+    const [buttonLabel, updateLabel] = useState('Mint Coin')
+    const [antButtonLabel, updateAntLabel] = useState('Mint Ant')
 
     useEffect(() => {
         if (coinStatus === 'idle' && isAdmin !== null) {
             dispatch(coinsConnect())
         } else if (coinStatus === 'succeeded') {
-            updateLabel('Mint Coin')
             if (founder.value > 0) {
                 if (!founder.isFCMinted) {
                     updateLabel('Mint Founder Coin')
@@ -104,8 +107,6 @@ export const Profile = () => {
     useEffect(() => {
         if (antStatus === 'idle' && isAdmin !== null) {
             dispatch(getAntIds())
-        } else if (antStatus === 'succeeded') {
-            updateAntLabel('Mint Ant')
         }
     }, [antStatus, dispatch, isAdmin])
 
@@ -127,12 +128,12 @@ export const Profile = () => {
                 <LeftTitle>Coins</LeftTitle>
                 <MappedCoins />
             </ProfilePanel>
-            {buttonLabel === null ? null : <StyledButton onClick={goToCoinBuilder}>{buttonLabel}</StyledButton>}
+            <StyledButton onClick={goToCoinBuilder}>{buttonLabel}</StyledButton>
             <ProfilePanel>
                 <LeftTitle>Ants</LeftTitle>
                 <MappedAnts />
             </ProfilePanel>
-            {antButtonLabel === null ? null : <StyledButton onClick={goToAntBuilder}>{antButtonLabel}</StyledButton>}
+            <StyledButton onClick={goToAntBuilder}>{antButtonLabel}</StyledButton>
         </ViewStyle>
     )
 }

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getProvider } from "../../utils/ethers-utils";
 
-const expectedChainId = 1337;
+const expectedChainId = 11155111;
 
 export const connect = createAsyncThunk(
   "connectSlice/connect",

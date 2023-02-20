@@ -22,13 +22,17 @@ const getImageFileName = (color) => {
 }
 
 export const getColor = (value, minPrices) => {
-  if (value >= parseFloat(minPrices.diamond)) {
+  const bronzePrice = minPrices.bronze || .001
+  const silverPrice = minPrices.silver || .002
+  const goldPrice = minPrices.gold || .003
+  const diamondPrice = minPrices.diamond || .004
+  if (value >= parseFloat(diamondPrice)) {
       return 3
-  } else if (value >= parseFloat(minPrices.gold)) {
+  } else if (value >= parseFloat(goldPrice)) {
       return 2
-  } else if (value >= parseFloat(minPrices.silver)) {
+  } else if (value >= parseFloat(silverPrice)) {
       return 1
-  } else if (value >= parseFloat(minPrices.bronze)) {
+  } else if (value >= parseFloat(bronzePrice)) {
       return 0
   }
   return -1
@@ -64,25 +68,26 @@ const embossText = (ctx, text, y = 1350, fontSize = '200px') => {
 const updateCoinCanvas = ({ ctx, color = -1, amount, id }) => {
   ctx.clearRect(0, 0, 2000, 2000)
   if (color > -1) {
-      const image = new Image(2000, 2000)
-      
-      image.src = getImageFileName(color)
+    const image = new Image(2000, 2000)
+    
+    image.src = getImageFileName(color)
+    if (id !== 0) id = id || 'Please Connect'
 
-      image.onload = () => {
-          embossText(ctx, amount + ' ETH')
-          embossText(ctx, id, 400, '150px')
-          ctx.globalCompositeOperation = 'destination-over'
+    image.onload = () => {
+      embossText(ctx, amount + ' ETH')
+      embossText(ctx, id, 400, '150px')
+      ctx.globalCompositeOperation = 'destination-over'
 
-          ctx.drawImage(image, 0, 0)
-          ctx.globalCompositeOperation = 'source-over'
+      ctx.drawImage(image, 0, 0)
+      ctx.globalCompositeOperation = 'source-over'
 
-          ctx.globalAlpha = .1
-          ctx.font = '200px times new roman'
-          ctx.fillText(amount + ' ETH', 1000, 1350)
-          ctx.font = '150px times new roman'
-          ctx.fillText(id, 1000, 400)
-          ctx.globalAlpha = 1
-      }
+      ctx.globalAlpha = .1
+      ctx.font = '200px times new roman'
+      ctx.fillText(amount + ' ETH', 1000, 1350)
+      ctx.font = '150px times new roman'
+      ctx.fillText(id, 1000, 400)
+      ctx.globalAlpha = 1
+    }
   }
 }
 
@@ -103,8 +108,9 @@ export const CoinCanvas = ({ amount }) => {
     const color = isFCBuilder ? 4 : getColor(amount, prices)
     const finalAmount = isFCBuilder ? amount > 0 ? amount + founder.value : founder.value : isDiscounted ? amount * 2 : amount
     const ctx = canvas.current.getContext('2d');
-    if ((finalAmount >= prices.bronze) && !isCanvasVisible) toggleCanvas(true)
-    else if (!(finalAmount >= prices.bronze) && isCanvasVisible) toggleCanvas(false)
+    const bronzePrice = prices.bronze || .001
+    if ((finalAmount >= bronzePrice) && !isCanvasVisible) toggleCanvas(true)
+    else if (!(finalAmount >= bronzePrice) && isCanvasVisible) toggleCanvas(false)
     updateCoinCanvas({ ctx: ctx, color: color, amount: finalAmount, id: id })
   }, [amount, founder, id, prices, isCanvasVisible])
 

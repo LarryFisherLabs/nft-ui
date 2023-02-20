@@ -48,8 +48,14 @@ export const createCoin = async (value) => {
 // general view functions
 
 export const owner = async () => {
-    const coinContract = getCoinContract()
-    return await coinContract.owner()
+    try {
+        const coinContract = getCoinContract()
+        const owner = await coinContract.owner()
+        console.log(owner)
+        return owner
+    } catch (err) {
+        return err
+    }
 }
 
 export const balanceOf = async (address) => {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from '../components/LayerButtons.js'
-import { ViewStyle, Title, Text, Title2CrossHair, CoinImg, Title4 } from '../styles/general.js'
+import { ViewStyle, Title, Text, Title2CrossHair, Title4 } from '../styles/general.js'
 import { getAntPrices, getPartInventories } from '../redux/thunks/antThunks.js'
-import { selectAntErrMsg, selectAntStatus, selectDiscountInfo, updateCoinId, updateCoinInfo } from '../redux/slices/antSlice.js'
+import { selectAntErrMsg, selectAntStatus, selectDiscountInfo, updateCoinInfo } from '../redux/slices/antSlice.js'
 import { AntCanvas } from '../components/canvas/AntCanvas.js'
 import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
 
@@ -50,7 +50,7 @@ export const AntBuilder = () => {
     return (
         <ViewStyle>
             <Title>Ant Builder</Title>
-            {(antStatus === 'succeeded' || antStatus === 'Loading prices...') ? (
+            {antStatus === 'failed' ? <Text>{err}</Text> : (
                 <Editor>
                     <AntCanvas/>
                     <div>
@@ -58,7 +58,7 @@ export const AntBuilder = () => {
                             <Title2CrossHair onClick={() => toggleCoinPanel(!isCoinPanelOpen)}>Coin Discount</Title2CrossHair>
                             <SectionButtons isOpen={isCoinPanelOpen}>
                                 {
-                                    coinStatus === "succeeded" ? coins.length > 0 ? coins.map((coin, index) => {
+                                    coinStatus === "succeeded" && coins.length > 0 ? coins.map((coin, index) => {
                                         const srcFile = 'http://127.0.0.1:3001/coins/images/' + coin.id
                                         const isSelected = selectedCoinInfo[1] === coin.id
                             
@@ -72,8 +72,7 @@ export const AntBuilder = () => {
                                                 </ButtonBottom>
                                             </Button>
                                         )
-                                    }) : <Text>Buy a coin to get up to a 40% discount on an ant as well as all future collections!</Text> :
-                                    coinStatus === "failed" ? <Text>{coinErr}</Text> : <Text>{coinStatus}</Text>
+                                    }) : coinStatus === "failed" ? <Text>{coinErr}</Text> : <Text>Buy a coin to get up to a 40% discount on an ant as well as all future collections!</Text>
                                 }
                             </SectionButtons>
                         </ButtonsPanel>
@@ -84,7 +83,7 @@ export const AntBuilder = () => {
                         })}
                     </div>
                 </Editor>
-            ) : antStatus === 'failed' ? <Text>{err}</Text> : <Text>Loading...</Text>}
+            )}
         </ViewStyle>
     )
 }

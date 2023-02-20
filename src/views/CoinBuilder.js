@@ -5,9 +5,7 @@ import { CanvasPanel, IndentedText, SmallText, StyledButton, StyledInput, Text, 
 import { selectPrices, selectFounder, selectCoinBuilderStatus, selectUserBalance, selectCoinErr } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
 import { CoinCanvas, getColor } from '../components/canvas/CoinCanvas'
-
-const minInputDeci = 0.0001
-const goodStatusList = ['succeeded', 'bad pricing', 'bad value', 'buying coin']
+import { selectIsConnected } from '../redux/slices/connectSlice'
 
 export const CoinBuilder = () => {
     const dispatch = useDispatch()
@@ -15,6 +13,7 @@ export const CoinBuilder = () => {
     const minPrices = useSelector(selectPrices)
     const founder = useSelector(selectFounder)
     const userBalance = useSelector(selectUserBalance)
+    const isConnected = useSelector(selectIsConnected)
     const coinError = useSelector(selectCoinErr)
 
     const [canvasAmount, updateAmount] = useState()
@@ -28,19 +27,17 @@ export const CoinBuilder = () => {
     // })
 
     const onInputChange = (event) => {
+        const bronzePrice = minPrices.bronze || .001
         const initialVal = (event.target.value !== null) ? parseFloat(event.target.value) : 0
         let finalVal = initialVal
         if (initialVal > 0 && initialVal <= 100000) {
-            const dif = ((initialVal * 1000000) % (minInputDeci * 1000000)) / 1000000
-            if (dif > 0) {
-                finalVal = ((initialVal * 1000000) - (dif * 1000000)) / 1000000
-            }
+            finalVal = parseFloat(initialVal.toFixed(4))
         } else if (initialVal > 100000) {
             finalVal = 100000
         }
         let previousAmount = (canvasAmount !== null) ? canvasAmount : 0
         if (finalVal.toString() !== initialVal.toString()) event.target.value = finalVal
-        if (finalVal !== previousAmount && ((finalVal >= minPrices.bronze) || (previousAmount >= minPrices.bronze) || isFounderCoinBuilder)) updateAmount(finalVal)
+        if (finalVal !== previousAmount && ((finalVal >= bronzePrice) || (previousAmount >= bronzePrice) || isFounderCoinBuilder)) updateAmount(finalVal)
     }
 
     const sendTransaction = () => {
@@ -50,7 +47,7 @@ export const CoinBuilder = () => {
     }
 
     useEffect(() => {
-        if (coinBuilderStatus === 'idle') {
+        if (coinBuilderStatus === 'idle' && isConnected) {
             dispatch(loadBuilder())
         } else if (coinBuilderStatus === 'succeeded') {
             if (isFounderCoinBuilder === null) {
@@ -58,13 +55,13 @@ export const CoinBuilder = () => {
                 updateIsDCB(founder.value > 0 && founder.isFCMinted === true && founder.isFCDiscountUsed === false)
             }
         }
-    }, [coinBuilderStatus, dispatch, founder, isFounderCoinBuilder])        
+    }, [coinBuilderStatus, dispatch, founder, isFounderCoinBuilder, isConnected])        
 
     return (
         <ViewStyle>
             <Title>Coin Builder</Title>
             {
-                (goodStatusList.includes(coinBuilderStatus)) ? (
+                (coinBuilderStatus === 'failed') ? <Text>{coinError}</Text> : (
                     <ViewStyle>
                         <Title2>{
                             userBalance > 0 ? "Add to your collection" :
@@ -83,18 +80,18 @@ export const CoinBuilder = () => {
                                         <Text>Get your founder coin for free or add value to it</Text>
                                     </TextBlock>) : (
                                     <TextBlock>
-                                        <Text>Minimum price for bronze coin: {minPrices.bronze} eth</Text>
-                                        <Text>Minimum for silver coin: {minPrices.silver} eth</Text>
-                                        <Text>Minimum for gold coin: {minPrices.gold} eth</Text>
-                                        <Text>Minimum for diamond coin: {minPrices.diamond} eth</Text>
+                                        <Text>Minimum price for bronze coin: {minPrices.bronze || .001} eth</Text>
+                                        <Text>Minimum for silver coin: {minPrices.silver || .002} eth</Text>
+                                        <Text>Minimum for gold coin: {minPrices.gold || .003} eth</Text>
+                                        <Text>Minimum for diamond coin: {minPrices.diamond || .004} eth</Text>
                                     </TextBlock>
                                 )
                             }
                             <CoinCanvas amount={canvasAmount}/>
                             <IndentedText>Amount of eth to send:</IndentedText>
-                            <StyledInput type="number" step={.0001} onChange={onInputChange} />
+                            <StyledInput type="number" step=".0001" onChange={onInputChange} />
                             {
-                                coinBuilderStatus === 'buying coin' ? null : (
+                                coinBuilderStatus === 'buying coin' || !isConnected ? null : (
                                     <StyledButton onClick={sendTransaction}>{
                                         isFounderCoinBuilder ? <SmallText>Buy Founder Coin</SmallText> :
                                         isDiscountedCoinBuilder ? <SmallText>Buy Discount Coin</SmallText> :
@@ -104,8 +101,7 @@ export const CoinBuilder = () => {
                             }
                         </CanvasPanel>
                     </ViewStyle>
-                ) : (coinBuilderStatus === 'failed') ? <Text>{coinError}</Text> :
-                <Text>{coinBuilderStatus}</Text>
+                )
             }
             
         </ViewStyle>

@@ -28,18 +28,20 @@ export const isDiscountUsed = async (coinId) => {
 
 export const createAnt = async (dna, value) => {
     const antContract = getAntContract()
+    console.log("dna: " + dna + " value: " + ethers.utils.parseEther(value.toString()))
     return await antContract.createAnt(dna, { value: ethers.utils.parseEther(value.toString()) })
 }
 
-export const createDiscountAnt = async (coinId, rawDna, value) => {
+export const createDiscountAnt = async (coinId, dna, value) => {
     const antContract = getAntContract()
-    return await antContract.createDiscountAnt(coinId, rawDna, { value: value })
+    console.log("coin id: " + coinId + " dna: " + dna + " value: " + ethers.utils.parseEther(value.toString()))
+    return await antContract.createDiscountAnt(coinId, dna, { value: ethers.utils.parseEther(value.toString()) })
 }
 
 export const getDnaPrice = async (dna, discountIndex) => {
     const antContract = getAntContract()
     const price = await antContract.getDnaPrice(dna, discountIndex)
-    return ethers.utils.formatEther(price)
+    return parseFloat(ethers.utils.formatEther(price))
 }
 
 export const getAnt = async (id) => {

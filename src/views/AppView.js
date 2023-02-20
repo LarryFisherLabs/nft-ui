@@ -66,6 +66,7 @@ export const ConnectButton = () => {
     const buttonAction = () => {
       if (status === 'succeeded' && !isConnected) dispatch(connect())
       else if (status === 'failed') window.location.reload()
+      // else if (status === 'offline') window.location
     }
   
     return (
@@ -74,6 +75,7 @@ export const ConnectButton = () => {
           (status === 'succeeded' && !isConnected) ? "Connect Wallet" :
           status === 'succeeded' ? account :
           status === 'failed' ? "Reload" :
+          status === 'offline' ? "Download Metamask" :
           "loading"
         }
       </StyledConnectButton>
@@ -101,18 +103,12 @@ export const HomeButton = styled.a`
 `
 
 export const AppView = () => {
-    console.log('start top view')
     const dispatch = useDispatch()
 
     const status = useSelector(selectStatus)
     const errorMsg = useSelector(selectErr)
     const isConnected = useSelector(selectIsConnected)
     const isAdmin = useSelector(selectIsCoinAdmin)
-
-    window.ethereum.on('accountsChanged', (_account) => {
-        if (isConnected) window.location.reload()
-    })
-    window.ethereum.on("chainChanged", () => window.location.reload())
 
     useEffect(() => {
         if (status === 'succeeded' && isConnected && isAdmin === null) dispatch(loadCoinAdmin())
@@ -128,13 +124,12 @@ export const AppView = () => {
             {
                 status === 'idle' ? <Text>loading...</Text> :
                 status === 'failed' ? <p>{errorMsg}</p> :
-                status === 'succeeded' ? 
-                    isConnected === false ? <Title>Please connect</Title> :
+                status === 'succeeded' || status === 'offline' ? 
                     window.location.pathname === '/' ? <Profile /> :
                     window.location.pathname === '/coin-builder' ? <CoinBuilder /> :
                     window.location.pathname === '/ant-builder' ? <AntBuilder /> :
                     (window.location.pathname === '/admin') && isAdmin ? <AdminPage /> :
-                    <p>You are not admin!</p> :
+                    <p>Out of bounds!</p> :
                 <Text>{status}</Text>
             }
         </div>
