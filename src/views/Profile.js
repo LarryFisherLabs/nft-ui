@@ -22,7 +22,7 @@ export const MappedCoins = () => {
             return(
                 <NftGrid>{
                     coins.map((coin, i) => {
-                        const imgSrc = 'http://127.0.0.1:3001/coins/images/' + coin.id
+                        const imgSrc = 'https://nft-api-bphk.onrender.com/coins/images/' + coin.id
                         return (
                             <CoinImg src={imgSrc} key={i} />
                         )
@@ -55,7 +55,7 @@ export const MappedAnts = () => {
             )
         } else {
             return (<NftGrid>{antIds.map((antId, i) => {
-                const imgSrc = 'http://127.0.0.1:3001/ants/images/' + antId
+                const imgSrc = 'https://nft-api-bphk.onrender.com/ants/images/' + antId
                 return (
                     <AntImg src={imgSrc} key={i} />
                 )
