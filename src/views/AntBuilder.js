@@ -59,7 +59,7 @@ export const AntBuilder = () => {
                             <SectionButtons isOpen={isCoinPanelOpen}>
                                 {
                                     coinStatus === "succeeded" && coins.length > 0 ? coins.map((coin, index) => {
-                                        const srcFile = 'http://127.0.0.1:3001/coins/images/' + coin.id
+                                        const srcFile = 'https://nft-api-bphk.onrender.com/coins/images/' + coin.id
                                         const isSelected = selectedCoinInfo[1] === coin.id
                             
                                         return (
