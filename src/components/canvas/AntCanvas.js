@@ -55,7 +55,7 @@ export const AntCanvas = () => {
 
     useEffect(() => {
         const ctx = canvas.current.getContext('2d')
-        if ((connectStatus === 'succeeded' && !isConnected) || (connectStatus === 'succeeded' && isFirstLoad) || antStatus === 'succeeded') updateAntCanvas(ctx, selectedIndexes)
+        if ((connectStatus === 'succeeded' && !isConnected) || (connectStatus === 'succeeded' && isFirstLoad) || antStatus === 'succeeded' || connectStatus === "offline") updateAntCanvas(ctx, selectedIndexes)
         if (isFirstLoad) toggleIsFirstLoad(false)
         let price = 0
         selectedIndexes.forEach((partIndex, sectionIndex) => {

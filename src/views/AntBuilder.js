@@ -55,7 +55,7 @@ export const AntBuilder = () => {
                     <AntCanvas/>
                     <div>
                         <ButtonsPanel>
-                            <Title2CrossHair onClick={() => toggleCoinPanel(!isCoinPanelOpen)}>Coin Discount</Title2CrossHair>
+                            <Title2CrossHair onClick={() => toggleCoinPanel(!isCoinPanelOpen)}>{isCoinPanelOpen ? "Coin Discount" + " ∨" : "Coin Discount" + " ∧"}</Title2CrossHair>
                             <SectionButtons isOpen={isCoinPanelOpen}>
                                 {
                                     coinStatus === "succeeded" && coins.length > 0 ? coins.map((coin, index) => {
