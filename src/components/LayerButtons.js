@@ -117,7 +117,7 @@ export const LayerButtons = ({ layerIndex }) => {
     return (
         <ButtonsPanel>
             <Title2CrossHair onClick={() => toggle(!isOpen)}>
-                {formatFileName(staticLayerInfo[layerIndex].fileName)}
+                {isOpen ? formatFileName(staticLayerInfo[layerIndex].fileName) + " ∨" : formatFileName(staticLayerInfo[layerIndex].fileName) + " ∧"}
             </Title2CrossHair>
             <SectionButtons isOpen={isOpen}>
                 {staticLayerInfo[layerIndex].elements.map((element, index) => {
