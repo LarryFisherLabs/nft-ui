@@ -6,13 +6,13 @@ import { AntBuilder } from './AntBuilder'
 import { AdminPage } from './AdminPage'
 import { CoinBuilder } from './CoinBuilder'
 
-import { StyledButton, Text, Title } from '../styles/general'
-import { selectAccount, selectErr, selectIsConnected, selectStatus } from '../redux/slices/connectSlice'
+import { StyledButton, Text } from '../styles/general'
+import { selectAccount, selectErr, selectIsConnected, selectIsWrongNet, selectStatus } from '../redux/slices/connectSlice'
 import { loadCoinAdmin } from '../redux/thunks/coinAdminThunks'
 import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
 
 import styled from 'styled-components'
-import { connect } from '../redux/thunks/connectThunk'
+import { changeNet, connect } from '../redux/thunks/connectThunk'
 
 export const Nav = styled.div`
   margin-left: 2rem;
@@ -61,10 +61,12 @@ export const ConnectButton = () => {
     const status = useSelector(selectStatus)
     const account = useSelector(selectAccount)
     const isConnected = useSelector(selectIsConnected)
+    const isWrongNet = useSelector(selectIsWrongNet)
     const dispatch = useDispatch()
   
     const buttonAction = () => {
-      if (status === 'succeeded' && !isConnected) dispatch(connect())
+      if (isWrongNet === true) dispatch(changeNet())
+      else if (status === 'succeeded' && !isConnected) dispatch(connect())
       else if (status === 'failed') window.location.reload()
       // else if (status === 'offline') window.location
     }
@@ -72,6 +74,7 @@ export const ConnectButton = () => {
     return (
       <StyledConnectButton type="button" onClick={buttonAction}>
         {
+          isWrongNet ? "Change Network" :
           (status === 'succeeded' && !isConnected) ? "Connect Wallet" :
           status === 'succeeded' ? account :
           status === 'failed' ? "Reload" :

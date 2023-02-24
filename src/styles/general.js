@@ -73,10 +73,10 @@ export const StyledAntCanvas = styled(Canvas)`
 export const CoinImg = styled.img`
     width: 280px;
     height: 280px;
-    image-rendering: pixelated;
 `
 
 export const AntImg = styled(CoinImg)`
+    image-rendering: pixelated;
     border-radius: 16px;
 `
 
