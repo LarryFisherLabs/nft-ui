@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ethers } from "ethers";
 import { getProvider } from "../../utils/ethers-utils";
+import { error } from "../slices/connectSlice";
 
 const expectedChainId = 11155111;
 
@@ -18,6 +20,38 @@ export const connect = createAsyncThunk(
         return { account: accounts[0] }
       }
     } catch (err) {
+      return {
+        status: "failed",
+        error: err.message
+      };
+    }
+  }
+);
+
+export const changeNet = createAsyncThunk(
+  "connectSlice/changeNet",
+  async (_, { dispatch }) => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: ethers.utils.hexlify(expectedChainId) }]
+      });
+    } catch (err) {
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainName: 'Sepolia Testnet',
+              chainId: ethers.utils.hexlify(expectedChainId),
+              nativeCurrency: { name: 'SepoliaETH', decimals: 18, symbol: 'SEP' },
+              rpcUrls: ['https://rpc.sepolia.dev']
+            }
+          ]
+        });
+      } else {
+        dispatch(error({ error: err }))
+      }
       return {
         status: "failed",
         error: err.message

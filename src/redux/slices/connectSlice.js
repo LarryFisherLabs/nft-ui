@@ -6,6 +6,7 @@ import { connect } from '../thunks/connectThunk'
 const initialState = {
   status: 'idle',
   isConnected: null,
+  isWrongNet: null,
   account: null,
   errMsg: ""
 }
@@ -18,6 +19,7 @@ export const connectSlice = createSlice({
       state.status = action.payload.status
     },
     error: (state, action) => {
+      state.status = 'failed'
       state.errMsg = "Error: " + action.payload.error
     }
   },
@@ -29,10 +31,16 @@ export const connectSlice = createSlice({
       .addCase(connect.fulfilled, (state, action) => {
         if (action.payload) {
           if (action.payload.status === 'failed') {
-            state.status = 'failed'
-            state.errMsg = "Error: " + action.payload.error
+            if (action.payload.error === "Check Network") {
+              state.status = 'succeeded'
+              state.isConnected = false
+              state.isWrongNet = true
+            } else {
+              state.status = 'failed'
+              state.errMsg = "Error: " + action.payload.error
+            }
           } else if (action.payload.account) {
-            state.status = "succeeded"
+            state.status = 'succeeded'
             state.isConnected = true
             state.account = action.payload.account
           } 
@@ -50,5 +58,6 @@ export default connectSlice.reducer
 
 export const selectStatus = state => state.connectSlice.status
 export const selectIsConnected = state => state.connectSlice.isConnected
+export const selectIsWrongNet = state => state.connectSlice.isWrongNet
 export const selectAccount = state => state.connectSlice.account
 export const selectErr = state => state.connectSlice.errMsg
