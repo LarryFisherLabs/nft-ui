@@ -6,7 +6,7 @@ import { AntBuilder } from './AntBuilder'
 import { AdminPage } from './AdminPage'
 import { CoinBuilder } from './CoinBuilder'
 
-import { StyledButton, Text, Title } from '../styles/general'
+import { StyledButton, Text } from '../styles/general'
 import { selectAccount, selectErr, selectIsConnected, selectIsWrongNet, selectStatus } from '../redux/slices/connectSlice'
 import { loadCoinAdmin } from '../redux/thunks/coinAdminThunks'
 import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
