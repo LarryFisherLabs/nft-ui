@@ -104,10 +104,20 @@ export const LayerButtons = ({ layerIndex }) => {
         }
     }
 
+    const formatFileName = (name) => {
+        let formattedName = ""
+        const splitName = name.split("-")
+        for (let i = 1; i < splitName.length; i++) {
+            if (i > 1) formattedName = formattedName + " "
+            formattedName = formattedName + splitName[i].charAt(0).toUpperCase() + splitName[i].slice(1)
+        }
+        return formattedName
+    }
+
     return (
         <ButtonsPanel>
             <Title2CrossHair onClick={() => toggle(!isOpen)}>
-                {staticLayerInfo[layerIndex].fileName}
+                {formatFileName(staticLayerInfo[layerIndex].fileName)}
             </Title2CrossHair>
             <SectionButtons isOpen={isOpen}>
                 {staticLayerInfo[layerIndex].elements.map((element, index) => {
@@ -117,7 +127,7 @@ export const LayerButtons = ({ layerIndex }) => {
                         
                         return (
                             <Button key={index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected}>
-                                <Title4>{element.name}</Title4>
+                                <Title4>{formatFileName(element.name)}</Title4>
                                 <ButtonBottom>
                                     <ToggledRemove isDisabled={isSelected && (element.rarity > 0)}>
                                         <Text>Remove</Text>
