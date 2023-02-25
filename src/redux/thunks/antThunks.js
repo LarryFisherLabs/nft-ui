@@ -93,7 +93,11 @@ export const buyAntThunk = createAsyncThunk(
         throw new Error('Bad tx. Logs: ' + receipt.logs)
       }
     } catch (err) {
-      dispatch(antError({error: err}))
+      let legalErr = false
+      if (err.message === "MetaMask Tx Signature: User denied transaction signature." || err.message.includes("insufficient funds")) legalErr = true
+      if (!legalErr) {
+        dispatch(antError({error: err.message}))
+      }
     }
   }
 )

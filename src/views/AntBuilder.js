@@ -27,9 +27,11 @@ export const AntBuilder = () => {
     const coinErr = useSelector(selectCoinErr)
     const selectedCoinInfo = useSelector(selectDiscountInfo)
     const [isCoinPanelOpen, toggleCoinPanel] = useState(true)
+    const [isFirstCoin, updateIsFirstCoin] = useState(true)
+    const [isFirstAnt, updateIsFirstAnt] = useState(true)
 
     const coinClick = (isDisabled, coinId, coinColor) => {
-        if (!isDisabled) {
+        if (!isDisabled && antStatus !== 'Buying ant...') {
             if (selectedCoinInfo[1] === coinId) {
                 dispatch(updateCoinInfo({ discountIndex: 0, coinId: null }))
                 dispatch(getAntPrices({ discountIndex: 0 }))
@@ -43,9 +45,18 @@ export const AntBuilder = () => {
     }
     
     useEffect(() => {
-        if (antStatus === 'idle' && isAdmin !== null) dispatch(getPartInventories())
-        else if (antStatus === 'succeeded' && coinStatus === 'idle') dispatch(loadCoinIds())
-    }, [antStatus, isAdmin, dispatch, coinStatus])
+        if (antStatus === 'idle' && isAdmin !== null && isFirstAnt) {
+            dispatch(getPartInventories())
+            updateIsFirstAnt(false)
+        }
+    }, [antStatus, isAdmin, dispatch, isFirstAnt])
+
+    useEffect(() => {
+        if (coinStatus === 'idle' && isAdmin !== null && isFirstCoin) {
+            dispatch(loadCoinIds())
+            updateIsFirstCoin(false)
+        }
+    }, [isAdmin, dispatch, coinStatus, isFirstCoin])
 
     return (
         <ViewStyle>
@@ -55,7 +66,7 @@ export const AntBuilder = () => {
                     <AntCanvas/>
                     <div>
                         <ButtonsPanel>
-                            <Title2CrossHair onClick={() => toggleCoinPanel(!isCoinPanelOpen)}>{isCoinPanelOpen ? "Coin Discount" + " ∨" : "Coin Discount" + " ∧"}</Title2CrossHair>
+                            <Title2CrossHair onClick={() => toggleCoinPanel(!isCoinPanelOpen)}>{isCoinPanelOpen ? "Coin Discount ∨" : "Coin Discount ∧"}</Title2CrossHair>
                             <SectionButtons isOpen={isCoinPanelOpen}>
                                 {
                                     coinStatus === "succeeded" && coins.length > 0 ? coins.map((coin, index) => {

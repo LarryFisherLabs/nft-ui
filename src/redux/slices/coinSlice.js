@@ -3,7 +3,6 @@ import { buyCoin, coinsConnect, loadBuilder, loadCoinIds } from '../thunks/coinT
 
 const initialState = {
   coinStatus: 'idle',
-  coinBuilderStatus: 'idle',
   coins: [],
   isCoinAdmin: null,
   founder: {
@@ -67,14 +66,14 @@ export const coinSlice = createSlice({
         }
       })
       .addCase(loadBuilder.pending, state => {
-        state.coinBuilderStatus = 'loading builder...'
+        state.coinStatus = 'loading builder...'
       })
       .addCase(loadBuilder.fulfilled, (state, action) => {
         if (action.payload.coinBuilderStatus === 'failed') {
-          state.coinBuilderStatus = 'failed'
+          state.coinStatus = 'failed'
           state.coinErrMsg = action.payload.err
         } else {
-          state.coinBuilderStatus = 'succeeded'
+          state.coinStatus = 'succeeded'
           state.founder.value = action.payload.founder.value
           state.founder.isFCMinted = action.payload.founder.isFCMinted
           state.founder.isFCDiscountUsed = action.payload.founder.isFCDiscountUsed
@@ -91,14 +90,18 @@ export const coinSlice = createSlice({
         }
       })
       .addCase(buyCoin.pending, state => {
-        state.coinBuilderStatus = 'buying coin'
+        state.coinStatus = 'buying coin'
       })
       .addCase(buyCoin.fulfilled, (state, action) => {
         if (action.payload.builderStatus === 'failed') {
-          state.coinBuilderStatus = 'failed'
-          state.coinErrMsg = action.payload.err
+          if (action.payload.err === "MetaMask Tx Signature: User denied transaction signature.") {
+            state.coinStatus = "succeeded"
+          } else {
+            state.coinStatus = 'failed'
+            state.coinErrMsg = action.payload.err
+          }
         } else if (action.payload.builderStatus === 'bad pricing' || action.payload.builderStatus === 'bad value') {
-          state.coinBuilderStatus = action.payload.builderStatus
+          state.coinStatus = action.payload.builderStatus
           state.prices = action.payload.prices
         }
       })
@@ -117,7 +120,6 @@ export const { updateIsCoinAdmin, updateCoins, coinError } = coinSlice.actions
 export default coinSlice.reducer
 
 export const selectCoinStatus = state => state.coinSlice.coinStatus
-export const selectCoinBuilderStatus = state => state.coinSlice.coinBuilderStatus
 export const selectCoins = state => state.coinSlice.coins
 export const selectIsCoinAdmin = state => state.coinSlice.isCoinAdmin
 export const selectFounder = state => state.coinSlice.founder
