@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { selectAntStatus, selectRarityPrices, selectSelectedIndexes } from "../../redux/slices/antSlice"
 import { buyAntThunk } from "../../redux/thunks/antThunks"
-import { Panel, StyledAntCanvas, StyledButton, Text, TextBlock } from "../../styles/general"
+import { Panel, StyledAntCanvas, StyledButton, TextBlock } from "../../styles/general"
 import { recursiveDraw, baseElements } from "../../utils/ant-utils/antCanvasUtils"
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
@@ -41,6 +41,7 @@ export const AntCanvasPanel = styled(Panel)`
     height: fit-content;
     top: 10%;
 `
+const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
 
 export const AntCanvas = () => {
     const dispatch = useDispatch()
@@ -48,23 +49,27 @@ export const AntCanvas = () => {
     const isConnected = useSelector(selectIsConnected)
     const selectedIndexes = useSelector(selectSelectedIndexes)
     const antStatus = useSelector(selectAntStatus)
-    const prices = useSelector(selectRarityPrices)
+    const pricesFromState = useSelector(selectRarityPrices)
     const canvas = useRef()
-    const [totalPrice, updatePrice] = useState()
+    const [totalPrice, updatePrice] = useState(0.0099)
     const [isFirstLoad, toggleIsFirstLoad] = useState(true)
+    const [prices, updatePrices] = useState([..._prices])
 
     useEffect(() => {
         const ctx = canvas.current.getContext('2d')
         if ((connectStatus === 'succeeded' && !isConnected) || (connectStatus === 'succeeded' && isFirstLoad) || antStatus === 'succeeded' || connectStatus === "offline") updateAntCanvas(ctx, selectedIndexes)
-        if (isFirstLoad) toggleIsFirstLoad(false)
-        let price = 0
-        selectedIndexes.forEach((partIndex, sectionIndex) => {
-            if (staticLayerInfo[sectionIndex].elements[partIndex].rarity > 0) {
-                price += parseFloat(prices[staticLayerInfo[sectionIndex].elements[partIndex].rarity - 1]) * 100000
-            }
-        })
-        updatePrice((price + parseFloat(prices[0]) * 1100000) / 100000)
-    }, [connectStatus, antStatus, selectedIndexes, prices, isConnected])
+        if (connectStatus === 'succeeded' && isFirstLoad) toggleIsFirstLoad(false)
+        if (pricesFromState[0] !== null && pricesFromState[0] !== prices[0]) updatePrices([...pricesFromState])
+        if (antStatus !== 'Buying ant...') {
+            let price = 0
+            selectedIndexes.forEach((partIndex, sectionIndex) => {
+                if (staticLayerInfo[sectionIndex].elements[partIndex].rarity > 0) {
+                    price += parseFloat(prices[staticLayerInfo[sectionIndex].elements[partIndex].rarity - 1]) * 100000
+                }
+            })
+            updatePrice((price + parseFloat(prices[0]) * 1100000) / 100000)
+        }
+    }, [connectStatus, antStatus, selectedIndexes, isConnected, isFirstLoad, prices, pricesFromState])
 
     const buyAnt = () => {
         dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))
@@ -75,17 +80,19 @@ export const AntCanvas = () => {
             <StyledAntCanvas ref={canvas} height={164} width={164} >
                 No browser support
             </StyledAntCanvas>
-            {antStatus === 'succeeded' ? (
-                <LeftTextBlock>
-                    <div>{"Ant Base Price: " + (prices[0] * 1100000 / 100000) + " eth"}</div>
-                    <div>{"Very Common Price: " + prices[0] + " eth"}</div>
-                    <div>{"Common Price: " + prices[1] + " eth"}</div>
-                    <div>{"Rare Price: " + prices[2] + " eth"}</div>
-                    <div>{"Very Rare Price: " + prices[3] + " eth"}</div>
-                    <div>{"Total Ant Price: " + totalPrice + " eth"}</div>
-                </LeftTextBlock>
-            ) : antStatus === 'idle' ? <LeftTextBlock>Please Connect</LeftTextBlock> : <Text>{antStatus}</Text>}
-            {antStatus === 'idle' ? null : <StickyButton onClick={buyAnt}>Buy Ant</StickyButton>}
+            <LeftTextBlock>
+                <div>{"Ant Base Price: " + (prices[0] * 1100000 / 100000) + " eth"}</div>
+                <div>{"Very Common Price: " + prices[0] + " eth"}</div>
+                <div>{"Common Price: " + prices[1] + " eth"}</div>
+                <div>{"Rare Price: " + prices[2] + " eth"}</div>
+                <div>{"Very Rare Price: " + prices[3] + " eth"}</div>
+                <div>{"Total Ant Price: " + totalPrice + " eth"}</div>
+            </LeftTextBlock>
+            {isConnected === false ? <LeftTextBlock>Please Connect</LeftTextBlock> : null}
+            {
+                antStatus === 'succeeded' ? <StickyButton onClick={buyAnt}>Buy Ant</StickyButton> : 
+                (antStatus === 'Buying ant...') || (antStatus.includes('Loading')) ? <LeftTextBlock>{antStatus}</LeftTextBlock> : null
+            }
         </AntCanvasPanel>
     )
 }

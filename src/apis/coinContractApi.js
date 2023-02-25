@@ -51,7 +51,6 @@ export const owner = async () => {
     try {
         const coinContract = getCoinContract()
         const owner = await coinContract.owner()
-        console.log(owner)
         return owner
     } catch (err) {
         return err

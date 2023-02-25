@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CanvasPanel, IndentedText, SmallText, StyledButton, StyledInput, Text, TextBlock, Title, Title2, ViewStyle } from '../styles/general'
 
-import { selectPrices, selectFounder, selectCoinBuilderStatus, selectUserBalance, selectCoinErr } from '../redux/slices/coinSlice'
+import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
 import { CoinCanvas, getColor } from '../components/canvas/CoinCanvas'
 import { selectIsConnected } from '../redux/slices/connectSlice'
 
 export const CoinBuilder = () => {
     const dispatch = useDispatch()
-    const coinBuilderStatus = useSelector(selectCoinBuilderStatus)
+    const coinStatus = useSelector(selectCoinStatus)
     const minPrices = useSelector(selectPrices)
     const founder = useSelector(selectFounder)
     const userBalance = useSelector(selectUserBalance)
@@ -47,21 +47,21 @@ export const CoinBuilder = () => {
     }
 
     useEffect(() => {
-        if (coinBuilderStatus === 'idle' && isConnected) {
+        if (coinStatus === 'idle' && isConnected) {
             dispatch(loadBuilder())
-        } else if (coinBuilderStatus === 'succeeded') {
+        } else if (coinStatus === 'succeeded') {
             if (isFounderCoinBuilder === null) {
                 updateIsFCB(founder.value > 0 && founder.isFCMinted === false)
                 updateIsDCB(founder.value > 0 && founder.isFCMinted === true && founder.isFCDiscountUsed === false)
             }
         }
-    }, [coinBuilderStatus, dispatch, founder, isFounderCoinBuilder, isConnected])        
+    }, [coinStatus, dispatch, founder, isFounderCoinBuilder, isConnected])        
 
     return (
         <ViewStyle>
             <Title>Coin Builder</Title>
             {
-                (coinBuilderStatus === 'failed') ? <Text>{coinError}</Text> : (
+                (coinStatus === 'failed') ? <Text>{coinError}</Text> : (
                     <ViewStyle>
                         <Title2>{
                             userBalance > 0 ? "Add to your collection" :
@@ -69,9 +69,9 @@ export const CoinBuilder = () => {
                         }</Title2>
                         <CanvasPanel>
                             {
-                                coinBuilderStatus === 'buying coin' ? <Text>Buying coin...</Text> : 
-                                coinBuilderStatus === 'bad pricing' ? <Text>Prices changed!</Text> :
-                                coinBuilderStatus === 'bad value' ? <Text>Not enough eth!</Text> :
+                                coinStatus === 'buying coin' ? <Text>Buying coin...</Text> : 
+                                coinStatus === 'bad pricing' ? <Text>Prices changed!</Text> :
+                                coinStatus === 'bad value' ? <Text>Not enough eth!</Text> :
                                 null
                             }
                             {
@@ -91,7 +91,7 @@ export const CoinBuilder = () => {
                             <IndentedText>Amount of eth to send:</IndentedText>
                             <StyledInput type="number" step=".0001" onChange={onInputChange} />
                             {
-                                coinBuilderStatus === 'buying coin' || !isConnected ? null : (
+                                coinStatus === 'buying coin' || !isConnected ? null : (
                                     <StyledButton onClick={sendTransaction}>{
                                         isFounderCoinBuilder ? <SmallText>Buy Founder Coin</SmallText> :
                                         isDiscountedCoinBuilder ? <SmallText>Buy Discount Coin</SmallText> :

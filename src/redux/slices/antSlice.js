@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { layerInfo } from '../../utils/ant-utils/antInfo'
 import { staticLayerInfo } from '../../utils/ant-utils/staticAntInfo'
-import { getAntIds, getAntPrices, getPartInventories } from '../thunks/antThunks'
+import { buyAntThunk, getAntIds, getAntPrices, getPartInventories } from '../thunks/antThunks'
 
 const initialState = {
   antStatus: 'idle',
@@ -50,17 +50,29 @@ export const antSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getPartInventories.pending, state => {
+        state.antStatus = 'Loading part inventories...'
+      })
       .addCase(getPartInventories.fulfilled, state => {
-        if (state.antStatus !== 'failed') state.antStatus = 'succeeded'
+        if (state.antStatus === 'Loading part inventories...') state.antStatus = 'succeeded'
+      })
+      .addCase(getAntIds.pending, state => {
+        state.antStatus = 'Loading ants...'
       })
       .addCase(getAntIds.fulfilled, state => {
-        if (state.antStatus !== 'failed') state.antStatus = 'succeeded'
+        if (state.antStatus === 'Loading ants...') state.antStatus = 'succeeded'
       })
       .addCase(getAntPrices.pending, state => {
-        state.antStatus = 'Loading prices...'
+        if (state.antStatus === 'succeeded') state.antStatus = 'Loading prices...'
       })
       .addCase(getAntPrices.fulfilled, state => {
-        if (state.antStatus !== 'failed') state.antStatus = 'succeeded'
+        if (state.antStatus === 'Loading prices...') state.antStatus = 'succeeded'
+      })
+      .addCase(buyAntThunk.pending, state => {
+        state.antStatus = 'Buying ant...'
+      })
+      .addCase(buyAntThunk.fulfilled, state => {
+        if (state.antStatus === 'Buying ant...') state.antStatus = 'succeeded'
       })
   }
 })

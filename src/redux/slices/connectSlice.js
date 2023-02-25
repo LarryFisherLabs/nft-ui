@@ -35,6 +35,9 @@ export const connectSlice = createSlice({
               state.status = 'succeeded'
               state.isConnected = false
               state.isWrongNet = true
+            } else if (action.payload.error === "User rejected the request.") {
+              state.status = "succeeded"
+              state.isConnected = false
             } else {
               state.status = 'failed'
               state.errMsg = "Error: " + action.payload.error
