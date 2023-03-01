@@ -51,7 +51,6 @@ export const StyledButton = styled.button`
     font-size: 1rem;
     cursor: pointer;
     align-self: center;
-    margin-top: 5px;
 `
 
 export const Canvas = styled.canvas`

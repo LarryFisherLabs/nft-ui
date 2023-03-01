@@ -10,6 +10,7 @@ import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
 import styled from 'styled-components'
 import { selectCoinErr, selectCoins, selectCoinStatus, selectIsCoinAdmin } from '../redux/slices/coinSlice.js'
 import { loadCoinIds } from '../redux/thunks/coinThunk.js'
+import { selectNetId } from '../redux/slices/connectSlice.js'
 
 export const Editor = styled.div`
     display: flex;
@@ -26,6 +27,7 @@ export const AntBuilder = () => {
     const coins = useSelector(selectCoins)
     const coinErr = useSelector(selectCoinErr)
     const selectedCoinInfo = useSelector(selectDiscountInfo)
+    const netId = useSelector(selectNetId)
     const [isCoinPanelOpen, toggleCoinPanel] = useState(true)
     const [isFirstCoin, updateIsFirstCoin] = useState(true)
     const [isFirstAnt, updateIsFirstAnt] = useState(true)
@@ -70,7 +72,7 @@ export const AntBuilder = () => {
                             <SectionButtons isOpen={isCoinPanelOpen}>
                                 {
                                     coinStatus === "succeeded" && coins.length > 0 ? coins.map((coin, index) => {
-                                        const srcFile = 'https://nft-api-bphk.onrender.com/coins/images/' + coin.id
+                                        const srcFile = 'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + coin.id
                                         const isSelected = selectedCoinInfo[1] === coin.id
                             
                                         return (

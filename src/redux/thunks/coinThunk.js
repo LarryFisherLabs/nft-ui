@@ -5,7 +5,7 @@ import { getCoinContract } from '../../utils/ethers-utils'
 import { coinError, updateCoins } from '../slices/coinSlice'
 
 const _getCoinIds = async (account) => {
-    const coinContract = getCoinContract()
+    const coinContract = await getCoinContract()
     const coinBalance = await balanceOf(account)
     let coins = []
     if (coinBalance > 0) {

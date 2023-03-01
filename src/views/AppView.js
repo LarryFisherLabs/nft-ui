@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Profile } from './Profile'
@@ -7,7 +7,7 @@ import { AdminPage } from './AdminPage'
 import { CoinBuilder } from './CoinBuilder'
 
 import { StyledButton, Text } from '../styles/general'
-import { selectAccount, selectErr, selectIsConnected, selectIsWrongNet, selectStatus } from '../redux/slices/connectSlice'
+import { selectAccount, selectErr, selectIsConnected, selectIsWrongNet, selectNetId, selectStatus } from '../redux/slices/connectSlice'
 import { loadCoinAdmin } from '../redux/thunks/coinAdminThunks'
 import { selectCoinStatus, selectIsCoinAdmin } from '../redux/slices/coinSlice'
 
@@ -15,7 +15,7 @@ import styled from 'styled-components'
 import { changeNet, connect } from '../redux/thunks/connectThunk'
 import { selectAntStatus } from '../redux/slices/antSlice'
 
-export const Nav = styled.div`
+const Nav = styled.div`
   margin-left: 2rem;
   background-color: rgb(145, 162, 230);
   width: fit-content;
@@ -29,7 +29,7 @@ export const Nav = styled.div`
   border-color: buttonborder;
 `
 
-export const LinkButton = styled.a`
+const LinkButton = styled.a`
   border-radius: 14px;
   font-weight: 600;
   color: #fed600;
@@ -38,11 +38,11 @@ export const LinkButton = styled.a`
   padding: 2px 2px;;
 `
 
-export const ActiveLinkButton = styled(LinkButton)`
+const ActiveLinkButton = styled(LinkButton)`
   background-color: rgb(241 132 200);
 `
 
-export const NavBar = () => {
+const NavBar = () => {
     const isAdmin = useSelector(selectIsCoinAdmin)
     return (
       <Nav>
@@ -54,41 +54,68 @@ export const NavBar = () => {
     )
 }
 
-export const StyledConnectButton = styled(StyledButton)`
+const StyledConnectButton = styled(StyledButton)`
+  margin-right: 1rem;
   justify-self: flex-end;
 `
 
-export const ConnectButton = () => {
-    const status = useSelector(selectStatus)
-    const coinStatus = useSelector(selectCoinStatus)
-    const antStatus = useSelector(selectAntStatus)
-    const account = useSelector(selectAccount)
-    const isConnected = useSelector(selectIsConnected)
-    const isWrongNet = useSelector(selectIsWrongNet)
-    const dispatch = useDispatch()
-  
-    const buttonAction = () => {
-      if ((status === 'failed') || (antStatus === 'failed') || (coinStatus === 'failed')) window.location.reload()
-      else if (isWrongNet === true) dispatch(changeNet())
-      else if (status === 'succeeded' && !isConnected) dispatch(connect())
-      else if (status === 'offline') window.open("https://chrome.google.com/webstore/search/metamask", "_blank")
-    }
-  
-    return (
-      <StyledConnectButton type="button" onClick={buttonAction}>
-        {
-          (status === 'failed') || (antStatus === 'failed') || (coinStatus === 'failed') ? "Reload" :
-          isWrongNet ? "Change Network" :
-          (status === 'succeeded' && !isConnected) ? "Connect Wallet" :
-          status === 'succeeded' ? account :
-          status === 'offline' ? "Download Metamask" :
-          "loading"
-        }
-      </StyledConnectButton>
-    )
+const ConnectButton = () => {
+  const status = useSelector(selectStatus)
+  const coinStatus = useSelector(selectCoinStatus)
+  const antStatus = useSelector(selectAntStatus)
+  const account = useSelector(selectAccount)
+  const isConnected = useSelector(selectIsConnected)
+  const isWrongNet = useSelector(selectIsWrongNet)
+  const dispatch = useDispatch()
+
+  const buttonAction = () => {
+    if ((status === 'failed') || (antStatus === 'failed') || (coinStatus === 'failed')) window.location.reload()
+    else if (isWrongNet === true) dispatch(changeNet(1))
+    else if (status === 'succeeded' && !isConnected) dispatch(connect())
+    else if (status === 'offline') window.open("https://chrome.google.com/webstore/search/metamask", "_blank")
+  }
+
+  return (
+    <StyledConnectButton type="button" onClick={buttonAction}>
+      {
+        (status === 'failed') || (antStatus === 'failed') || (coinStatus === 'failed') ? "Reload" :
+        isWrongNet ? "Change Network" :
+        (status === 'succeeded' && !isConnected) ? "Connect Wallet" :
+        status === 'succeeded' ? account :
+        status === 'offline' ? "Download Metamask" :
+        "loading"
+      }
+    </StyledConnectButton>
+  )
 }
 
-export const HeaderWrapper = styled.header`
+const StyledOptions = styled.div`
+  flex-flow: column nowrap;
+`
+
+const StyledOptionsButton = styled(StyledButton)`
+  background-color: #946cb0;
+`
+
+const StyledOptionsPanel = styled.div`
+  display: ${props => props.isOpen ? 'flex' : 'none'};
+  flex-flow: column nowrap;
+  z-index: 2;
+  position: absolute;
+  background-color: #946cb0;
+  padding: 4px;
+  border-radius: 16px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonborder;
+`
+
+// const StyledOptionPanelButton = styled.(StyledButton)`
+//   color: #fed600;
+//   font-size: 1.2rem;
+// `
+
+const HeaderWrapper = styled.header`
   display: grid;
   flex-flow: row nowrap;
   width: 100%;
@@ -96,12 +123,12 @@ export const HeaderWrapper = styled.header`
   align-items: center;
   z-index: 2;
   padding: 1rem;
-  grid-template-columns: 1fr 10fr 10fr;
+  grid-template-columns: 1fr 10fr 10fr 1fr;
   position: sticky;
   top: 0;
 `
 
-export const HomeButton = styled.a`
+const HomeButton = styled.a`
   background-image: url('logo.png');
   background-size: contain;
   width: 45px;
@@ -115,17 +142,45 @@ export const AppView = () => {
     const errorMsg = useSelector(selectErr)
     const isConnected = useSelector(selectIsConnected)
     const isAdmin = useSelector(selectIsCoinAdmin)
+    const netId = useSelector(selectNetId)
+
+    const [isOptionsOpen, updateIsOptionsOpen] = useState(false)
 
     useEffect(() => {
         if (status === 'succeeded' && isConnected && isAdmin === null) dispatch(loadCoinAdmin())
     }, [status, dispatch, isConnected, isAdmin])
 
+    const toggleOptions = () => {
+      updateIsOptionsOpen(!isOptionsOpen)
+    }
+
+    const openFaucet = () => {
+      if (netId !== null) {
+        const link = netId === 0 ? "https://sepolia-faucet.pk910.de/" : "https://goerlifaucet.com/"
+        window.open(link, "_blank")
+      }
+    }
+
+    const switchNet = () => {
+      if (netId !== null) {
+        const newNet = netId === 0 ? 1 : 0
+        dispatch(changeNet(newNet))
+      }
+    }
+
     return (
         <div>  
             <HeaderWrapper>
-                <HomeButton href='.' />
-                <NavBar />
-                <ConnectButton />
+              <HomeButton href='.' />
+              <NavBar />
+              <ConnectButton />
+              <StyledOptions>
+                <StyledOptionsButton type='button' onClick={toggleOptions}>...</StyledOptionsButton>
+                <StyledOptionsPanel isOpen={isOptionsOpen}>
+                  <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>
+                  {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
+                </StyledOptionsPanel>
+              </StyledOptions>
             </HeaderWrapper>
             {
                 status === 'idle' ? <Text>loading...</Text> :
