@@ -45,7 +45,7 @@ export const getAntIds = createAsyncThunk(
   "antSlice/getAntIds",
   async (_, { dispatch, getState }) => {
     try {
-      const antContract = getAntContract()
+      const antContract = await getAntContract()
       const account = getState().connectSlice.account
       const antBalance = await antBalanceOf(account)
       let ants = []

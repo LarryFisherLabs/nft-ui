@@ -7,11 +7,13 @@ import { selectCoinErr, selectCoins, selectCoinStatus, selectFounder, selectIsCo
 import { coinsConnect } from '../redux/thunks/coinThunk'
 import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../redux/slices/antSlice'
 import { getAntIds } from '../redux/thunks/antThunks'
+import { selectNetId } from '../redux/slices/connectSlice'
 
 export const MappedCoins = () => {
     const coinStatus = useSelector(selectCoinStatus)
     const coinErrMsg = useSelector(selectCoinErr)
     const coins = useSelector(selectCoins)
+    const netId = useSelector(selectNetId)
 
     if (coinStatus === 'succeeded') {
         if (coins.length < 1) {
@@ -22,7 +24,7 @@ export const MappedCoins = () => {
             return(
                 <NftGrid>{
                     coins.map((coin, i) => {
-                        const imgSrc = 'https://nft-api-bphk.onrender.com/coins/images/' + coin.id
+                        const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + coin.id
                         return (
                             <CoinImg src={imgSrc} key={i} />
                         )
@@ -47,6 +49,7 @@ export const MappedAnts = () => {
     const antStatus = useSelector(selectAntStatus)
     const antErrMsg = useSelector(selectAntErrMsg)
     const antIds = useSelector(selectAntIds)
+    const netId = useSelector(selectNetId)
 
     if (antStatus === 'succeeded') {
         if (antIds.length < 1) {
@@ -55,7 +58,7 @@ export const MappedAnts = () => {
             )
         } else {
             return (<NftGrid>{antIds.map((antId, i) => {
-                const imgSrc = 'https://nft-api-bphk.onrender.com/ants/images/' + antId
+                const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/ants/images/' + antId
                 return (
                     <AntImg src={imgSrc} key={i} />
                 )
@@ -88,7 +91,6 @@ export const Profile = () => {
     const antStatus = useSelector(selectAntStatus)
 
     const [buttonLabel, updateLabel] = useState('Mint Coin')
-    const [antButtonLabel, updateAntLabel] = useState('Mint Ant')
 
     useEffect(() => {
         if (coinStatus === 'idle' && isAdmin !== null) {
@@ -133,7 +135,7 @@ export const Profile = () => {
                 <LeftTitle>Ants</LeftTitle>
                 <MappedAnts />
             </ProfilePanel>
-            <StyledButton onClick={goToAntBuilder}>{antButtonLabel}</StyledButton>
+            <StyledButton onClick={goToAntBuilder}>{'Mint Ant'}</StyledButton>
         </ViewStyle>
     )
 }

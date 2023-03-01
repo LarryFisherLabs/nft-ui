@@ -8,6 +8,7 @@ const initialState = {
   isConnected: null,
   isWrongNet: null,
   account: null,
+  netId: null,
   errMsg: ""
 }
 
@@ -46,6 +47,7 @@ export const connectSlice = createSlice({
             state.status = 'succeeded'
             state.isConnected = true
             state.account = action.payload.account
+            state.netId = action.payload.netId
           } 
         } else {
           // wait for connect button
@@ -63,4 +65,5 @@ export const selectStatus = state => state.connectSlice.status
 export const selectIsConnected = state => state.connectSlice.isConnected
 export const selectIsWrongNet = state => state.connectSlice.isWrongNet
 export const selectAccount = state => state.connectSlice.account
+export const selectNetId = state => state.connectSlice.netId
 export const selectErr = state => state.connectSlice.errMsg
