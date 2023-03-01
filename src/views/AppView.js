@@ -177,7 +177,7 @@ export const AppView = () => {
               <StyledOptions>
                 <StyledOptionsButton type='button' onClick={toggleOptions}>...</StyledOptionsButton>
                 <StyledOptionsPanel isOpen={isOptionsOpen}>
-                  <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>
+                  {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
                   {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
                 </StyledOptionsPanel>
               </StyledOptions>
