@@ -179,6 +179,7 @@ export const AppView = () => {
                 <StyledOptionsPanel isOpen={isOptionsOpen}>
                   {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
                   {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
+                  {netId === null ? <Text>Please Connect</Text> : null}
                 </StyledOptionsPanel>
               </StyledOptions>
             </HeaderWrapper>
