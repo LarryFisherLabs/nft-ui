@@ -125,7 +125,7 @@ export const Profile = () => {
             <Title>
                 Arcade Profile
             </Title>
-            <Title2>Welcome</Title2>
+            <Title2>{window.innerWidth}</Title2>
             <ProfilePanel>
                 <LeftTitle>Coins</LeftTitle>
                 <MappedCoins />
