@@ -7,7 +7,7 @@ import { recursiveDraw, baseElements } from "../../utils/ant-utils/antCanvasUtil
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
-import { selectIsConnected, selectStatus } from "../../redux/slices/connectSlice"
+import { selectIsConnected, selectStatus, selectViewLevel } from "../../redux/slices/connectSlice"
 
 const updateAntCanvas = (ctx, indexes) => {
     ctx.clearRect(0, 0, 328, 328)
@@ -23,23 +23,23 @@ const updateAntCanvas = (ctx, indexes) => {
 
 
 export const StickyButton = styled(StyledButton)`
-    position: sticky;
-    top: 83%;
-    margin-top: 15px; 
+    font-size: ${props => props.viewLevel < 4 ? null : '1rem'};
+    margin-top: 5px; 
 `
 
 
 export const LeftTextBlock = styled(TextBlock)`
-    align-self: start;
+    align-self: ${props => props.viewLevel < 4 ? 'start' : 'center'};
+    background-color: ${props => props.viewLevel < 4 ? null : '#901778'};
+    border-radius: 16px;
 `
 
 export const AntCanvasPanel = styled(Panel)`
     display: flex;
     flex-flow: column;
-    min-width: 500px;
     position: sticky;
     height: fit-content;
-    top: 10%;
+    top: ${props => props.viewLevel < 4 ? '4.6rem' : '6.21rem'};
 `
 const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
 
@@ -50,6 +50,7 @@ export const AntCanvas = () => {
     const selectedIndexes = useSelector(selectSelectedIndexes)
     const antStatus = useSelector(selectAntStatus)
     const pricesFromState = useSelector(selectRarityPrices)
+    const viewLevel = useSelector(selectViewLevel)
     const canvas = useRef()
     const [totalPrice, updatePrice] = useState(0.0099)
     const [isFirstLoad, toggleIsFirstLoad] = useState(true)
@@ -76,11 +77,11 @@ export const AntCanvas = () => {
     }
 
     return (
-        <AntCanvasPanel>
-            <StyledAntCanvas ref={canvas} height={164} width={164} >
+        <AntCanvasPanel viewLevel={viewLevel}>
+            <StyledAntCanvas ref={canvas} height={164} width={164} viewLevel={viewLevel} >
                 No browser support
             </StyledAntCanvas>
-            <LeftTextBlock>
+            <LeftTextBlock viewLevel={viewLevel}>
                 <div>{"Ant Base Price: " + (prices[0] * 1100000 / 100000) + " eth"}</div>
                 <div>{"Very Common Price: " + prices[0] + " eth"}</div>
                 <div>{"Common Price: " + prices[1] + " eth"}</div>
@@ -88,10 +89,10 @@ export const AntCanvas = () => {
                 <div>{"Very Rare Price: " + prices[3] + " eth"}</div>
                 <div>{"Total Ant Price: " + totalPrice + " eth"}</div>
             </LeftTextBlock>
-            {isConnected === false ? <LeftTextBlock>Please Connect</LeftTextBlock> : null}
+            {isConnected === false ? <LeftTextBlock viewLevel={viewLevel}>Please Connect</LeftTextBlock> : null}
             {
-                antStatus === 'succeeded' ? <StickyButton onClick={buyAnt}>Buy Ant</StickyButton> : 
-                (antStatus === 'Buying ant...') || (antStatus.includes('Loading')) ? <LeftTextBlock>{antStatus}</LeftTextBlock> : null
+                antStatus === 'succeeded' ? <StickyButton viewLevel={viewLevel} onClick={buyAnt}>Buy Ant</StickyButton> : 
+                (antStatus === 'Buying ant...') || (antStatus.includes('Loading')) ? <LeftTextBlock viewLevel={viewLevel}>{antStatus}</LeftTextBlock> : null
             }
         </AntCanvasPanel>
     )

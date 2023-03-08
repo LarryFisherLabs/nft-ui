@@ -10,11 +10,11 @@ export const ViewStyle = styled.div`
 
 export const Text = styled.div`
     color: #fed600;
-    font-size: 1.2rem;
+    font-size: ${props => (props.viewLevel < 5 || props.viewLevel === undefined) ? '1.2rem' : '1rem'};
 `
 
 export const SmallText = styled(Text)`
-    font-size: 1rem;
+    font-size: ${props => (props.viewLevel < 5 || props.viewLevel === undefined) ? '1rem' : '.8rem'};
 `
 
 export const IndentedText = styled(SmallText)`
@@ -65,6 +65,8 @@ export const Canvas = styled.canvas`
 `
 
 export const StyledAntCanvas = styled(Canvas)`
+    width: ${props => props.viewLevel === 0 ? '450px' : props.viewLevel === 1 ? '355px' : props.viewLevel === 2 ? '300px' : props.viewLevel === 3 ? '250px' :  props.viewLevel === 4 ? '200px' : '220px'};
+    height: ${props => props.viewLevel === 0 ? '450px' : props.viewLevel === 1 ? '355px' : props.viewLevel === 2 ? '300px' : props.viewLevel === 3 ? '250px' :  props.viewLevel === 4 ? '200px' : '220px'};
     position: sticky;
     top: 10%;
 `

@@ -5,6 +5,7 @@ import { Title2CrossHair, Title4, Text, SmallText, CanvasPanel } from '../styles
 import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
 
 import styled from 'styled-components'
+import { selectViewLevel } from '../redux/slices/connectSlice.js'
 
 export const Button = styled.div`
     display: flex;
@@ -12,8 +13,8 @@ export const Button = styled.div`
     background-image: url(${props => props.srcFile});
     background-size: contain;
     padding: 5px;
-    width: 164px;
-    height: 164px;
+    width: ${props => props.viewLevel === 0 ? '164px' : props.viewLevel === 1 ? '150px' : props.viewLevel === 2 ? '140px' : props.viewLevel === 3 ? '130px' : '120px'};
+    height: ${props => props.viewLevel === 0 ? '164px' : props.viewLevel === 1 ? '150px' : props.viewLevel === 2 ? '140px' : props.viewLevel === 3 ? '130px' : '120px'};
     border: ${props => props.isSelected ? '5px solid #c76648' : props.isDisabled ? '5px solid rgb(199, 102, 72, .23)' : '1px solid #83f394'};
     align-items: center;
     cursor: pointer;
@@ -22,7 +23,7 @@ export const Button = styled.div`
 
 export const ButtonsPanel = styled(CanvasPanel)`
     padding: 0 1.2rem;
-    min-width: 280px;
+    min-width: 100px;
     padding-bottom: 1.2rem;
     max-width: 100%;
 `
@@ -30,7 +31,7 @@ export const ButtonsPanel = styled(CanvasPanel)`
 export const SectionButtons = styled.div`
     flex-flow: row wrap;
     display: ${props => props.isOpen ? 'flex' : 'none'};
-    gap: .7rem;
+    gap: ${props => props.viewLevel < 5 ? '.7rem' : '.2rem'};
     justify-content: center;
 `
 
@@ -49,6 +50,7 @@ export const LayerButtons = ({ layerIndex }) => {
     const selectedIndexes = useSelector(selectSelectedIndexes)
     const partStocks = useSelector(selectPartStocks)
     const antStatus = useSelector(selectAntStatus)
+    const viewLevel = useSelector(selectViewLevel)
 
     const [isOpen, toggle] = useState(true)
 
@@ -122,20 +124,20 @@ export const LayerButtons = ({ layerIndex }) => {
             <Title2CrossHair onClick={() => toggle(!isOpen)}>
                 {isOpen ? formatFileName(staticLayerInfo[layerIndex].fileName) + " ∨" : formatFileName(staticLayerInfo[layerIndex].fileName) + " ∧"}
             </Title2CrossHair>
-            <SectionButtons isOpen={isOpen}>
+            <SectionButtons viewLevel={viewLevel} isOpen={isOpen}>
                 {staticLayerInfo[layerIndex].elements.map((element, index) => {
                     if (element.name !== 'empty') {
                         const srcFile = `ant/${staticLayerInfo[layerIndex].fileName}/${element.name}.png`
                         const isSelected = selectedIndexes[layerIndex] === index
                         
                         return (
-                            <Button key={index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected}>
+                            <Button key={index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected} viewLevel={viewLevel}>
                                 <Title4>{formatFileName(element.name)}</Title4>
                                 <ButtonBottom>
                                     <ToggledRemove isDisabled={isSelected && (element.rarity > 0)}>
-                                        <Text>Remove</Text>
+                                        <Text viewLevel={viewLevel}>Remove</Text>
                                     </ToggledRemove>
-                                    <SmallText>
+                                    <SmallText viewLevel={viewLevel}>
                                         {
                                             element.rarity === 0 ? "Base" :
                                             element.rarity === 1 ? "Very Common" :
@@ -145,7 +147,7 @@ export const LayerButtons = ({ layerIndex }) => {
                                             "Undefined"
                                         }
                                     </SmallText>
-                                    <SmallText>
+                                    <SmallText viewLevel={viewLevel}>
                                         {partStocks[layerIndex][index] === null ? "Please Connect" : "In stock: " + partStocks[layerIndex][index]}
                                     </SmallText>
                                 </ButtonBottom>
