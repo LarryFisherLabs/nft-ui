@@ -7,19 +7,19 @@ import { AdminPage } from './AdminPage'
 import { CoinBuilder } from './CoinBuilder'
 
 import { StyledButton, Text } from '../styles/general'
-import { selectAccount, selectErr, selectIsConnected, selectViewLevel, selectIsWrongNet, selectNetId, selectStatus } from '../redux/slices/connectSlice'
+import { selectAccount, selectErr, selectIsConnected, selectIsWrongNet, selectNetId, selectStatus, selectViewLevel } from '../redux/slices/connectSlice'
 import { loadCoinAdmin } from '../redux/thunks/coinAdminThunks'
 import { selectCoinStatus, selectIsCoinAdmin } from '../redux/slices/coinSlice'
 
 import styled from 'styled-components'
 import { changeNet, connect } from '../redux/thunks/connectThunk'
 import { selectAntStatus } from '../redux/slices/antSlice'
+import { getViewLevel } from '../utils/deviceType'
 
 const Nav = styled.div`
-  margin-left: ${props => props.viewLevel < 2 ? '2rem' : props.viewLevel < 4 ? '1.2rem' : '0'};
+  margin-left: 2rem;
   background-color: rgb(145, 162, 230);
   width: fit-content;
-  padding: 2px;
   border-radius: 16px;
   display: grid;
   grid-auto-flow: column;
@@ -27,7 +27,18 @@ const Nav = styled.div`
   border-width: 2px;
   border-style: outset;
   border-color: buttonborder;
-  justify-self: ${props => props.viewLevel > 3 ? 'center' : 'auto'};
+  justify-self: auto;
+  @media ${getViewLevel(1)} {
+    margin-left: 1.2rem;
+  }
+  @media ${getViewLevel(3)} {
+    justify-self: center;
+    margin-left: 0;
+    margin-top: -1.1rem;
+  }
+  @media ${getViewLevel(4)} {
+    margin-top: -1.4rem;
+  }
 `
 
 const LinkButton = styled.a`
@@ -35,9 +46,15 @@ const LinkButton = styled.a`
   font-weight: 600;
   color: #fed600;
   text-decoration: none;
-  font-size: ${props => props.viewLevel < 4 ? '1.2rem' : props.viewLevel < 5 ? '1rem' : '.9rem'};
-  padding: .25rem;
+  font-size: 1.2rem;
+  padding: .15rem;
   text-align: center;
+  @media ${getViewLevel(3)} {
+    font-size: 1rem;
+  }
+  @media ${getViewLevel(4)} {
+    font-size: .9rem;
+  }
 `
 
 const ActiveLinkButton = styled(LinkButton)`
@@ -46,25 +63,43 @@ const ActiveLinkButton = styled(LinkButton)`
 
 const NavBar = () => {
     const isAdmin = useSelector(selectIsCoinAdmin)
-    const viewLevel = useSelector(selectViewLevel)
     return (
-      <Nav viewLevel={viewLevel}>
-        {window.location.pathname === '/' ? <ActiveLinkButton viewLevel={viewLevel} href="/">Profile</ActiveLinkButton> : <LinkButton viewLevel={viewLevel} href="/">Profile</LinkButton>}
-        {window.location.pathname === '/coin-builder' ? <ActiveLinkButton viewLevel={viewLevel} href="/coin-builder">Coin Builder</ActiveLinkButton> : <LinkButton viewLevel={viewLevel} href="/coin-builder">Coin Builder</LinkButton>}
-        {window.location.pathname === '/ant-builder' ? <ActiveLinkButton viewLevel={viewLevel} href="/ant-builder">Ant Builder</ActiveLinkButton> : <LinkButton viewLevel={viewLevel} href="/ant-builder">Ant Builder</LinkButton>}
-        {isAdmin === true ? window.location.pathname === '/admin' ? <ActiveLinkButton viewLevel={viewLevel} href="/admin">Admin</ActiveLinkButton> : <LinkButton viewLevel={viewLevel} href="/admin">Admin</LinkButton> : null}
+      <Nav>
+        {window.location.pathname === '/' ? <ActiveLinkButton href="/">Profile</ActiveLinkButton> : <LinkButton href="/">Profile</LinkButton>}
+        {window.location.pathname === '/coin-builder' ? <ActiveLinkButton href="/coin-builder">Coin Builder</ActiveLinkButton> : <LinkButton href="/coin-builder">Coin Builder</LinkButton>}
+        {window.location.pathname === '/ant-builder' ? <ActiveLinkButton href="/ant-builder">Ant Builder</ActiveLinkButton> : <LinkButton href="/ant-builder">Ant Builder</LinkButton>}
+        {isAdmin === true ? window.location.pathname === '/admin' ? <ActiveLinkButton href="/admin">Admin</ActiveLinkButton> : <LinkButton href="/admin">Admin</LinkButton> : null}
       </Nav>
     )
 }
 
 const StyledConnectButton = styled(StyledButton)`
-  padding: .4rem;
-  font-size: ${props => props.viewLevel < 5 ? '1rem' : '.9rem'};
-  margin-right: ${props => props.viewLevel < 4 ? '1rem' : '0'};
+  padding: .2rem;
+  font-size: 1.1rem;
+  margin-right: 1rem;
   justify-self: flex-end;
+  display: ${props => props.index === 0 ? 'block' : 'none'};
+  @media ${getViewLevel(3)} {
+    font-size: 1rem;
+    margin-right: 0;
+    margin-top: -.8rem;
+    display: ${props => props.index === 0 ? 'none' : 'block'};
+  }
+  @media ${getViewLevel(4)} {
+    margin-top: -1.02rem;
+    font-size: .9rem;
+  }
 `
 
-const ConnectButton = () => {
+const connectButtonAction = (dispatch, status, antStatus, coinStatus, isWrongNet, isConnected, viewLevel) => {
+  if ((status === 'failed') || (antStatus === 'failed') || (coinStatus === 'failed')) window.location.reload()
+  else if (isWrongNet === true) dispatch(changeNet(1))
+  else if (status === 'succeeded' && !isConnected) dispatch(connect())
+  else if (status === 'offline' && viewLevel < 4) window.open("https://chrome.google.com/webstore/search/metamask", "_blank")
+  else if (status === 'offline' && viewLevel > 3) window.open("https://brave.com/download", "_blank")
+}
+
+const ConnectButton = ({ index }) => {
   const status = useSelector(selectStatus)
   const coinStatus = useSelector(selectCoinStatus)
   const antStatus = useSelector(selectAntStatus)
@@ -75,15 +110,11 @@ const ConnectButton = () => {
   const dispatch = useDispatch()
 
   const buttonAction = () => {
-    if ((status === 'failed') || (antStatus === 'failed') || (coinStatus === 'failed')) window.location.reload()
-    else if (isWrongNet === true) dispatch(changeNet(1))
-    else if (status === 'succeeded' && !isConnected) dispatch(connect())
-    else if (status === 'offline' && viewLevel < 4) window.open("https://chrome.google.com/webstore/search/metamask", "_blank")
-    else if (status === 'offline' && viewLevel > 3) window.open("https://brave.com/download", "_blank")
+    connectButtonAction(dispatch, status, antStatus, coinStatus, isWrongNet, isConnected, viewLevel)
   }
 
   return (
-    <StyledConnectButton viewLevel={viewLevel} type="button" onClick={buttonAction}>
+    <StyledConnectButton type="button" onClick={buttonAction} index={index}>
       {
         (status === 'failed') || (antStatus === 'failed') || (coinStatus === 'failed') ? "Reload" :
         isWrongNet ? "Change Network" :
@@ -120,11 +151,6 @@ const StyledOptionsPanel = styled.div`
   border-color: buttonborder;
 `
 
-// const StyledOptionPanelButton = styled.(StyledButton)`
-//   color: #fed600;
-//   font-size: 1.2rem;
-// `
-
 const StickyHeader = styled.header`
   z-index: 2;
   position: sticky;
@@ -142,7 +168,10 @@ const HeaderWrapper = styled.header`
   align-items: center;
   padding: 1rem;
   padding-bottom: 0;
-  grid-template-columns: ${props => props.viewLevel < 4 ? '1fr 10fr 10fr 1fr' : '1fr 12fr 1fr'};
+  grid-template-columns: 1fr 10fr 10fr 1fr;
+  @media ${getViewLevel(3)} {
+    grid-template-columns: 1fr 12fr 1fr;
+  }
 `
 
 const HomeButton = styled.a`
@@ -156,6 +185,9 @@ export const AppView = () => {
   const dispatch = useDispatch()
 
   const status = useSelector(selectStatus)
+  const antStatus = useSelector(selectAntStatus)
+  const coinStatus = useSelector(selectCoinStatus)
+  const isWrongNet = useSelector(selectIsWrongNet)
   const errorMsg = useSelector(selectErr)
   const isConnected = useSelector(selectIsConnected)
   const isAdmin = useSelector(selectIsCoinAdmin)
@@ -186,24 +218,27 @@ export const AppView = () => {
     }
   }
 
+  const altConnect = () => {
+    connectButtonAction(dispatch, status, antStatus, coinStatus, isWrongNet, isConnected, viewLevel)
+  }
+
   return (
     <div>
       <StickyHeader>
-        <HeaderWrapper viewLevel={viewLevel}>
+        <HeaderWrapper>
           <HomeButton href='.' />
           <NavBar />
-          {viewLevel < 4 ? <ConnectButton /> : null}
+          <ConnectButton index={0} />
           <StyledOptions>
             <StyledOptionsButton type='button' onClick={toggleOptions}>...</StyledOptionsButton>
             <StyledOptionsPanel isOpen={isOptionsOpen}>
-              <Text>{viewLevel}</Text>
               {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
               {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
-              {netId === null ? <Text>Please Connect</Text> : null}
+              {netId === null ? <StyledButton onClick={altConnect}>Please Connect</StyledButton> : null}
             </StyledOptionsPanel>
           </StyledOptions>
         </HeaderWrapper>
-        {viewLevel > 3 ? <ConnectButton /> : null}
+        <ConnectButton index={1} />
       </StickyHeader>
       {
         status === 'idle' ? <Text>loading...</Text> :

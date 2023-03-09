@@ -5,6 +5,7 @@ import { selectFounder, selectPrices, selectTotalCount } from "../../redux/slice
 import { Canvas } from "../../styles/general"
 
 import styled from 'styled-components'
+import { getViewLevel } from "../../utils/deviceType"
 
 
 const getImageFileName = (color) => {
@@ -93,6 +94,11 @@ const updateCoinCanvas = ({ ctx, color = -1, amount, id }) => {
 
 export const StyledCoinCanvas = styled(Canvas)`
   display: ${props => props.isDisabled ? 'block' : 'none'};
+  @media ${getViewLevel(4)} {
+    width: 350px;
+    height: 350px;
+    margin-top: 5px;
+  }
 `
 
 export const CoinCanvas = ({ amount }) => {

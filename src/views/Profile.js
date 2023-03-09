@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, StyledButton, Text, Title, Title2, ViewStyle } from '../styles/general'
+import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, Text, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -80,10 +80,6 @@ export const MappedAnts = () => {
 const ProfilePanel = styled(Panel)`
     min-width: 30%;
     padding-bottom: 1.2rem;
-`
-
-const TopMarginBtn = styled(StyledButton)`
-    margin-top: .3rem;
 `
 
 export const Profile = () => {

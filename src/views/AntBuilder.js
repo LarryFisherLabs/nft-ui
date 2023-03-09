@@ -33,20 +33,28 @@ import {
   selectIsCoinAdmin,
 } from "../redux/slices/coinSlice.js";
 import { loadCoinIds } from "../redux/thunks/coinThunk.js";
-import { selectNetId, selectViewLevel } from "../redux/slices/connectSlice.js";
+import { selectNetId } from "../redux/slices/connectSlice.js";
+import { getViewLevel } from "../utils/deviceType.js";
 
 export const Editor = styled.div`
   display: flex;
-  flex-flow: ${props => props.viewLevel < 4 ? 'row' : 'column'};
+  flex-flow: row;
   width: 90%;
   gap: 1rem;
-  align-items: ${props => props.viewLevel < 4 ? 'normal' : 'center'};
+  align-items: normal;
+  @media ${getViewLevel(3)} {
+    flex-flow: column;
+    align-items: center;
+  }
 `;
 
 export const CenteredColumn4Mbl = styled.div`
   display: flex;
   flex-flow: column;
-  align-items: ${props => props.viewLevel < 4 ? 'normal' : 'center'};
+  align-items: normal;
+  @media ${getViewLevel(3)} {
+    align-items: center;
+  }
 `
 
 export const AntBuilder = () => {
@@ -59,7 +67,6 @@ export const AntBuilder = () => {
   const coinErr = useSelector(selectCoinErr);
   const selectedCoinInfo = useSelector(selectDiscountInfo);
   const netId = useSelector(selectNetId);
-  const viewLevel = useSelector(selectViewLevel);
   const [isCoinPanelOpen, toggleCoinPanel] = useState(true);
   const [isFirstCoin, updateIsFirstCoin] = useState(true);
   const [isFirstAnt, updateIsFirstAnt] = useState(true);
@@ -100,16 +107,16 @@ export const AntBuilder = () => {
       {antStatus === "failed" ? (
         <Text>{err}</Text>
       ) : (
-        <Editor viewLevel={viewLevel}>
+        <Editor>
           <AntCanvas />
-          <CenteredColumn4Mbl viewLevel={viewLevel}>
+          <CenteredColumn4Mbl>
             <ButtonsPanel>
               <Title2CrossHair
                 onClick={() => toggleCoinPanel(!isCoinPanelOpen)}
               >
                 {isCoinPanelOpen ? "Coin Discount ∨" : "Coin Discount ∧"}
               </Title2CrossHair>
-              <SectionButtons viewLevel={viewLevel} isOpen={isCoinPanelOpen}>
+              <SectionButtons isOpen={isCoinPanelOpen}>
                 {coinStatus === "succeeded" && coins.length > 0 ? (
                   coins.map((coin, index) => {
                     const srcFile =
@@ -128,7 +135,6 @@ export const AntBuilder = () => {
                         srcFile={srcFile}
                         isSelected={isSelected}
                         isDisabled={coin.isDiscountUsed}
-                        viewLevel={viewLevel}
                       >
                         <Title4>
                           {coin.color === 0
@@ -143,7 +149,7 @@ export const AntBuilder = () => {
                         </Title4>
                         <ButtonBottom>
                           <ToggledRemove isDisabled={isSelected}>
-                            <Text viewLevel={viewLevel}>Remove</Text>
+                            <Text>Remove</Text>
                           </ToggledRemove>
                         </ButtonBottom>
                       </Button>
@@ -152,7 +158,7 @@ export const AntBuilder = () => {
                 ) : coinStatus === "failed" ? (
                   <Text>{coinErr}</Text>
                 ) : (
-                  <Text viewLevel={viewLevel}>
+                  <Text>
                     Buy a coin to get up to a 40% discount on an ant as well as
                     all future collections!
                   </Text>

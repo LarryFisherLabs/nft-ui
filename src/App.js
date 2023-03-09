@@ -6,6 +6,7 @@ import { selectIsConnected, selectStatus, selectViewLevel, updateStatus, updateV
 import { AppView } from './views/AppView'
 
 import styled from 'styled-components'
+import { viewLevelMaxWidth } from './utils/deviceType'
 
 
 export const AppWrapper = styled.div`
@@ -34,7 +35,8 @@ function App() {
 
   useLayoutEffect(() => {
     const viewWidth = window.innerWidth
-    const newViewLevel = viewWidth > 1183 ? 0 : viewWidth > 1034 ? 1 : viewWidth > 937 ? 2 : viewWidth > 847 ? 3 : viewWidth > 647 ? 4 : 5
+    const maxWidths = viewLevelMaxWidth
+    const newViewLevel = viewWidth > maxWidths[0] ? 0 : viewWidth > maxWidths[1] ? 1 : viewWidth > maxWidths[2] ? 2 : viewWidth > maxWidths[3] ? 3 : viewWidth > maxWidths[4] ? 4 : 5
     dispatch(updateViewLevel({ viewLevel: newViewLevel }))
   }, [viewLevel, dispatch])
   

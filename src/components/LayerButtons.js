@@ -5,7 +5,7 @@ import { Title2CrossHair, Title4, Text, SmallText, CanvasPanel } from '../styles
 import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
 
 import styled from 'styled-components'
-import { selectViewLevel } from '../redux/slices/connectSlice.js'
+import { getViewLevel } from '../utils/deviceType.js'
 
 export const Button = styled.div`
     display: flex;
@@ -13,12 +13,28 @@ export const Button = styled.div`
     background-image: url(${props => props.srcFile});
     background-size: contain;
     padding: 5px;
-    width: ${props => props.viewLevel === 0 ? '164px' : props.viewLevel === 1 ? '150px' : props.viewLevel === 2 ? '140px' : props.viewLevel === 3 ? '130px' : '120px'};
-    height: ${props => props.viewLevel === 0 ? '164px' : props.viewLevel === 1 ? '150px' : props.viewLevel === 2 ? '140px' : props.viewLevel === 3 ? '130px' : '120px'};
+    width: 164px;
+    height: 164px;
     border: ${props => props.isSelected ? '5px solid #c76648' : props.isDisabled ? '5px solid rgb(199, 102, 72, .23)' : '1px solid #83f394'};
     align-items: center;
     cursor: pointer;
     justify-content: space-between;
+    @media ${getViewLevel(0)} {
+        width: 150px;
+        height: 150px;
+    }
+    @media ${getViewLevel(1)} {
+        width: 140px;
+        height: 140px;
+    }
+    @media ${getViewLevel(2)} {
+        width: 130px;
+        height: 130px;
+    }
+    @media ${getViewLevel(3)} {
+        width: 120px;
+        height: 120px;
+    }
 `
 
 export const ButtonsPanel = styled(CanvasPanel)`
@@ -31,8 +47,11 @@ export const ButtonsPanel = styled(CanvasPanel)`
 export const SectionButtons = styled.div`
     flex-flow: row wrap;
     display: ${props => props.isOpen ? 'flex' : 'none'};
-    gap: ${props => props.viewLevel < 5 ? '.7rem' : '.2rem'};
+    gap: .7rem;
     justify-content: center;
+    @media ${getViewLevel(3)} {
+        gap: .2rem;
+    }
 `
 
 export const ToggledRemove = styled.div`
@@ -50,7 +69,6 @@ export const LayerButtons = ({ layerIndex }) => {
     const selectedIndexes = useSelector(selectSelectedIndexes)
     const partStocks = useSelector(selectPartStocks)
     const antStatus = useSelector(selectAntStatus)
-    const viewLevel = useSelector(selectViewLevel)
 
     const [isOpen, toggle] = useState(true)
 
@@ -124,20 +142,20 @@ export const LayerButtons = ({ layerIndex }) => {
             <Title2CrossHair onClick={() => toggle(!isOpen)}>
                 {isOpen ? formatFileName(staticLayerInfo[layerIndex].fileName) + " ∨" : formatFileName(staticLayerInfo[layerIndex].fileName) + " ∧"}
             </Title2CrossHair>
-            <SectionButtons viewLevel={viewLevel} isOpen={isOpen}>
+            <SectionButtons isOpen={isOpen}>
                 {staticLayerInfo[layerIndex].elements.map((element, index) => {
                     if (element.name !== 'empty') {
                         const srcFile = `ant/${staticLayerInfo[layerIndex].fileName}/${element.name}.png`
                         const isSelected = selectedIndexes[layerIndex] === index
                         
                         return (
-                            <Button key={index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected} viewLevel={viewLevel}>
+                            <Button key={index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected}>
                                 <Title4>{formatFileName(element.name)}</Title4>
                                 <ButtonBottom>
                                     <ToggledRemove isDisabled={isSelected && (element.rarity > 0)}>
-                                        <Text viewLevel={viewLevel}>Remove</Text>
+                                        <Text>Remove</Text>
                                     </ToggledRemove>
-                                    <SmallText viewLevel={viewLevel}>
+                                    <SmallText>
                                         {
                                             element.rarity === 0 ? "Base" :
                                             element.rarity === 1 ? "Very Common" :
@@ -147,7 +165,7 @@ export const LayerButtons = ({ layerIndex }) => {
                                             "Undefined"
                                         }
                                     </SmallText>
-                                    <SmallText viewLevel={viewLevel}>
+                                    <SmallText>
                                         {partStocks[layerIndex][index] === null ? "Please Connect" : "In stock: " + partStocks[layerIndex][index]}
                                     </SmallText>
                                 </ButtonBottom>
