@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { getViewLevel } from '../utils/deviceType'
 
 // pagelayout
 export const ViewStyle = styled.div`
@@ -11,10 +12,16 @@ export const ViewStyle = styled.div`
 export const Text = styled.div`
     color: #fed600;
     font-size: 1.2rem;
+    @media ${getViewLevel(4)} {
+        font-size: 1rem;
+    }
 `
 
 export const SmallText = styled(Text)`
     font-size: 1rem;
+    @media ${getViewLevel(4)} {
+        font-size: .8rem;
+    }
 `
 
 export const IndentedText = styled(SmallText)`
@@ -53,25 +60,49 @@ export const StyledButton = styled.button`
     align-self: center;
 `
 
+export const TopMarginBtn = styled(StyledButton)`
+    margin-top: .3rem;
+`
+
 export const Canvas = styled.canvas`
     width: 450px;
     height: 450px;
     border: 1px solid #d3d3d3;
     image-rendering: pixelated;
-    position: sticky;
-    top: 85px;
     margin: 15px;
     align-self: center;
 `
 
 export const StyledAntCanvas = styled(Canvas)`
-    position: sticky;
-    top: 10%;
+    @media ${getViewLevel(0)} {
+        width: 355px;
+        height: 355px;
+    }
+    @media ${getViewLevel(1)} {
+        width: 300px;
+        height: 300px;
+    }
+    @media ${getViewLevel(2)} {
+        width: 250px;
+        height: 250px;
+    }
+    @media ${getViewLevel(4)} {
+        width: 220px;
+        height: 220px;
+    }
 `
 
 export const CoinImg = styled.img`
     width: 280px;
     height: 280px;
+    @media ${getViewLevel(3)} {
+        width: 220px;
+        height: 220px;
+    }
+    @media ${getViewLevel(4)} {
+        width: 190px;
+        height: 190px;
+    }
 `
 
 export const AntImg = styled(CoinImg)`
@@ -96,6 +127,9 @@ export const CanvasPanel = styled(Panel)`
     width: fit-content;
     min-width: 600px;
     margin-bottom: 1rem;
+    @media ${getViewLevel(4)} {
+        min-width: fit-content;
+    }
 `
 
 export const TextBlock = styled(Text)`

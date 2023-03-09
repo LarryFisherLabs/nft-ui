@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 
 import { connect } from './redux/thunks/connectThunk'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectIsConnected, selectStatus, updateStatus } from './redux/slices/connectSlice'
+import { selectIsConnected, selectStatus, selectViewLevel, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
 import { AppView } from './views/AppView'
 
 import styled from 'styled-components'
+import { viewLevelMaxWidth } from './utils/deviceType'
 
 
 export const AppWrapper = styled.div`
@@ -18,22 +19,26 @@ function App() {
   const dispatch = useDispatch()
   const status = useSelector(selectStatus)
   const isConnected = useSelector(selectIsConnected)
+  const viewLevel = useSelector(selectViewLevel)
 
   useEffect(() => {
     if (window.ethereum) {
       if (status === 'idle') {
-        window.ethereum.on('accountsChanged', (_account) => {
-          if (isConnected) window.location.reload()
-        })
+        window.ethereum.on('accountsChanged', (_account) => {if (isConnected) window.location.reload()})
         window.ethereum.on("chainChanged", () => window.location.reload())
         dispatch(connect({}))
       }
-    } else {
-      if (status === 'idle') {
-        dispatch(updateStatus({ status: 'offline' }))
-      }
+    } else if (status === 'idle') {
+      dispatch(updateStatus({ status: 'offline' }))
     }
   }, [status, dispatch, isConnected])
+
+  useLayoutEffect(() => {
+    const viewWidth = window.innerWidth
+    const maxWidths = viewLevelMaxWidth
+    const newViewLevel = viewWidth > maxWidths[0] ? 0 : viewWidth > maxWidths[1] ? 1 : viewWidth > maxWidths[2] ? 2 : viewWidth > maxWidths[3] ? 3 : viewWidth > maxWidths[4] ? 4 : 5
+    dispatch(updateViewLevel({ viewLevel: newViewLevel }))
+  }, [viewLevel, dispatch])
   
   return (<AppWrapper><AppView/></AppWrapper>)
 }

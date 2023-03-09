@@ -8,6 +8,7 @@ import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
 import { selectIsConnected, selectStatus } from "../../redux/slices/connectSlice"
+import { getViewLevel } from "../../utils/deviceType"
 
 const updateAntCanvas = (ctx, indexes) => {
     ctx.clearRect(0, 0, 328, 328)
@@ -23,23 +24,34 @@ const updateAntCanvas = (ctx, indexes) => {
 
 
 export const StickyButton = styled(StyledButton)`
-    position: sticky;
-    top: 83%;
-    margin-top: 15px; 
+    margin-top: 5px; 
+    @media ${getViewLevel(3)} {
+        font-size: 1rem;
+    }
 `
 
 
 export const LeftTextBlock = styled(TextBlock)`
     align-self: start;
+    border-radius: 16px;
+    @media ${getViewLevel(3)} {
+        align-self: center;
+        background-color: #901778;
+    }
 `
 
 export const AntCanvasPanel = styled(Panel)`
     display: flex;
     flex-flow: column;
-    min-width: 500px;
     position: sticky;
     height: fit-content;
-    top: 10%;
+    top: 4rem;
+    @media ${getViewLevel(3)} {
+        top: 5.1rem;
+    }
+    @media ${getViewLevel(4)} {
+        top: 4.7rem;
+    }
 `
 const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
 

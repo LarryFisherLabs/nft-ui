@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CanvasPanel, IndentedText, SmallText, StyledButton, StyledInput, Text, TextBlock, Title, Title2, ViewStyle } from '../styles/general'
+import { CanvasPanel, IndentedText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
@@ -92,11 +92,11 @@ export const CoinBuilder = () => {
                             <StyledInput type="number" step=".0001" onChange={onInputChange} />
                             {
                                 coinStatus === 'buying coin' || !isConnected ? null : (
-                                    <StyledButton onClick={sendTransaction}>{
+                                    <TopMarginBtn onClick={sendTransaction}>{
                                         isFounderCoinBuilder ? <SmallText>Buy Founder Coin</SmallText> :
                                         isDiscountedCoinBuilder ? <SmallText>Buy Discount Coin</SmallText> :
                                         <SmallText>Buy Coin</SmallText>
-                                    }</StyledButton>
+                                    }</TopMarginBtn>
                                 )
                             }
                         </CanvasPanel>

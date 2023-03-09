@@ -5,6 +5,7 @@ import { Title2CrossHair, Title4, Text, SmallText, CanvasPanel } from '../styles
 import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
 
 import styled from 'styled-components'
+import { getViewLevel } from '../utils/deviceType.js'
 
 export const Button = styled.div`
     display: flex;
@@ -18,11 +19,27 @@ export const Button = styled.div`
     align-items: center;
     cursor: pointer;
     justify-content: space-between;
+    @media ${getViewLevel(0)} {
+        width: 150px;
+        height: 150px;
+    }
+    @media ${getViewLevel(1)} {
+        width: 140px;
+        height: 140px;
+    }
+    @media ${getViewLevel(2)} {
+        width: 130px;
+        height: 130px;
+    }
+    @media ${getViewLevel(3)} {
+        width: 120px;
+        height: 120px;
+    }
 `
 
 export const ButtonsPanel = styled(CanvasPanel)`
     padding: 0 1.2rem;
-    min-width: 280px;
+    min-width: 100px;
     padding-bottom: 1.2rem;
     max-width: 100%;
 `
@@ -32,6 +49,9 @@ export const SectionButtons = styled.div`
     display: ${props => props.isOpen ? 'flex' : 'none'};
     gap: .7rem;
     justify-content: center;
+    @media ${getViewLevel(3)} {
+        gap: .2rem;
+    }
 `
 
 export const ToggledRemove = styled.div`

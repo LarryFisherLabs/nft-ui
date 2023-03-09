@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, StyledButton, Text, Title, Title2, ViewStyle } from '../styles/general'
+import React, { useEffect } from 'react'
+import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, Text, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -90,21 +90,11 @@ export const Profile = () => {
     const isAdmin = useSelector(selectIsCoinAdmin)
     const antStatus = useSelector(selectAntStatus)
 
-    const [buttonLabel, updateLabel] = useState('Mint Coin')
-
     useEffect(() => {
         if (coinStatus === 'idle' && isAdmin !== null) {
             dispatch(coinsConnect())
-        } else if (coinStatus === 'succeeded') {
-            if (founder.value > 0) {
-                if (!founder.isFCMinted) {
-                    updateLabel('Mint Founder Coin')
-                } else if (!founder.isFCDiscountUsed) {
-                    updateLabel('Mint Discounted Coin')
-                }
-            }
         }
-    }, [coinStatus, dispatch, founder, isAdmin])
+    }, [coinStatus, dispatch, isAdmin])
 
     useEffect(() => {
         if (antStatus === 'idle' && isAdmin !== null) {
@@ -130,12 +120,17 @@ export const Profile = () => {
                 <LeftTitle>Coins</LeftTitle>
                 <MappedCoins />
             </ProfilePanel>
-            <StyledButton onClick={goToCoinBuilder}>{buttonLabel}</StyledButton>
+            <TopMarginBtn onClick={goToCoinBuilder}>{
+                founder.value > 0 ?
+                    !founder.isFCMinted ? 'Mint Founder Coin' :
+                    !founder.isFCDiscountUsed ? 'Mint Discounted Coin' :
+                    'Mint Coin' : 'Mint Coin'
+            }</TopMarginBtn>
             <ProfilePanel>
                 <LeftTitle>Ants</LeftTitle>
                 <MappedAnts />
             </ProfilePanel>
-            <StyledButton onClick={goToAntBuilder}>{'Mint Ant'}</StyledButton>
+            <TopMarginBtn onClick={goToAntBuilder}>Mint Ant</TopMarginBtn>
         </ViewStyle>
     )
 }
