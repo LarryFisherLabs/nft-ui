@@ -132,6 +132,7 @@ const StyledOptions = styled.div`
   flex-flow: column nowrap;
   @media ${getViewLevel(4)} {
     margin-top: -.6rem;
+    margin-right: -.4rem;
   }
 `
 
@@ -184,6 +185,7 @@ const HomeButton = styled.a`
   height: 45px;
   @media ${getViewLevel(4)} {
     margin-top: -.6rem;
+    margin-left: -.4rem;
   }
 `
 
