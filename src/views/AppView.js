@@ -86,7 +86,7 @@ const StyledConnectButton = styled(StyledButton)`
     display: ${props => props.index === 0 ? 'none' : 'block'};
   }
   @media ${getViewLevel(4)} {
-    margin-top: -1.02rem;
+    margin-top: -.8rem;
     font-size: .9rem;
   }
 `
@@ -130,6 +130,9 @@ const ConnectButton = ({ index }) => {
 
 const StyledOptions = styled.div`
   flex-flow: column nowrap;
+  @media ${getViewLevel(4)} {
+    margin-top: -.6rem;
+  }
 `
 
 const StyledOptionsButton = styled(StyledButton)`
@@ -179,6 +182,9 @@ const HomeButton = styled.a`
   background-size: contain;
   width: 45px;
   height: 45px;
+  @media ${getViewLevel(4)} {
+    margin-top: -.6rem;
+  }
 `
 
 export const AppView = () => {
