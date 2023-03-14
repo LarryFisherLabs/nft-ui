@@ -37,7 +37,7 @@ const Nav = styled.div`
     margin-top: -1.1rem;
   }
   @media ${getViewLevel(4)} {
-    margin-top: -1.4rem;
+    margin-top: -1.2rem;
   }
 `
 
@@ -86,7 +86,7 @@ const StyledConnectButton = styled(StyledButton)`
     display: ${props => props.index === 0 ? 'none' : 'block'};
   }
   @media ${getViewLevel(4)} {
-    margin-top: -.7rem;
+    margin-top: -.6rem;
     font-size: .9rem;
   }
 `
