@@ -86,7 +86,7 @@ const StyledConnectButton = styled(StyledButton)`
     display: ${props => props.index === 0 ? 'none' : 'block'};
   }
   @media ${getViewLevel(4)} {
-    margin-top: -.8rem;
+    margin-top: -.7rem;
     font-size: .9rem;
   }
 `
