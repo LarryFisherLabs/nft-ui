@@ -100,8 +100,8 @@ export const CoinImg = styled.img`
         height: 220px;
     }
     @media ${getViewLevel(4)} {
-        width: 190px;
-        height: 190px;
+        width: 170px;
+        height: 170px;
     }
 `
 

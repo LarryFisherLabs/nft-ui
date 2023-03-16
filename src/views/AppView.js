@@ -37,7 +37,7 @@ const Nav = styled.div`
     margin-top: -1.1rem;
   }
   @media ${getViewLevel(4)} {
-    margin-top: -1.4rem;
+    margin-top: -1.2rem;
   }
 `
 
@@ -86,7 +86,7 @@ const StyledConnectButton = styled(StyledButton)`
     display: ${props => props.index === 0 ? 'none' : 'block'};
   }
   @media ${getViewLevel(4)} {
-    margin-top: -1.02rem;
+    margin-top: -.6rem;
     font-size: .9rem;
   }
 `
@@ -130,6 +130,10 @@ const ConnectButton = ({ index }) => {
 
 const StyledOptions = styled.div`
   flex-flow: column nowrap;
+  @media ${getViewLevel(4)} {
+    margin-top: -.6rem;
+    margin-right: -.4rem;
+  }
 `
 
 const StyledOptionsButton = styled(StyledButton)`
@@ -179,6 +183,10 @@ const HomeButton = styled.a`
   background-size: contain;
   width: 45px;
   height: 45px;
+  @media ${getViewLevel(4)} {
+    margin-top: -.6rem;
+    margin-left: -.4rem;
+  }
 `
 
 export const AppView = () => {
