@@ -87,7 +87,7 @@ const StyledConnectButton = styled(StyledButton)`
   }
   @media ${getViewLevel(4)} {
     margin-top: -.6rem;
-    font-size: .9rem;
+    font-size: .85rem;
   }
 `
 
