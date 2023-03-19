@@ -42,6 +42,9 @@ export const ButtonsPanel = styled(CanvasPanel)`
     min-width: 100px;
     padding-bottom: 1.2rem;
     max-width: 100%;
+    @media ${getViewLevel(3)} {
+        margin-bottom: .6rem;
+    }
 `
 
 export const SectionButtons = styled.div`

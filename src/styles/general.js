@@ -11,20 +11,40 @@ export const ViewStyle = styled.div`
 
 export const Text = styled.div`
     color: #fed600;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    @media ${getViewLevel(2)} {
+        font-size: .9rem;
+    }
+    @media ${getViewLevel(3)} {
+        font-size: .8rem;
+    }
     @media ${getViewLevel(4)} {
-        font-size: 1rem;
+        font-size: .7rem;
+    }
+`
+
+export const LargeText = styled.div`
+    color: #fed600;
+    font-size: 1.2rem;
+    @media ${getViewLevel(3)} {
+        font-size: .9rem;
     }
 `
 
 export const SmallText = styled(Text)`
-    font-size: 1rem;
+    font-size: .9rem;
+    @media ${getViewLevel(2)} {
+        font-size: .73rem;
+    }
+    @media ${getViewLevel(3)} {
+        font-size: .65rem;
+    }
     @media ${getViewLevel(4)} {
-        font-size: .8rem;
+        font-size: .57rem;
     }
 `
 
-export const IndentedText = styled(SmallText)`
+export const IndentedText = styled(Text)`
     padding-left: 20%;
 `
 
@@ -47,7 +67,19 @@ export const Title2CrossHair = styled(Title2)`
 `
 
 export const Title4 = styled(Title2)`
-    font-size: 1rem;
+    font-size: .9rem;
+    @media ${getViewLevel(0)} {
+        font-size: .8rem;
+    }
+    @media ${getViewLevel(2)} {
+        font-size: .73rem;
+    }
+    @media ${getViewLevel(3)} {
+        font-size: .65rem;
+    }
+    @media ${getViewLevel(4)} {
+        font-size: .57rem;
+    }
 `
 
 export const StyledButton = styled.button`
@@ -71,6 +103,9 @@ export const Canvas = styled.canvas`
     image-rendering: pixelated;
     margin: 15px;
     align-self: center;
+    @media ${getViewLevel(4)} {
+        margin: 10px;
+    }
 `
 
 export const StyledAntCanvas = styled(Canvas)`

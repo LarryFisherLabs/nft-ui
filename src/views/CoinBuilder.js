@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CanvasPanel, IndentedText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
+import { CanvasPanel, IndentedText, LargeText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
@@ -80,10 +80,10 @@ export const CoinBuilder = () => {
                                         <Text>Get your founder coin for free or add value to it</Text>
                                     </TextBlock>) : (
                                     <TextBlock>
-                                        <Text>Minimum price for bronze coin: {minPrices.bronze || .001} eth</Text>
-                                        <Text>Minimum for silver coin: {minPrices.silver || .002} eth</Text>
-                                        <Text>Minimum for gold coin: {minPrices.gold || .003} eth</Text>
-                                        <Text>Minimum for diamond coin: {minPrices.diamond || .004} eth</Text>
+                                        <LargeText>Minimum price for bronze coin: {minPrices.bronze || .001} eth</LargeText>
+                                        <LargeText>Minimum for silver coin: {minPrices.silver || .002} eth</LargeText>
+                                        <LargeText>Minimum for gold coin: {minPrices.gold || .003} eth</LargeText>
+                                        <LargeText>Minimum for diamond coin: {minPrices.diamond || .004} eth</LargeText>
                                     </TextBlock>
                                 )
                             }

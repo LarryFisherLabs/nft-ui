@@ -45,6 +45,7 @@ export const Editor = styled.div`
   @media ${getViewLevel(3)} {
     flex-flow: column;
     align-items: center;
+    gap: .6rem;
   }
 `;
 

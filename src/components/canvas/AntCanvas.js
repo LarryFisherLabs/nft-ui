@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { selectAntStatus, selectRarityPrices, selectSelectedIndexes } from "../../redux/slices/antSlice"
 import { buyAntThunk } from "../../redux/thunks/antThunks"
 import { Panel, StyledAntCanvas, StyledButton, TextBlock } from "../../styles/general"
@@ -59,7 +59,7 @@ export const AntCanvas = () => {
     const dispatch = useDispatch()
     const connectStatus = useSelector(selectStatus)
     const isConnected = useSelector(selectIsConnected)
-    const selectedIndexes = useSelector(selectSelectedIndexes)
+    const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
     const antStatus = useSelector(selectAntStatus)
     const pricesFromState = useSelector(selectRarityPrices)
     const canvas = useRef()
@@ -69,7 +69,7 @@ export const AntCanvas = () => {
 
     useEffect(() => {
         const ctx = canvas.current.getContext('2d')
-        if ((connectStatus === 'succeeded' && !isConnected) || (connectStatus === 'succeeded' && isFirstLoad) || antStatus === 'succeeded' || connectStatus === "offline") updateAntCanvas(ctx, selectedIndexes)
+        if (connectStatus === 'succeeded' || connectStatus === "offline") updateAntCanvas(ctx, selectedIndexes)
         if (connectStatus === 'succeeded' && isFirstLoad) toggleIsFirstLoad(false)
         if (pricesFromState[0] !== null && pricesFromState[0] !== prices[0]) updatePrices([...pricesFromState])
         if (antStatus !== 'Buying ant...') {
