@@ -82,9 +82,9 @@ export const loadCoinIds = createAsyncThunk(
 // get coins and founder deets
 export const coinsConnect = createAsyncThunk(
     'coinSlice/coinsConnect', 
-    async (_, { dispatch, getState }) => {
+    async (remoteAddress, { dispatch, getState }) => {
         try {
-            const account = getState().connectSlice.account
+            const account = remoteAddress || getState().connectSlice.account
             const coinIds = await _getCoinIds(account)
             const founder = await _getFounder(account)
 

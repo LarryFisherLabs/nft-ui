@@ -8,6 +8,7 @@ import { coinsConnect } from '../redux/thunks/coinThunk'
 import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../redux/slices/antSlice'
 import { getAntIds } from '../redux/thunks/antThunks'
 import { selectNetId } from '../redux/slices/connectSlice'
+import { goToNftView } from '../utils/redirect'
 
 export const MappedCoins = () => {
     const coinStatus = useSelector(selectCoinStatus)
@@ -26,7 +27,7 @@ export const MappedCoins = () => {
                     coins.map((coin, i) => {
                         const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + coin.id
                         return (
-                            <CoinImg src={imgSrc} key={i} />
+                            <CoinImg onClick={() => goToNftView('coin', coin.id)} src={imgSrc} key={i} />
                         )
                     })
                 }</NftGrid>
@@ -60,7 +61,7 @@ export const MappedAnts = () => {
             return (<NftGrid>{antIds.map((antId, i) => {
                 const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/ants/images/' + antId
                 return (
-                    <AntImg src={imgSrc} key={i} />
+                    <AntImg onClick={() => goToNftView('ant', antId)} src={imgSrc} key={i} />
                 )
             })}</NftGrid>)
         }
@@ -77,13 +78,12 @@ export const MappedAnts = () => {
     }
 }
 
-const ProfilePanel = styled(Panel)`
-    min-width: 30%;
+export const ProfilePanel = styled(Panel)`
+    min-width: 11rem;
     padding-bottom: 1.2rem;
 `
 
-export const Profile = () => {
-
+export const Profile = ({ remoteAddress = null }) => {
     const dispatch = useDispatch()
     const coinStatus = useSelector(selectCoinStatus)
     const founder = useSelector(selectFounder)
@@ -92,15 +92,15 @@ export const Profile = () => {
 
     useEffect(() => {
         if (coinStatus === 'idle' && isAdmin !== null) {
-            dispatch(coinsConnect())
+            dispatch(coinsConnect(remoteAddress))
         }
-    }, [coinStatus, dispatch, isAdmin])
+    }, [coinStatus, dispatch, isAdmin, remoteAddress])
 
     useEffect(() => {
         if (antStatus === 'idle' && isAdmin !== null) {
-            dispatch(getAntIds())
+            dispatch(getAntIds(remoteAddress))
         }
-    }, [antStatus, dispatch, isAdmin])
+    }, [antStatus, dispatch, isAdmin, remoteAddress])
 
     const goToCoinBuilder = () => {
         window.location = '/coin-builder'
@@ -115,22 +115,29 @@ export const Profile = () => {
             <Title>
                 Arcade Profile
             </Title>
-            <Title2>Welcome</Title2>
+            <Title2>{remoteAddress || "Welcome"}</Title2>
             <ProfilePanel>
                 <LeftTitle>Coins</LeftTitle>
                 <MappedCoins />
             </ProfilePanel>
-            <TopMarginBtn onClick={goToCoinBuilder}>{
-                founder.value > 0 ?
-                    !founder.isFCMinted ? 'Mint Founder Coin' :
-                    !founder.isFCDiscountUsed ? 'Mint Discounted Coin' :
-                    'Mint Coin' : 'Mint Coin'
-            }</TopMarginBtn>
+            {
+                remoteAddress === null ?
+                    <TopMarginBtn onClick={goToCoinBuilder}>{
+                        founder.value > 0 ?
+                            !founder.isFCMinted ? 'Mint Founder Coin' :
+                            !founder.isFCDiscountUsed ? 'Mint Discounted Coin' :
+                            'Mint Coin' : 'Mint Coin'
+                    }</TopMarginBtn> :
+                    null
+            }
+            
             <ProfilePanel>
                 <LeftTitle>Ants</LeftTitle>
                 <MappedAnts />
             </ProfilePanel>
-            <TopMarginBtn onClick={goToAntBuilder}>Mint Ant</TopMarginBtn>
+            {
+                remoteAddress === null ? <TopMarginBtn onClick={goToAntBuilder}>Mint Ant</TopMarginBtn> : null
+            }
         </ViewStyle>
     )
 }
