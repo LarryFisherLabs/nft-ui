@@ -21,6 +21,28 @@ export const Text = styled.div`
     @media ${getViewLevel(4)} {
         font-size: .7rem;
     }
+    @media ${getViewLevel(5)} {
+        font-size: .68rem;
+    }
+`
+
+export const TextLink = styled.a`
+    text-underline-position: below;
+    margin-left: .3rem;
+    color: #fed600;
+    font-size: 1.1rem;
+    @media ${getViewLevel(2)} {
+        font-size: .9rem;
+    }
+    @media ${getViewLevel(3)} {
+        font-size: .8rem;
+    }
+    @media ${getViewLevel(4)} {
+        font-size: .7rem;
+    }
+    @media ${getViewLevel(5)} {
+        font-size: .68rem;
+    }
 `
 
 export const LargeText = styled.div`
@@ -28,6 +50,9 @@ export const LargeText = styled.div`
     font-size: 1.2rem;
     @media ${getViewLevel(3)} {
         font-size: .9rem;
+    }
+    @media ${getViewLevel(5)} {
+        font-size: .83rem;
     }
 `
 
@@ -86,10 +111,16 @@ export const StyledButton = styled.button`
     border-radius: 16px;
     background-color: #c397e1;
     color: #fed600;
-    padding: .5rem;
+    padding: .3rem;
     font-size: 1rem;
     cursor: pointer;
     align-self: center;
+`
+
+export const ThinStyledButton = styled(StyledButton)`
+    padding: .12rem;
+    font-size: .9rem;
+    border-radius: 0% 16px 16px 0%;
 `
 
 export const TopMarginBtn = styled(StyledButton)`
@@ -130,17 +161,45 @@ export const StyledAntCanvas = styled(Canvas)`
 export const CoinImg = styled.img`
     width: 280px;
     height: 280px;
+    cursor: pointer;
     @media ${getViewLevel(3)} {
         width: 220px;
         height: 220px;
     }
     @media ${getViewLevel(4)} {
-        width: 170px;
-        height: 170px;
+        width: 160px;
+        height: 160px;
+    }
+    @media ${getViewLevel(5)} {
+        width: 140px;
+        height: 140px;
     }
 `
 
 export const AntImg = styled(CoinImg)`
+    image-rendering: pixelated;
+    border-radius: 16px;
+`
+
+export const LargeCoinImg = styled.img`
+    width: 550px;
+    height: 550px;
+    @media ${getViewLevel(3)} {
+        width: 520px;
+        height: 520px;
+    }
+    @media ${getViewLevel(4)} {
+        width: 420px;
+        height: 420px;
+    }
+    @media ${getViewLevel(5)} {
+        width: 350px;
+        height: 350px;
+    }
+`
+
+export const LargeAntImg = styled(LargeCoinImg)`
+    padding-bottom: .3rem;
     image-rendering: pixelated;
     border-radius: 16px;
 `
@@ -183,4 +242,15 @@ export const NftGrid = styled.div`
 export const StyledInput = styled.input`
     align-self: center;
     margin-top: 8px;
+    background: transparent;
+    border-radius: 16px;
+`
+
+export const InputWithFlatSide = styled(StyledInput)`
+    padding-top: .1rem;
+    padding-bottom: .1rem;
+    border-radius: 16px 0% 0% 16px;
+    max-width: 5rem;
+    text-align: center;
+    padding-left: .18rem;
 `

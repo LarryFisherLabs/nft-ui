@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Profile } from './Profile'
@@ -15,6 +15,10 @@ import styled from 'styled-components'
 import { changeNet, connect } from '../redux/thunks/connectThunk'
 import { selectAntStatus } from '../redux/slices/antSlice'
 import { getViewLevel } from '../utils/deviceType'
+import { NftView } from './NftView'
+import { useOffElementClickListener } from '../utils/hooks/hooks-general'
+import { isAddress } from 'ethers/lib/utils'
+import { NftCollection } from './NftCollection'
 
 const Nav = styled.div`
   margin-left: 2rem;
@@ -129,6 +133,7 @@ const ConnectButton = ({ index }) => {
 }
 
 const StyledOptions = styled.div`
+  justify-self: flex-end;
   flex-flow: column nowrap;
   @media ${getViewLevel(4)} {
     margin-top: -.6rem;
@@ -137,12 +142,13 @@ const StyledOptions = styled.div`
 `
 
 const StyledOptionsButton = styled(StyledButton)`
+  padding: .5rem;
   background-color: #946cb0;
   min-width: 45px;
 `
 
 const StyledOptionsPanel = styled.div`
-  margin-left: -6rem;
+  margin-left: ${props => props.netId === 0 ? -5.8 : -6.3}rem;
   display: ${props => props.isOpen ? 'flex' : 'none'};
   flex-flow: column nowrap;
   z-index: 2;
@@ -179,7 +185,7 @@ const HeaderWrapper = styled.header`
 `
 
 const HomeButton = styled.a`
-  background-image: url('logo.png');
+  background-image: url('/logo.png');
   background-size: contain;
   width: 45px;
   height: 45px;
@@ -187,6 +193,13 @@ const HomeButton = styled.a`
     margin-top: -.6rem;
     margin-left: -.4rem;
   }
+`
+
+const ButtonsRow = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  width: fit-content;
+  align-self: center;
 `
 
 export const AppView = () => {
@@ -204,9 +217,14 @@ export const AppView = () => {
 
   const [isOptionsOpen, updateIsOptionsOpen] = useState(false)
 
+  const optionsPanelRef = useRef()
+  const optionsToggleRef = useRef()
+
   useEffect(() => {
     if (status === 'succeeded' && isConnected && isAdmin === null) dispatch(loadCoinAdmin())
   }, [status, dispatch, isConnected, isAdmin])
+
+  useOffElementClickListener([optionsPanelRef, optionsToggleRef], isOptionsOpen, updateIsOptionsOpen)
 
   const toggleOptions = () => {
     updateIsOptionsOpen(!isOptionsOpen)
@@ -230,19 +248,55 @@ export const AppView = () => {
     connectButtonAction(dispatch, status, antStatus, coinStatus, isWrongNet, isConnected, viewLevel)
   }
 
+  const isFormattedNftViewUrl = () => {
+    const splitPath = window.location.pathname.split('/')
+    const isCoinUrl = splitPath[1] === 'coin'
+    if (splitPath.length === 3 || (splitPath.length === 4 && splitPath[3] === '')) {
+      const nftId = parseFloat(splitPath[2])
+      const isIdInt = Number.isInteger(nftId)
+      const isFormatted = (isCoinUrl || splitPath[1] === 'ant')
+      const isInRange = isCoinUrl ? 0 <= nftId && nftId <= 2999 : 0 <= nftId && nftId <= 9999
+      if (isFormatted && isInRange && isIdInt) return !isNaN(splitPath[2]) && splitPath[2] !== ''
+    }
+    return false
+  }
+
+  const isFormattedRemoteProfile = () => {
+    const splitPath = window.location.pathname.split('/')
+    if (splitPath.length === 2 || (splitPath.length === 3 && splitPath[2] === '')) return isAddress(splitPath[1])
+    return false
+  }
+
+  const isFormattedCollectionView = () => {
+    const splitPath = window.location.pathname.split('/')
+    const isCoinUrl = splitPath[1] === 'coins'
+    if (splitPath.length === 3 || (splitPath.length === 4 && splitPath[3] === '')) {
+      const pageId = parseFloat(splitPath[2])
+      const isPageIdInt = Number.isInteger(pageId)
+      const isFormatted = (isCoinUrl || splitPath[1] === 'ants')
+      const isInRange = isCoinUrl ? 1 <= pageId && pageId <= 300 : 1 <= pageId && pageId <= 1000
+      if (isFormatted && isInRange && isPageIdInt) return !isNaN(splitPath[2]) && splitPath[2] !== ''
+    }
+    return false
+  }
+
   return (
     <div>
       <StickyHeader>
         <HeaderWrapper>
-          <HomeButton href='.' />
+          <HomeButton href='/' />
           <NavBar />
           <ConnectButton index={0} />
           <StyledOptions>
-            <StyledOptionsButton type='button' onClick={toggleOptions}>...</StyledOptionsButton>
-            <StyledOptionsPanel isOpen={isOptionsOpen}>
+            <StyledOptionsButton ref={optionsToggleRef} type='button' onClick={toggleOptions}>...</StyledOptionsButton>
+            <StyledOptionsPanel isOpen={isOptionsOpen} netId={netId} id={'options-panel'} ref={optionsPanelRef}>
               {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
               {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
               {netId === null ? <StyledButton onClick={altConnect}>Please Connect</StyledButton> : null}
+              <ButtonsRow>
+                <StyledButton onClick={() => window.location = "/coins/1"}>Coins</StyledButton>
+                <StyledButton onClick={() => window.location = "/ants/1"}>Ants</StyledButton>
+              </ButtonsRow>
             </StyledOptionsPanel>
           </StyledOptions>
         </HeaderWrapper>
@@ -255,6 +309,9 @@ export const AppView = () => {
           window.location.pathname === '/' ? <Profile /> :
           window.location.pathname === '/coin-builder' ? <CoinBuilder /> :
           window.location.pathname === '/ant-builder' ? <AntBuilder /> :
+          isFormattedCollectionView() ? <NftCollection /> :
+          isFormattedNftViewUrl() ? <NftView /> :
+          isFormattedRemoteProfile() ? <Profile remoteAddress={window.location.pathname.split('/')[1]} /> :
           (window.location.pathname === '/admin') && isAdmin ? <AdminPage /> :
           <p>Out of bounds!</p> :
         <Text>{status}</Text>

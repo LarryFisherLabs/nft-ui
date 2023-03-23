@@ -81,7 +81,7 @@ export const AntCanvas = () => {
             })
             updatePrice((price + parseFloat(prices[0]) * 1100000) / 100000)
         }
-    }, [connectStatus, antStatus, selectedIndexes, isConnected, isFirstLoad, prices, pricesFromState])
+    }, [connectStatus, antStatus, selectedIndexes, isConnected, isFirstLoad, prices, pricesFromState, canvas])
 
     const buyAnt = () => {
         dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))

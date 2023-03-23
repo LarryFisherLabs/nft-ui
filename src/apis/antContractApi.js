@@ -77,3 +77,8 @@ export const antBaseURI = async () => {
     const antContract = await getAntContract()
     return await antContract.baseURI()
 }
+
+export const changeName = async (id, newName) => {
+    const antContract = await getAntContract()
+    return await antContract.changeName(id, newName)
+}
