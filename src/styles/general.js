@@ -85,6 +85,12 @@ export const LeftTitle = styled(Title)`
 export const Title2 = styled(Title)`
     font-size: 1.5rem;
     font-weight: 100;
+    @media ${getViewLevel(3)} {
+        font-size: 1.2rem;
+    }
+    @media ${getViewLevel(5)} {
+        font-size: .9rem;
+    }
 `
 
 export const Title2CrossHair = styled(Title2)`
