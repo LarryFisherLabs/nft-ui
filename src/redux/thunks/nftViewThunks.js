@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { antOwnerOf, changeName, getAnt, getCount, isDiscountUsed } from "../../apis/antContractApi";
 import { getCounters, ownerOf } from "../../apis/coinContractApi";
+import { getNftCount, getNftOwner } from "../../apis/coinDbApi";
 import { updateAntName, updateIsAntDiscountAvailable, updateIsOwnedByUser, updateNftViewErr, updateTotalNftCount } from "../slices/nftViewSlice";
 
 // nftType:
@@ -9,9 +10,10 @@ import { updateAntName, updateIsAntDiscountAvailable, updateIsOwnedByUser, updat
 
 export const loadNftCount = createAsyncThunk(
   "nftViewSlice/loadNftCount",
-  async (nftType, { dispatch }) => {
+  async (nftType, { dispatch, getState }) => {
     try {
-      const counter = nftType === 0 ? (await getCounters())[0] : await getCount()
+      const address = getState().connectSlice.account
+      const counter = address === null ? await getNftCount(getState().connectSlice.netId, nftType) : nftType === 0 ? (await getCounters())[0] : await getCount()
       dispatch(updateTotalNftCount({ totalNftCount: counter }))
     } catch (err) {
       dispatch(updateNftViewErr({ nftViewErr: err.message }))
@@ -24,7 +26,7 @@ export const loadNftInfo = createAsyncThunk(
   async ({ nftType, nftIndex }, { dispatch, getState }) => {
     try {
       const user = getState().connectSlice.account;
-      const owner = nftType === 0 ? await ownerOf(nftIndex) : await antOwnerOf(nftIndex);
+      const owner = user === null ? await getNftOwner(getState().connectSlice.netId, nftIndex, nftType) : nftType === 0 ? await ownerOf(nftIndex) : await antOwnerOf(nftIndex);
       dispatch(updateIsOwnedByUser({ isOwnedByUser: user === owner.toLowerCase(), owner: owner.toLowerCase() }))
       if (nftType === 0) {
         const isAntDiscountUsed = await isDiscountUsed(nftIndex)

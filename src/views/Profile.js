@@ -8,7 +8,7 @@ import { coinsConnect } from '../redux/thunks/coinThunk'
 import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../redux/slices/antSlice'
 import { getAntIds } from '../redux/thunks/antThunks'
 import { selectNetId } from '../redux/slices/connectSlice'
-import { goToNftView } from '../utils/redirect'
+import { goTo, goToNftView } from '../utils/redirect'
 
 export const MappedCoins = () => {
     const coinStatus = useSelector(selectCoinStatus)
@@ -102,14 +102,6 @@ export const Profile = ({ remoteAddress = null }) => {
         }
     }, [antStatus, dispatch, isAdmin, remoteAddress])
 
-    const goToCoinBuilder = () => {
-        window.location = '/coin-builder'
-    }
-
-    const goToAntBuilder = () => {
-        window.location = '/ant-builder'
-    }
-
     return (
         <ViewStyle>
             <Title>
@@ -122,7 +114,7 @@ export const Profile = ({ remoteAddress = null }) => {
             </ProfilePanel>
             {
                 remoteAddress === null ?
-                    <TopMarginBtn onClick={goToCoinBuilder}>{
+                    <TopMarginBtn onClick={() => goTo('/coin-builder')}>{
                         founder.value > 0 ?
                             !founder.isFCMinted ? 'Mint Founder Coin' :
                             !founder.isFCDiscountUsed ? 'Mint Discounted Coin' :
@@ -136,7 +128,7 @@ export const Profile = ({ remoteAddress = null }) => {
                 <MappedAnts />
             </ProfilePanel>
             {
-                remoteAddress === null ? <TopMarginBtn onClick={goToAntBuilder}>Mint Ant</TopMarginBtn> : null
+                remoteAddress === null ? <TopMarginBtn onClick={() => {goTo('/ant-builder')}}>Mint Ant</TopMarginBtn> : null
             }
         </ViewStyle>
     )

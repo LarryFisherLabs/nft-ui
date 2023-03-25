@@ -23,6 +23,9 @@ export const connectSlice = createSlice({
     updateViewLevel: (state, action) => {
       state.viewLevel = action.payload.viewLevel
     },
+    updateNetId: (state, action) => {
+      state.netId = action.payload.netId
+    },
     error: (state, action) => {
       state.status = 'failed'
       state.errMsg = "Error: " + action.payload.error
@@ -34,35 +37,33 @@ export const connectSlice = createSlice({
         state.status = 'loading connection...'
       })
       .addCase(connect.fulfilled, (state, action) => {
-        if (action.payload) {
-          if (action.payload.status === 'failed') {
-            if (action.payload.error === "Check Network") {
-              state.status = 'succeeded'
-              state.isConnected = false
-              state.isWrongNet = true
-            } else if (action.payload.error === "User rejected the request.") {
-              state.status = "succeeded"
-              state.isConnected = false
-            } else {
-              state.status = 'failed'
-              state.errMsg = "Error: " + action.payload.error
-            }
-          } else if (action.payload.account) {
-            state.status = 'succeeded'
-            state.isConnected = true
-            state.account = action.payload.account
-            state.netId = action.payload.netId
-          } 
+        if (action.payload.status === 'failed') {
+          if (action.payload.error === "User rejected the request.") {
+            state.status = "succeeded"
+            state.isConnected = false
+          } else {
+            state.status = 'failed'
+            state.errMsg = "Error: " + action.payload.error
+          }
+        } else if (action.payload.account) {
+          state.status = 'succeeded'
+          state.isConnected = true
+          state.account = action.payload.account
+          state.netId = action.payload.netId
+        } else if (action.payload.isWrongNet) {
+          state.status = 'succeeded'
+          state.isWrongNet = true
+          state.netId = 1
         } else {
-          // wait for connect button
-          state.status = "succeeded"
+          state.status = 'succeeded'
+          state.netId = action.payload.netId
           state.isConnected = false
         }
       })
   },
 })
 
-export const { updateStatus, updateViewLevel, error } = connectSlice.actions
+export const { updateStatus, updateViewLevel, updateNetId, error } = connectSlice.actions
 export default connectSlice.reducer
 
 export const selectStatus = state => state.connectSlice.status
