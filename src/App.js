@@ -2,14 +2,15 @@ import React, { useEffect, useLayoutEffect } from 'react'
 
 import { connect } from './redux/thunks/connectThunk'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectIsConnected, selectStatus, selectViewLevel, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
+import { selectIsConnected, selectStatus, selectViewLevel, updateNetId, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
 import { AppView } from './views/AppView'
 
 import styled from 'styled-components'
 import { viewLevelMaxWidth } from './utils/deviceType'
+import { getUrlParam } from './utils/url-utils/getUrlParam'
 
 
-export const AppWrapper = styled.div`
+const AppWrapper = styled.div`
   background-image: linear-gradient(rgb(197,180,227), rgb(77, 143, 234) 900px, rgb(151, 17, 17) 1800px, rgb(214, 118, 0) 2700px, rgb(151, 17, 17) 3600px, rgb(77, 143, 234) 4500px, rgb(197, 180, 227) 5400px, rgb(77, 143, 234) 6300px, rgb(151, 17, 17) 7200px, rgb(214, 118, 0) 8100px);
   background-size: cover;
   min-height: 100vh;
@@ -29,7 +30,12 @@ function App() {
         dispatch(connect({}))
       }
     } else if (status === 'idle') {
-      dispatch(updateStatus({ status: 'offline' }))
+      const passedNetId = getUrlParam('netId', true)
+      if (passedNetId !== 0 && passedNetId !== 1) window.location = window.location.pathname + '?netId=1'
+      else {
+        dispatch(updateStatus({ status: 'offline' }))
+        dispatch(updateNetId({ netId: passedNetId }))
+      }
     }
   }, [status, dispatch, isConnected])
 

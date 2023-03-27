@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { buyCoin, coinsConnect, loadBuilder, loadCoinIds } from '../thunks/coinThunk'
+import { buyCoin, coinsConnect, loadBuilder, loadCoinIdsOffline, loadCoinsForAntBuilder } from '../thunks/coinThunk'
 
 const initialState = {
   coinStatus: 'idle',
@@ -105,10 +105,18 @@ export const coinSlice = createSlice({
           state.prices = action.payload.prices
         }
       })
-      .addCase(loadCoinIds.pending, state => {
+      .addCase(loadCoinsForAntBuilder.pending, state => {
         state.coinStatus = 'Loading coins...'
       })
-      .addCase(loadCoinIds.fulfilled, (state, action) => {
+      .addCase(loadCoinsForAntBuilder.fulfilled, (state, action) => {
+        if (state.coinStatus !== 'failed') {
+          state.coinStatus = 'succeeded'
+        }
+      })
+      .addCase(loadCoinIdsOffline.pending, state => {
+        state.coinStatus = 'Loading coins...'
+      })
+      .addCase(loadCoinIdsOffline.fulfilled, (state, action) => {
         if (state.coinStatus !== 'failed') {
           state.coinStatus = 'succeeded'
         }

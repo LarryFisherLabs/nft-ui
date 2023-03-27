@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { NumberedPageNav } from "../components/NumberedPageNav"
 import { selectNetId, selectStatus } from "../redux/slices/connectSlice"
-import { selectAntName, selectIsAntDiscountAvailable, selectIsOwnedByUser, selectNftOwner, selectNftViewErr, selectTotalNftCount } from "../redux/slices/nftViewSlice"
+import { selectAntDiscountString, selectAntName, selectIsOwnedByUser, selectNftOwner, selectNftViewErr, selectTotalNftCount } from "../redux/slices/nftViewSlice"
 import { changeAntName, loadNftCount, loadNftInfo } from "../redux/thunks/nftViewThunks"
 import { CanvasPanel, InputWithFlatSide, LargeAntImg, LargeCoinImg, Text, TextLink, ThinStyledButton, Title, ViewStyle } from "../styles/general"
 import { getViewLevel } from "../utils/deviceType"
+import { getHref } from "../utils/redirect"
 
 const NftPanel = styled(CanvasPanel)`
     align-items: center;
@@ -27,6 +28,10 @@ const TextRow = styled.div`
     margin-bottom: .2rem;
 `
 
+const TextLeadingSpace = styled(Text)`
+    margin-left: .3rem;
+`
+
 // nftType
 // 0 - coins
 // 1 - ants
@@ -37,7 +42,7 @@ export const NftView = () => {
     const status = useSelector(selectStatus)
     const antName = useSelector(selectAntName)
     const isOwnedByUser = useSelector(selectIsOwnedByUser)
-    const isAntDiscountAvailable = useSelector(selectIsAntDiscountAvailable)
+    const antDiscountString = useSelector(selectAntDiscountString)
     const nftViewErr = useSelector(selectNftViewErr)
     const netId = useSelector(selectNetId)
     const nftOwner = useSelector(selectNftOwner)
@@ -54,13 +59,14 @@ export const NftView = () => {
     }
 
     const getOwnerHref = () => {
-        return isOwnedByUser ? '/' : '/' + nftOwner
+        const fullPath = isOwnedByUser ? '/' : '/' + nftOwner
+        return getHref(fullPath)
     }
 
     useEffect(() => {
-        if (nftViewErr === null && status === 'succeeded' && totalNftCount === null) {
+        if (nftViewErr === null && (status === 'succeeded' || status === 'offline') && totalNftCount === null) {
             dispatch(loadNftCount(nftType))
-        } else if (nftViewErr === null && status === 'succeeded' && isOwnedByUser === null && totalNftCount !== null && nftIndex < totalNftCount) {
+        } else if (nftViewErr === null && (status === 'succeeded' || status === 'offline') && isOwnedByUser === null && nftIndex < totalNftCount) {
             dispatch(loadNftInfo({ nftType: nftType, nftIndex: nftIndex }))
         }
     }, [nftViewErr, status, isOwnedByUser, dispatch, nftIndex, nftType, totalNftCount])
@@ -73,10 +79,17 @@ export const NftView = () => {
                 (nftIndex >= totalNftCount) && (totalNftCount !== null) ? <Text>NFT has not been minted yet</Text> :
                 [
                     <NftPanel key={'panel'}>
-                        {
-                            nftType === 0 ? <Title>Coin #{nftIndex}</Title> : <Title>{antName}</Title>
-                        }
-                        <TextRow><Text>{"Owner:"}</Text><TextLink href={getOwnerHref()}><u>{isOwnedByUser ? "You" : nftOwner}</u></TextLink></TextRow>
+                        <Title>
+                            {nftType === 0 ? 'Coin #' + nftIndex : antName !== null ? antName : 'Loading...'}
+                        </Title>
+                        <TextRow>
+                            <Text>{"Owner:"}</Text>
+                            {
+                                isOwnedByUser === null ? 
+                                    <TextLeadingSpace>{"Loading..."}</TextLeadingSpace> :
+                                    <TextLink href={getOwnerHref()}><u>{isOwnedByUser ? "You" : nftOwner}</u></TextLink>
+                            }
+                        </TextRow>
                         {
                             nftType === 0 ? 
                                 <LargeCoinImg src={'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + nftIndex} /> :                                    
@@ -84,7 +97,7 @@ export const NftView = () => {
                         }
                         {
                             nftType === 0 ? 
-                                <Text>Ant Discount: {isAntDiscountAvailable ? "available" : isAntDiscountAvailable === null ? "loading..." : "used"}</Text> :
+                                <Text>Ant Discount: {antDiscountString === null ? "loading..." : antDiscountString}</Text> :
                             isOwnedByUser ? (
                                 <div>
                                     <InputWithFlatSide onChange={onInputChange} />

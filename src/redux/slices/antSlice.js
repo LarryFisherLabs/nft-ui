@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { layerInfo } from '../../utils/ant-utils/antInfo'
 import { staticLayerInfo } from '../../utils/ant-utils/staticAntInfo'
-import { buyAntThunk, getAntIds, getAntPrices, getPartInventories } from '../thunks/antThunks'
+import { buyAntThunk, getAntIds, getAntPrices, getPartInventories, loadAntIdsOffline } from '../thunks/antThunks'
 
 const initialState = {
   antStatus: 'idle',
@@ -73,6 +73,12 @@ export const antSlice = createSlice({
       })
       .addCase(buyAntThunk.fulfilled, state => {
         if (state.antStatus === 'Buying ant...') state.antStatus = 'succeeded'
+      })
+      .addCase(loadAntIdsOffline.pending, state => {
+        state.antStatus = 'Loading ants...'
+      })
+      .addCase(loadAntIdsOffline.fulfilled, state => {
+        if (state.antStatus === 'Loading ants...') state.antStatus = 'succeeded'
       })
   }
 })

@@ -32,7 +32,7 @@ import {
   selectCoinStatus,
   selectIsCoinAdmin,
 } from "../redux/slices/coinSlice.js";
-import { loadCoinIds } from "../redux/thunks/coinThunk.js";
+import { loadCoinsForAntBuilder } from "../redux/thunks/coinThunk.js";
 import { selectNetId } from "../redux/slices/connectSlice.js";
 import { getViewLevel } from "../utils/deviceType.js";
 
@@ -97,7 +97,7 @@ export const AntBuilder = () => {
 
   useEffect(() => {
     if (coinStatus === "idle" && isAdmin !== null && isFirstCoin) {
-      dispatch(loadCoinIds());
+      dispatch(loadCoinsForAntBuilder());
       updateIsFirstCoin(false);
     }
   }, [isAdmin, dispatch, coinStatus, isFirstCoin]);

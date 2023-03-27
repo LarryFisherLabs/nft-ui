@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 import { getProvider } from "../../utils/ethers-utils";
-import { error } from "../slices/connectSlice";
+import { error, updateNetId } from "../slices/connectSlice";
 
 // !!! network ids !!!
 // 0 sepolia
@@ -32,12 +32,12 @@ export const connect = createAsyncThunk(
       const accs = await window.ethereum.request({ method: "eth_accounts" })
       const network = await provider.getNetwork()
       const netId = network.chainId === expectedChainId[0] ? 0 : network.chainId === expectedChainId[1] ? 1 : null
-      if (network.chainId !== expectedChainId[0] && network.chainId !== expectedChainId[1]) throw new Error("Check Network")
-      if (accs[0]) return { account: accs[0], netId: netId }
-      if (isConnected === false) {
+      if (netId === null) return { isWrongNet: true }
+      else if (accs[0]) return { account: accs[0], netId: netId }
+      else if (isConnected === false) {
         const accounts = await provider.send("eth_requestAccounts", []);
-        return { account: accounts[0] }
-      }
+        return { account: accounts[0], netId: netId }
+      } else return { netId: netId }
     } catch (err) {
       return {
         status: "failed",
@@ -49,30 +49,29 @@ export const connect = createAsyncThunk(
 
 export const changeNet = createAsyncThunk(
   "connectSlice/changeNet",
-  async (netId, { dispatch }) => {
+  async (netId, { dispatch, getState }) => {
     try {
-      const chainId = netId === 0 ? ethers.utils.hexlify(expectedChainId[netId]) : '0x5'
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: chainId }]
-      });
+      const status = getState().connectSlice.status
+      if (status === 'offline') window.location = window.location.pathname + '?netId=' + netId
+      else {
+        // 0x5 must be hardcoded as hexlify leaves padding zeros for expectedChainId[1]
+        const chainId = netId === 0 ? ethers.utils.hexlify(expectedChainId[netId]) : '0x5'
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: chainId }]
+        });
+      }
     } catch (err) {
       if (err.code === 4902) {
-        console.log("Too far")
-
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
             chainParams[netId]
           ]
         });
-      } else {
+      } else if (!err.contains('User rejected')) {
         dispatch(error({ error: err }))
       }
-      return {
-        status: "failed",
-        error: err.message
-      };
     }
   }
 );

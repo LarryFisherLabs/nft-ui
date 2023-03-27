@@ -4,11 +4,11 @@ import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, Text, Title, Title2, TopMar
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCoinErr, selectCoins, selectCoinStatus, selectFounder, selectIsCoinAdmin } from '../redux/slices/coinSlice'
-import { coinsConnect } from '../redux/thunks/coinThunk'
+import { coinsConnect, loadCoinIdsOffline } from '../redux/thunks/coinThunk'
 import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../redux/slices/antSlice'
-import { getAntIds } from '../redux/thunks/antThunks'
-import { selectNetId } from '../redux/slices/connectSlice'
-import { goToNftView } from '../utils/redirect'
+import { getAntIds, loadAntIdsOffline } from '../redux/thunks/antThunks'
+import { selectAccount, selectNetId, selectStatus } from '../redux/slices/connectSlice'
+import { goTo, goToNftView } from '../utils/redirect'
 
 export const MappedCoins = () => {
     const coinStatus = useSelector(selectCoinStatus)
@@ -25,9 +25,10 @@ export const MappedCoins = () => {
             return(
                 <NftGrid>{
                     coins.map((coin, i) => {
-                        const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + coin.id
+                        const coinId = isNaN(coin) ? coin.id : coin
+                        const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + coinId 
                         return (
-                            <CoinImg onClick={() => goToNftView('coin', coin.id)} src={imgSrc} key={i} />
+                            <CoinImg onClick={() => goToNftView('coin', coinId)} src={imgSrc} key={i} />
                         )
                     })
                 }</NftGrid>
@@ -85,6 +86,8 @@ export const ProfilePanel = styled(Panel)`
 
 export const Profile = ({ remoteAddress = null }) => {
     const dispatch = useDispatch()
+    const status = useSelector(selectStatus)
+    const account = useSelector(selectAccount)
     const coinStatus = useSelector(selectCoinStatus)
     const founder = useSelector(selectFounder)
     const isAdmin = useSelector(selectIsCoinAdmin)
@@ -93,22 +96,18 @@ export const Profile = ({ remoteAddress = null }) => {
     useEffect(() => {
         if (coinStatus === 'idle' && isAdmin !== null) {
             dispatch(coinsConnect(remoteAddress))
+        } else if (remoteAddress !== null && coinStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))){
+            dispatch(loadCoinIdsOffline(remoteAddress))
         }
-    }, [coinStatus, dispatch, isAdmin, remoteAddress])
+    }, [coinStatus, dispatch, isAdmin, remoteAddress, status, account])
 
     useEffect(() => {
         if (antStatus === 'idle' && isAdmin !== null) {
             dispatch(getAntIds(remoteAddress))
+        } else if (remoteAddress !== null && antStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))){
+            dispatch(loadAntIdsOffline(remoteAddress))
         }
-    }, [antStatus, dispatch, isAdmin, remoteAddress])
-
-    const goToCoinBuilder = () => {
-        window.location = '/coin-builder'
-    }
-
-    const goToAntBuilder = () => {
-        window.location = '/ant-builder'
-    }
+    }, [antStatus, dispatch, isAdmin, remoteAddress, status, account])
 
     return (
         <ViewStyle>
@@ -122,7 +121,7 @@ export const Profile = ({ remoteAddress = null }) => {
             </ProfilePanel>
             {
                 remoteAddress === null ?
-                    <TopMarginBtn onClick={goToCoinBuilder}>{
+                    <TopMarginBtn onClick={() => goTo('/coin-builder')}>{
                         founder.value > 0 ?
                             !founder.isFCMinted ? 'Mint Founder Coin' :
                             !founder.isFCDiscountUsed ? 'Mint Discounted Coin' :
@@ -136,7 +135,7 @@ export const Profile = ({ remoteAddress = null }) => {
                 <MappedAnts />
             </ProfilePanel>
             {
-                remoteAddress === null ? <TopMarginBtn onClick={goToAntBuilder}>Mint Ant</TopMarginBtn> : null
+                remoteAddress === null ? <TopMarginBtn onClick={() => {goTo('/ant-builder')}}>Mint Ant</TopMarginBtn> : null
             }
         </ViewStyle>
     )
