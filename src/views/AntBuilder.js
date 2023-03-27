@@ -1,37 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  ButtonBottom,
-  ButtonsPanel,
-  LayerButtons,
-  SectionButtons,
-  ToggledRemove,
-} from "../components/LayerButtons.js";
-import {
-  ViewStyle,
-  Title,
-  Text,
-  Title2CrossHair,
-  Title4,
-} from "../styles/general.js";
+import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from "../components/LayerButtons.js";
+import { ViewStyle, Title, Text, Title2CrossHair, Title4 } from "../styles/general.js";
 import { getAntPrices, getPartInventories } from "../redux/thunks/antThunks.js";
-import {
-  selectAntErrMsg,
-  selectAntStatus,
-  selectDiscountInfo,
-  updateCoinInfo,
-} from "../redux/slices/antSlice.js";
+import { selectAntErrMsg, selectAntStatus, selectDiscountInfo, updateCoinInfo } from "../redux/slices/antSlice.js";
 import { AntCanvas } from "../components/canvas/AntCanvas.js";
 import { staticLayerInfo } from "../utils/ant-utils/staticAntInfo.js";
 
 import styled from "styled-components";
-import {
-  selectCoinErr,
-  selectCoins,
-  selectCoinStatus,
-  selectIsCoinAdmin,
-} from "../redux/slices/coinSlice.js";
+import { selectCoinErr, selectCoins, selectCoinStatus, selectIsCoinAdmin } from "../redux/slices/coinSlice.js";
 import { loadCoinsForAntBuilder } from "../redux/thunks/coinThunk.js";
 import { selectNetId } from "../redux/slices/connectSlice.js";
 import { getViewLevel } from "../utils/deviceType.js";
@@ -55,6 +32,24 @@ export const CenteredColumn4Mbl = styled.div`
   align-items: normal;
   @media ${getViewLevel(3)} {
     align-items: center;
+  }
+`
+
+const BlackTitle = styled(Title4)`
+  color: black;
+  font-weight: 200;
+  font-size: 1.1rem;
+  @media ${getViewLevel(0)} {
+    font-size: 1rem;
+  }
+  @media ${getViewLevel(2)} {
+    font-size: .9rem;
+  }
+  @media ${getViewLevel(3)} {
+    font-size: .8rem;
+  }
+  @media ${getViewLevel(4)} {
+    font-size: .7rem;
   }
 `
 
@@ -137,7 +132,7 @@ export const AntBuilder = () => {
                         isSelected={isSelected}
                         isDisabled={coin.isDiscountUsed}
                       >
-                        <Title4>
+                        <BlackTitle>
                           {coin.color === 0
                             ? "10% Discount"
                             : coin.color === 1
@@ -147,7 +142,7 @@ export const AntBuilder = () => {
                             : coin.color === 3
                             ? "40% Discount"
                             : "50% Discount"}
-                        </Title4>
+                        </BlackTitle>
                         <ButtonBottom>
                           <ToggledRemove isDisabled={isSelected}>
                             <Text>Remove</Text>
@@ -158,7 +153,7 @@ export const AntBuilder = () => {
                   })
                 ) : coinStatus === "failed" ? (
                   <Text>{coinErr}</Text>
-                ) : (
+                ) : coinStatus === 'Loading coins...' ? <Text>Loading coins</Text> : (
                   <Text>
                     Buy a coin to get up to a 40% discount on an ant as well as
                     all future collections!
