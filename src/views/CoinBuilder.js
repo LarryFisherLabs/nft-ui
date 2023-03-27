@@ -27,17 +27,19 @@ export const CoinBuilder = () => {
     // })
 
     const onInputChange = (event) => {
-        const bronzePrice = minPrices.bronze || .001
-        const initialVal = (event.target.value !== null) ? parseFloat(event.target.value) : 0
-        let finalVal = initialVal
-        if (initialVal > 0 && initialVal <= 100000) {
-            finalVal = parseFloat(initialVal.toFixed(4))
-        } else if (initialVal > 100000) {
-            finalVal = 100000
-        }
-        let previousAmount = (canvasAmount !== null) ? canvasAmount : 0
-        if (finalVal.toString() !== initialVal.toString()) event.target.value = finalVal
-        if (finalVal !== previousAmount && ((finalVal >= bronzePrice) || (previousAmount >= bronzePrice) || isFounderCoinBuilder)) updateAmount(finalVal)
+        if (coinStatus !== 'buying coin') {
+            const bronzePrice = minPrices.bronze || .001
+            const initialVal = (event.target.value !== null) ? parseFloat(event.target.value) : 0
+            let finalVal = initialVal
+            if (initialVal > 0 && initialVal <= 100000) {
+                finalVal = parseFloat(initialVal.toFixed(4))
+            } else if (initialVal > 100000) {
+                finalVal = 100000
+            }
+            let previousAmount = (canvasAmount !== null) ? canvasAmount : 0
+            if (finalVal.toString() !== initialVal.toString()) event.target.value = finalVal
+            if (finalVal !== previousAmount && ((finalVal >= bronzePrice) || (previousAmount >= bronzePrice) || isFounderCoinBuilder)) updateAmount(finalVal)
+        } else event.target.value = canvasAmount
     }
 
     const sendTransaction = () => {
@@ -69,7 +71,7 @@ export const CoinBuilder = () => {
                         }</Title2>
                         <CanvasPanel>
                             {
-                                coinStatus === 'buying coin' ? <Text>Buying coin...</Text> : 
+                                coinStatus === 'buying coin' ? <LargeText>Buying coin...</LargeText> : 
                                 coinStatus === 'bad pricing' ? <Text>Prices changed!</Text> :
                                 coinStatus === 'bad value' ? <Text>Not enough eth!</Text> :
                                 null

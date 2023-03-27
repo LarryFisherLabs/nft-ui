@@ -27,7 +27,6 @@ export const Text = styled.div`
 `
 
 export const TextLink = styled.a`
-    text-underline-position: below;
     margin-left: .3rem;
     color: #fed600;
     font-size: 1.1rem;
@@ -138,11 +137,9 @@ export const Canvas = styled.canvas`
     height: 450px;
     border: 1px solid #d3d3d3;
     image-rendering: pixelated;
-    margin: 15px;
+    margin: 10px;
     align-self: center;
-    @media ${getViewLevel(4)} {
-        margin: 10px;
-    }
+    border-radius: 16px;
 `
 
 export const StyledAntCanvas = styled(Canvas)`
@@ -250,13 +247,13 @@ export const StyledInput = styled.input`
     margin-top: 8px;
     background: transparent;
     border-radius: 16px;
+    text-align: center;
+    max-width: 5rem;
 `
 
 export const InputWithFlatSide = styled(StyledInput)`
     padding-top: .1rem;
     padding-bottom: .1rem;
     border-radius: 16px 0% 0% 16px;
-    max-width: 5rem;
-    text-align: center;
     padding-left: .18rem;
 `

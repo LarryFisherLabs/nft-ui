@@ -6,12 +6,12 @@ import { selectNetId, selectStatus } from "../redux/slices/connectSlice"
 import { selectNftViewErr, selectTotalNftCount } from "../redux/slices/nftViewSlice"
 import { loadNftCount } from "../redux/thunks/nftViewThunks"
 import { AntImg, CoinImg, NftGrid, Panel, Text, Title, ViewStyle } from "../styles/general"
-import { goToNftView } from "../utils/redirect"
+import { goToCollectionView, goToNftView } from "../utils/redirect"
 
 const nftsPerPage = 8
 
 export const MappedNfts = ({ startIndex, finishIndex }) => {
-    if (finishIndex < startIndex) window.location = '/' + window.location.pathname.split('/')[1] + '/' + (Math.floor(finishIndex / 8) + 1)
+    if (finishIndex < startIndex) goToCollectionView(window.location.pathname.split('/')[1], (Math.floor(finishIndex / 8) + 1))
     const netId = useSelector(selectNetId)
     const nftType = window.location.pathname.split('/')[1] === 'coins' ? 0 : 1
     const nftSrcArray = []
@@ -46,7 +46,7 @@ export const NftCollection = () => {
     const status = useSelector(selectStatus)
     const totalNftCount = useSelector(selectTotalNftCount)
     const nftViewErr = useSelector(selectNftViewErr)
-    const [displayPageRange, setDisplayPageRange] = useState()
+    const [pageTitle, setPageTitle] = useState()
     const [maxPageIndex, setMaxPageIndex] = useState(null)
     const [finishIndex, setFinishIndex] = useState(pageNumber * nftsPerPage - 1)
     const startIndex = (pageNumber - 1) * nftsPerPage
@@ -55,10 +55,12 @@ export const NftCollection = () => {
         if ((status === 'succeeded' || status === 'offline') && totalNftCount === null) dispatch(loadNftCount(nftType))
         else if (totalNftCount !== null && maxPageIndex === null) {
             if (totalNftCount - 1 < finishIndex) setFinishIndex(totalNftCount - 1)
-            setDisplayPageRange(`${startIndex}-${totalNftCount - 1 < finishIndex ? totalNftCount - 1 : finishIndex}`)
+            const pageTitleStart = nftType === 0 ? startIndex === totalNftCount - 1 ? 'Coin ' : 'Coins ' : startIndex === totalNftCount - 1 ? 'Ant ' : 'Ants '
+            const pageTitleRange = startIndex === totalNftCount - 1 ? `${startIndex}` : `${startIndex}-${totalNftCount - 1 < finishIndex ? totalNftCount - 1 : finishIndex}`
+            setPageTitle(`${pageTitleStart}${pageTitleRange}`)
             setMaxPageIndex(Math.floor((totalNftCount - 1) / nftsPerPage) + 1)
         }
-    }, [status, totalNftCount, dispatch, nftType, displayPageRange, startIndex, finishIndex, maxPageIndex])
+    }, [status, totalNftCount, dispatch, nftType, pageTitle, startIndex, finishIndex, maxPageIndex])
 
     return (
         <ViewStyle>
@@ -67,7 +69,7 @@ export const NftCollection = () => {
                 maxPageIndex === null ? <Text>Loading collection...</Text> :
                 [
                     <Panel key={'collection-panel'} startIndex={startIndex} finishIndex={finishIndex}>
-                        <CenteredTitle>{nftType === 0 ? `Coins ${displayPageRange}` : `Ants ${displayPageRange}`}</CenteredTitle>
+                        <CenteredTitle>{pageTitle}</CenteredTitle>
                         <MappedNfts startIndex={startIndex} finishIndex={finishIndex} />
                     </Panel>,
                     <NumberedPageNav key={'page-nav'} currentPageIndex={pageNumber} minPageIndex={1} maxPageIndex={maxPageIndex} />
