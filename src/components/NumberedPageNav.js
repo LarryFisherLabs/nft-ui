@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { InputWithFlatSide, Text, ThinStyledButton } from "../styles/general"
 import { getViewLevel } from "../utils/deviceType"
 import { useOffElementClickListener } from "../utils/hooks/hooks-general"
+import { goToCollectionView } from "../utils/redirect"
 
 const SmallInput = styled(InputWithFlatSide)`
     width: ${props => `${1.8 + (props.size * .4)}em`};
@@ -22,12 +23,6 @@ const ButtonText = styled(Text)`
     color: ${props => props.isDisabled ? 'red' : 'null'};
     justify-self: center;
     font-size: 1.1rem;
-    @media ${getViewLevel(4)} {
-        font-size: 1rem;
-    }
-    @media ${getViewLevel(5)} {
-        font-size: .9rem;
-    }
 `
 
 const MirroredText = styled(ButtonText)`
@@ -68,7 +63,7 @@ export const NumberedPageNav = ({ currentPageIndex, minPageIndex, maxPageIndex }
 
     const switchPage = (newPageIndex) => {
         const pathName = window.location.pathname.split('/')[1]
-        window.location = '/' + pathName + '/' + newPageIndex
+        goToCollectionView(pathName, newPageIndex)
     }
 
     useEffect(() => {

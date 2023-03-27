@@ -27,3 +27,9 @@ export const goToNftView = (pathName, nftIndex) => {
 export const goToProfile = () => {
     if (window.location.pathname !== '/') goTo('/')
 }
+
+// pathName should be 'coins' or 'ants'
+export const goToCollectionView = (pathName, pageNumber) => {
+    const fullPath = '/' + pathName + '/' + pageNumber
+    if (!window.location.pathname.includes(fullPath)) goTo(fullPath)
+}

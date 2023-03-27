@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { antBalanceOf, antOwnerOf, createAnt, createDiscountAnt, getDnaPrice, getPartInventory, getRarityPrices } from "../../apis/antContractApi";
+import { getOwnersNfts } from "../../apis/coinDbApi";
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo";
 import { getAntContract } from "../../utils/ethers-utils";
 import { antError, updateAntIds, updatePartAvailability, updateRarityPrices } from "../slices/antSlice";
@@ -37,6 +38,18 @@ export const getAntPrices = createAsyncThunk(
       dispatch(updateRarityPrices({ prices: prices }))
     } catch (err) {
       dispatch(antError({error: err}))
+    }
+  }
+)
+
+export const loadAntIdsOffline = createAsyncThunk(
+  "antSlice/loadAntIdsOffline",
+  async (remoteAddress, { dispatch, getState }) => {
+    try {
+      const antIds = await getOwnersNfts(getState().connectSlice.netId, remoteAddress, 1)
+      dispatch(updateAntIds({ antIds: antIds }))
+    } catch (err) {
+      dispatch(antError({ error: err.message }))
     }
   }
 )

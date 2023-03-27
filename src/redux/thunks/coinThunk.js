@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { isDiscountUsed } from '../../apis/antContractApi'
 import { balanceOf, createExactCoin, createFounderCoin, getCoin, getCounters, getFounder, getTierPrices, isOnFounderList, ownerOf } from '../../apis/coinContractApi'
+import { getOwnersNfts } from '../../apis/coinDbApi'
 import { getCoinContract } from '../../utils/ethers-utils'
 import { coinError, updateCoins } from '../slices/coinSlice'
 
@@ -51,8 +52,20 @@ const _getFounder = async (account) => {
     return founder
 }
 
-export const loadCoinIds = createAsyncThunk(
-    'coinSlice/loadCoinIds', 
+export const loadCoinIdsOffline = createAsyncThunk(
+    'coinSlice/loadCoinIdsOffline',
+    async (remoteAddress, { dispatch, getState }) => {
+        try {
+            const coinIds = await getOwnersNfts(getState().connectSlice.netId, remoteAddress, 0)
+            dispatch(updateCoins({ coins: coinIds }))
+        } catch (err) {
+            dispatch(coinError({ error: err.message }))
+        }
+    }
+)
+
+export const loadCoinsForAntBuilder = createAsyncThunk(
+    'coinSlice/loadCoinsForAntBuilder', 
     async (_, { dispatch, getState }) => {
         try {
             const account = getState().connectSlice.account
@@ -143,7 +156,7 @@ export const loadBuilder = createAsyncThunk(
 
 export const buyCoin = createAsyncThunk(
     'coinSlice/buyCoin',
-    async({ value, color }, { dispatch, getState }) => {
+    async({ value, color }, { getState }) => {
         try {
             const account = getState().connectSlice.account
             const founder = await _getFounder(account)

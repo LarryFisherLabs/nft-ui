@@ -52,7 +52,7 @@ export const NftCollection = () => {
     const startIndex = (pageNumber - 1) * nftsPerPage
 
     useEffect(() => {
-        if (status === 'succeeded' && totalNftCount === null) dispatch(loadNftCount(nftType))
+        if ((status === 'succeeded' || status === 'offline') && totalNftCount === null) dispatch(loadNftCount(nftType))
         else if (totalNftCount !== null && maxPageIndex === null) {
             if (totalNftCount - 1 < finishIndex) setFinishIndex(totalNftCount - 1)
             setDisplayPageRange(`${startIndex}-${totalNftCount - 1 < finishIndex ? totalNftCount - 1 : finishIndex}`)

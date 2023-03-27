@@ -14,7 +14,7 @@ const StyledConnectButton = styled(StyledButton)`
   margin-right: 1rem;
   justify-self: flex-end;
   display: ${props => props.index === 0 ? 'block' : 'none'};
-  background-color: ${props => props.isHome || props.buttonActionId !== connectButtonActionIds.goToProfile ? 'rgb(241 132 200)' : null};
+  background-color: ${props => props.isHome || (props.buttonActionId !== connectButtonActionIds.goToProfile && props.buttonActionId !== null) ? 'rgb(241 132 200)' : null};
   cursor: ${props => props.isHome && props.buttonActionId === connectButtonActionIds.goToProfile ? 'default' : null};
   @media ${getViewLevel(3)} {
     font-size: 1rem;
@@ -49,10 +49,10 @@ export const ConnectButton = ({ index }) => {
         connectButtonActionId === connectButtonActionIds.reload ? "Reload" :
         connectButtonActionId === connectButtonActionIds.changeNet ? "Change Network" :
         connectButtonActionId === connectButtonActionIds.connect ? "Connect Wallet" :
-        connectButtonActionId === connectButtonActionIds.goToProfile ? account :
+        connectButtonActionId === connectButtonActionIds.goToProfile && account ? account :
         connectButtonActionId === connectButtonActionIds.downloadMM ? "Download Metamask" :
         connectButtonActionId === connectButtonActionIds.downloadBrave ? "Download Brave" :
-        "out of bounds"
+        "Loading..."
       }
     </StyledConnectButton>
   )

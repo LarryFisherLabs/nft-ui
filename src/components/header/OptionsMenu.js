@@ -9,7 +9,7 @@ import { getViewLevel } from "../../utils/deviceType"
 import { useSecondaryConnectButtonAction } from "../../utils/hooks/connectButtonActionHook"
 import { useOffElementClickListener } from "../../utils/hooks/hooks-general"
 import { urls } from "../../utils/json-constants/urls"
-import { goTo } from "../../utils/redirect"
+import { goToCollectionView } from "../../utils/redirect"
 import { SecondaryConnectButton } from "./SecondaryConnectButton"
 
 const StyledOptions = styled.div`
@@ -86,8 +86,8 @@ export const OptionsMenu = () => {
                 {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
                 {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
                 <ButtonsRow>
-                    <StyledButton onClick={() => goTo("/coins/1")}>Coins</StyledButton>
-                    <StyledButton onClick={() => goTo("/ants/1")}>Ants</StyledButton>
+                    <StyledButton onClick={() => goToCollectionView('coins', 1)}>Coins</StyledButton>
+                    <StyledButton onClick={() => goToCollectionView('ants', 1)}>Ants</StyledButton>
                 </ButtonsRow>
             </StyledOptionsPanel>
         </StyledOptions>
