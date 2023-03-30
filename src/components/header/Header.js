@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { getViewLevel } from '../../utils/deviceType'
-import { getCurrentUrlParam, getHref } from '../../utils/redirect'
-import { getUrlParam } from '../../utils/url-utils/getUrlParam'
+import { getHref } from '../../utils/redirect'
 import { ConnectButton } from './ConnectButton'
 import { NavBar } from './NavBar'
 import { OptionsMenu } from './OptionsMenu'
@@ -30,7 +29,7 @@ const HeaderWrapper = styled.header`
 `
 
 const HomeButton = styled.a`
-    background-image: url('/logo.png');
+    background-image: url('/favicon.ico');
     background-size: contain;
     width: 45px;
     height: 45px;

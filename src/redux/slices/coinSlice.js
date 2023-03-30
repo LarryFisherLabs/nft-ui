@@ -94,7 +94,7 @@ export const coinSlice = createSlice({
       })
       .addCase(buyCoin.fulfilled, (state, action) => {
         if (action.payload.builderStatus === 'failed') {
-          if (action.payload.err === "MetaMask Tx Signature: User denied transaction signature.") {
+          if (action.payload.err.includes("User denied")) {
             state.coinStatus = "succeeded"
           } else {
             state.coinStatus = 'failed'

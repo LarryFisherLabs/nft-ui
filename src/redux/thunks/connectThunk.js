@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 import { getProvider } from "../../utils/ethers-utils";
-import { error, updateNetId } from "../slices/connectSlice";
+import { error } from "../slices/connectSlice";
 
 // !!! network ids !!!
 // 0 sepolia

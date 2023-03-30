@@ -10,10 +10,12 @@ export const useOffElementClickListener = (refArray, isSelected, setIsSelected) 
                 tempIsUnselected = i === 0 ? true : tempIsUnselected
             } else tempIsUnselected = false
         }
-        if (tempIsUnselected) setIsSelected(false)
+        if (tempIsUnselected) {
+            setIsSelected(false)
+        }
     }, [refArray, setIsSelected])
     useEffect(() => {
-        let isOneRefPresent
+        let isOneRefPresent = false
         for (let i = 0; i < refArray.length; i++) {
             const ref = refArray[i]
             if (ref.current) {
@@ -28,9 +30,29 @@ export const useOffElementClickListener = (refArray, isSelected, setIsSelected) 
 
         return () => {
             if (isListening) {
-                document.removeEventListener("mousedown", handleClickOffElement)
                 setIsListening(false)
+                document.removeEventListener("mousedown", handleClickOffElement)
             }
         }
     }, [refArray, isSelected, isListening, setIsListening, handleClickOffElement])
+}
+
+export const useClickListener = (isOnPage, setIsOnPage, isWaitingForClick) => {
+    const [isListening, setIsListening] = useState(false)
+    const handleClick = useCallback(() => {
+        setIsOnPage(false)
+    }, [setIsOnPage])
+    useEffect(() => {
+        if (isWaitingForClick && isOnPage && !isListening) {
+            document.addEventListener("mousedown", handleClick)
+            setIsListening(true)
+        }
+
+        return () => {
+            if (isListening) {
+                setIsListening(false)
+                document.removeEventListener("mousedown", handleClick)
+            }
+        }
+    }, [isOnPage, isListening, setIsListening, handleClick, isWaitingForClick])
 }

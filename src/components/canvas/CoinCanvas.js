@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import { useState } from "react"
-import { useSelector } from "react-redux"
+import { shallowEqual, useSelector } from "react-redux"
 import { selectFounder, selectPrices, selectTotalCount } from "../../redux/slices/coinSlice"
 import { Canvas } from "../../styles/general"
 
@@ -103,8 +103,8 @@ export const StyledCoinCanvas = styled(Canvas)`
 
 export const CoinCanvas = ({ amount }) => {
   const id = useSelector(selectTotalCount)
-  const prices = useSelector(selectPrices)
-  const founder = useSelector(selectFounder)
+  const prices = useSelector(selectPrices, shallowEqual)
+  const founder = useSelector(selectFounder, shallowEqual)
   const canvas = useRef()
   const [isCanvasVisible, toggleCanvas] = useState(false)
 

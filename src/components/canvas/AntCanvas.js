@@ -7,7 +7,7 @@ import { recursiveDraw, baseElements } from "../../utils/ant-utils/antCanvasUtil
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
-import { selectIsConnected, selectStatus } from "../../redux/slices/connectSlice"
+import { selectIsConnected, selectIsWrongNet, selectStatus } from "../../redux/slices/connectSlice"
 import { getViewLevel } from "../../utils/deviceType"
 
 const updateAntCanvas = (ctx, indexes) => {
@@ -31,12 +31,68 @@ export const StickyButton = styled(StyledButton)`
 `
 
 
-export const LeftTextBlock = styled(TextBlock)`
-    align-self: start;
+export const ColoredTextBlock = styled(TextBlock)`
+    align-self: center;
     border-radius: 16px;
     @media ${getViewLevel(3)} {
-        align-self: center;
-        background-color: #901778;
+        background-color: #8f7ae3;
+    }
+`
+
+export const LargerText = styled.div`
+    color: #fed600;
+    font-size: 1.2rem;
+    font-weight: 600;
+    @media ${getViewLevel(2)} {
+        font-size: 1.1rem;
+    }
+    @media ${getViewLevel(3)} {
+        font-size: 1rem;
+    }
+    @media ${getViewLevel(4)} {
+        font-size: .9rem;
+    }
+    @media ${getViewLevel(5)} {
+        font-size: .8rem;
+    }
+`
+
+const BlackText = styled(LargerText)`
+    color: black;
+    padding-bottom: .3rem;
+`
+
+const BrownText = styled(LargerText)`
+    text-shadow: black 1px 1px 0px;
+    color: #ff7983;
+`
+
+const GreenText = styled(BrownText)`
+    color: #68dd6b;
+`
+
+const GoldText = styled(BrownText)`
+    color: #feff00;
+`
+
+const PurpleText = styled(BrownText)`
+    color: #ffa3ff;
+`
+
+const TopPaddingText = styled(LargerText)`
+    padding-top: .4rem;
+    font-size: 1.3rem;
+    @media ${getViewLevel(2)} {
+        font-size: 1.2rem;
+    }
+    @media ${getViewLevel(3)} {
+        font-size: 1.1rem;
+    }
+    @media ${getViewLevel(4)} {
+        font-size: 1rem;
+    }
+    @media ${getViewLevel(5)} {
+        font-size: .9rem;
     }
 `
 
@@ -59,18 +115,17 @@ export const AntCanvas = () => {
     const dispatch = useDispatch()
     const connectStatus = useSelector(selectStatus)
     const isConnected = useSelector(selectIsConnected)
+    const isWrongNet = useSelector(selectIsWrongNet)
     const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
     const antStatus = useSelector(selectAntStatus)
-    const pricesFromState = useSelector(selectRarityPrices)
+    const pricesFromState = useSelector(selectRarityPrices, shallowEqual)
     const canvas = useRef()
     const [totalPrice, updatePrice] = useState(0.0099)
-    const [isFirstLoad, toggleIsFirstLoad] = useState(true)
     const [prices, updatePrices] = useState([..._prices])
 
     useEffect(() => {
         const ctx = canvas.current.getContext('2d')
         if (connectStatus === 'succeeded' || connectStatus === "offline") updateAntCanvas(ctx, selectedIndexes)
-        if (connectStatus === 'succeeded' && isFirstLoad) toggleIsFirstLoad(false)
         if (pricesFromState[0] !== null && pricesFromState[0] !== prices[0]) updatePrices([...pricesFromState])
         if (antStatus !== 'Buying ant...') {
             let price = 0
@@ -81,7 +136,7 @@ export const AntCanvas = () => {
             })
             updatePrice((price + parseFloat(prices[0]) * 1100000) / 100000)
         }
-    }, [connectStatus, antStatus, selectedIndexes, isConnected, isFirstLoad, prices, pricesFromState, canvas])
+    }, [connectStatus, antStatus, selectedIndexes, prices, pricesFromState, canvas])
 
     const buyAnt = () => {
         dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))
@@ -92,18 +147,18 @@ export const AntCanvas = () => {
             <StyledAntCanvas ref={canvas} height={164} width={164} >
                 No browser support
             </StyledAntCanvas>
-            <LeftTextBlock>
-                <div>{"Ant Base Price: " + (prices[0] * 1100000 / 100000) + " eth"}</div>
-                <div>{"Very Common Price: " + prices[0] + " eth"}</div>
-                <div>{"Common Price: " + prices[1] + " eth"}</div>
-                <div>{"Rare Price: " + prices[2] + " eth"}</div>
-                <div>{"Very Rare Price: " + prices[3] + " eth"}</div>
-                <div>{"Total Ant Price: " + totalPrice + " eth"}</div>
-            </LeftTextBlock>
-            {isConnected === false ? <LeftTextBlock>Please Connect</LeftTextBlock> : null}
+            <ColoredTextBlock>
+                <BlackText>{"Ant Base Price: " + (prices[0] * 1100000 / 100000) + " eth"}</BlackText>
+                <BrownText>{"Very Common Price: " + prices[0] + " eth"}</BrownText>
+                <GreenText>{"Common Price: " + prices[1] + " eth"}</GreenText>
+                <GoldText>{"Rare Price: " + prices[2] + " eth"}</GoldText>
+                <PurpleText>{"Very Rare Price: " + prices[3] + " eth"}</PurpleText>
+                <TopPaddingText>{"Total Ant Price: " + totalPrice + " eth"}</TopPaddingText>
+            </ColoredTextBlock>
+            { isWrongNet === false ? <ColoredTextBlock>Please Change Network</ColoredTextBlock> : isConnected === false ? <ColoredTextBlock>Please Connect</ColoredTextBlock> : null}
             {
                 antStatus === 'succeeded' ? <StickyButton onClick={buyAnt}>Buy Ant</StickyButton> : 
-                (antStatus === 'Buying ant...') || (antStatus.includes('Loading')) ? <LeftTextBlock>{antStatus}</LeftTextBlock> : null
+                (antStatus === 'Buying ant...') || (antStatus.includes('Loading')) ? <ColoredTextBlock>{antStatus}</ColoredTextBlock> : null
             }
         </AntCanvasPanel>
     )

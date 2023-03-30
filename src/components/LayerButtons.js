@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { removeAntFile, selectAntFile, selectAntStatus, selectPartStocks, selectSelectedIndexes } from '../redux/slices/antSlice.js'
 import { Title2CrossHair, Title4, Text, SmallText, CanvasPanel } from '../styles/general'
 import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
@@ -69,8 +69,8 @@ export const ButtonBottom = styled.div`
 
 export const LayerButtons = ({ layerIndex }) => {
     const dispatch = useDispatch()
-    const selectedIndexes = useSelector(selectSelectedIndexes)
-    const partStocks = useSelector(selectPartStocks)
+    const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
+    const partStocks = useSelector(selectPartStocks, shallowEqual)
     const antStatus = useSelector(selectAntStatus)
 
     const [isOpen, toggle] = useState(true)

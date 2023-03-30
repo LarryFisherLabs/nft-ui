@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, Text, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { selectCoinErr, selectCoins, selectCoinStatus, selectFounder, selectIsCoinAdmin } from '../redux/slices/coinSlice'
 import { coinsConnect, loadCoinIdsOffline } from '../redux/thunks/coinThunk'
 import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../redux/slices/antSlice'
@@ -13,7 +13,7 @@ import { goTo, goToNftView } from '../utils/redirect'
 export const MappedCoins = () => {
     const coinStatus = useSelector(selectCoinStatus)
     const coinErrMsg = useSelector(selectCoinErr)
-    const coins = useSelector(selectCoins)
+    const coins = useSelector(selectCoins, shallowEqual)
     const netId = useSelector(selectNetId)
 
     if (coinStatus === 'succeeded') {
@@ -50,7 +50,7 @@ export const MappedCoins = () => {
 export const MappedAnts = () => {
     const antStatus = useSelector(selectAntStatus)
     const antErrMsg = useSelector(selectAntErrMsg)
-    const antIds = useSelector(selectAntIds)
+    const antIds = useSelector(selectAntIds, shallowEqual)
     const netId = useSelector(selectNetId)
 
     if (antStatus === 'succeeded') {
@@ -89,7 +89,7 @@ export const Profile = ({ remoteAddress = null }) => {
     const status = useSelector(selectStatus)
     const account = useSelector(selectAccount)
     const coinStatus = useSelector(selectCoinStatus)
-    const founder = useSelector(selectFounder)
+    const founder = useSelector(selectFounder, shallowEqual)
     const isAdmin = useSelector(selectIsCoinAdmin)
     const antStatus = useSelector(selectAntStatus)
 
