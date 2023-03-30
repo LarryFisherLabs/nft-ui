@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import styled from "styled-components"
 import { InputWithFlatSide, Text, ThinStyledButton } from "../styles/general"
-import { getViewLevel } from "../utils/deviceType"
 import { useOffElementClickListener } from "../utils/hooks/hooks-general"
 import { goToCollectionView } from "../utils/redirect"
 
@@ -39,6 +38,7 @@ export const NumberedPageNav = ({ currentPageIndex, minPageIndex, maxPageIndex }
     const [targetIndex, setTargetIndex] = useState(currentPageIndex)
     const [isIdInputSelected, setIsIdInputSelected] = useState(false)
     const [idInputSize, setIdInputSize] = useState(1)
+    const refArray = useMemo(() => [idInputRef], [idInputRef])
 
     const onTargetIdInputChange = (event) => {
         const id = parseInt(event.target.value)
@@ -73,7 +73,7 @@ export const NumberedPageNav = ({ currentPageIndex, minPageIndex, maxPageIndex }
         }
     }, [targetIndex, isIdInputSelected, setTargetIndex, currentPageIndex])
 
-    useOffElementClickListener([idInputRef], isIdInputSelected, setIsIdInputSelected)
+    useOffElementClickListener(refArray, isIdInputSelected, setIsIdInputSelected)
 
     return (
         <StyledNftNavBar>

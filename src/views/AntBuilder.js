@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from "../components/LayerButtons.js";
 import { ViewStyle, Title, Text, Title2CrossHair, Title4 } from "../styles/general.js";
 import { getAntPrices, getPartInventories } from "../redux/thunks/antThunks.js";
@@ -37,19 +37,10 @@ export const CenteredColumn4Mbl = styled.div`
 
 const BlackTitle = styled(Title4)`
   color: black;
-  font-weight: 200;
+  font-weight: bold;
   font-size: 1.1rem;
-  @media ${getViewLevel(0)} {
-    font-size: 1rem;
-  }
   @media ${getViewLevel(2)} {
     font-size: .9rem;
-  }
-  @media ${getViewLevel(3)} {
-    font-size: .8rem;
-  }
-  @media ${getViewLevel(4)} {
-    font-size: .7rem;
   }
 `
 
@@ -59,9 +50,9 @@ export const AntBuilder = () => {
   const isAdmin = useSelector(selectIsCoinAdmin);
   const err = useSelector(selectAntErrMsg);
   const coinStatus = useSelector(selectCoinStatus);
-  const coins = useSelector(selectCoins);
+  const coins = useSelector(selectCoins, shallowEqual);
   const coinErr = useSelector(selectCoinErr);
-  const selectedCoinInfo = useSelector(selectDiscountInfo);
+  const selectedCoinInfo = useSelector(selectDiscountInfo, shallowEqual);
   const netId = useSelector(selectNetId);
   const [isCoinPanelOpen, toggleCoinPanel] = useState(true);
   const [isFirstCoin, updateIsFirstCoin] = useState(true);
@@ -153,7 +144,7 @@ export const AntBuilder = () => {
                   })
                 ) : coinStatus === "failed" ? (
                   <Text>{coinErr}</Text>
-                ) : coinStatus === 'Loading coins...' ? <Text>Loading coins</Text> : (
+                ) : coinStatus === 'Loading coins...' ? <Text>Loading coins...</Text> : (
                   <Text>
                     Buy a coin to get up to a 40% discount on an ant as well as
                     all future collections!

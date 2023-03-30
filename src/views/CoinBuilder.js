@@ -1,17 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { CanvasPanel, IndentedText, LargeText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { CanvasPanel, CenteredLargeText, IndentedText, LargeText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
 import { CoinCanvas, getColor } from '../components/canvas/CoinCanvas'
-import { selectIsConnected } from '../redux/slices/connectSlice'
+import { selectIsConnected, selectIsWrongNet } from '../redux/slices/connectSlice'
+import styled from 'styled-components'
+
+const BronzeText = styled(LargeText)`
+    padding-left: .7rem;
+    color: #ff912f;
+    font-size: 1.2rem;
+    text-shadow: black 1px 1px 0px;
+`
+
+const SilverText = styled(BronzeText)`
+    color: #ffffff;
+`
+
+const GoldText = styled(BronzeText)`
+    color: #feff00;
+`
+
+const DiamondText = styled(BronzeText)`
+    color: #a1e8ff;
+`
 
 export const CoinBuilder = () => {
     const dispatch = useDispatch()
+    const isWrongNet = useSelector(selectIsWrongNet)
     const coinStatus = useSelector(selectCoinStatus)
-    const minPrices = useSelector(selectPrices)
-    const founder = useSelector(selectFounder)
+    const minPrices = useSelector(selectPrices, shallowEqual)
+    const founder = useSelector(selectFounder, shallowEqual)
     const userBalance = useSelector(selectUserBalance)
     const isConnected = useSelector(selectIsConnected)
     const coinError = useSelector(selectCoinErr)
@@ -82,10 +103,11 @@ export const CoinBuilder = () => {
                                         <Text>Get your founder coin for free or add value to it</Text>
                                     </TextBlock>) : (
                                     <TextBlock>
-                                        <LargeText>Minimum price for bronze coin: {minPrices.bronze || .001} eth</LargeText>
-                                        <LargeText>Minimum for silver coin: {minPrices.silver || .002} eth</LargeText>
-                                        <LargeText>Minimum for gold coin: {minPrices.gold || .003} eth</LargeText>
-                                        <LargeText>Minimum for diamond coin: {minPrices.diamond || .004} eth</LargeText>
+                                        <LargeText>{isConnected === false ? 'Demo ' : null}Minimum Prices:</LargeText>
+                                        <BronzeText>Bronze coin: {minPrices.bronze || .001} eth</BronzeText>
+                                        <SilverText>Silver coin: {minPrices.silver || .002} eth</SilverText>
+                                        <GoldText>Gold coin: {minPrices.gold || .003} eth</GoldText>
+                                        <DiamondText>Diamond coin: {minPrices.diamond || .004} eth</DiamondText>
                                     </TextBlock>
                                 )
                             }
@@ -101,6 +123,7 @@ export const CoinBuilder = () => {
                                     }</TopMarginBtn>
                                 )
                             }
+                            { isWrongNet ? <CenteredLargeText>Please Change Network</CenteredLargeText> : isConnected === false ? <CenteredLargeText>Please Connect</CenteredLargeText> : null}
                         </CanvasPanel>
                     </ViewStyle>
                 )

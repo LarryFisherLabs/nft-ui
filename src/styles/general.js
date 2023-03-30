@@ -46,13 +46,12 @@ export const TextLink = styled.a`
 
 export const LargeText = styled.div`
     color: #fed600;
-    font-size: 1.2rem;
-    @media ${getViewLevel(3)} {
-        font-size: .9rem;
-    }
-    @media ${getViewLevel(5)} {
-        font-size: .83rem;
-    }
+    font-size: 1.3rem;
+    font-weight: 600;
+`
+
+export const CenteredLargeText = styled(LargeText)`
+    align-self: center;
 `
 
 export const SmallText = styled(Text)`
@@ -74,7 +73,7 @@ export const IndentedText = styled(Text)`
 
 export const Title = styled(Text)`
     font-size: 2.5rem;
-    font-weight: 120;
+    font-weight: 600;
 `
 
 export const LeftTitle = styled(Title)`
@@ -83,12 +82,12 @@ export const LeftTitle = styled(Title)`
 
 export const Title2 = styled(Title)`
     font-size: 1.5rem;
-    font-weight: 100;
+    font-weight: 500;
     @media ${getViewLevel(3)} {
         font-size: 1.2rem;
     }
     @media ${getViewLevel(5)} {
-        font-size: .9rem;
+        font-size: 1.2rem;
     }
 `
 

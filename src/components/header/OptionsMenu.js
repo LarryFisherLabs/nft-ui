@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
@@ -10,6 +10,7 @@ import { useSecondaryConnectButtonAction } from "../../utils/hooks/connectButton
 import { useOffElementClickListener } from "../../utils/hooks/hooks-general"
 import { urls } from "../../utils/json-constants/urls"
 import { goToCollectionView } from "../../utils/redirect"
+import { isFormattedAntCollectionView, isFormattedCoinCollectionView } from "../../utils/url-utils/isUrlFormatted"
 import { SecondaryConnectButton } from "./SecondaryConnectButton"
 
 const StyledOptions = styled.div`
@@ -49,6 +50,10 @@ const ButtonsRow = styled.div`
   align-self: center;
 `
 
+const SelectableStyledButton = styled(StyledButton)`
+    background-color: ${props => props.isSelected ? 'rgb(241 132 200)' : null};
+`
+
 export const OptionsMenu = () => {
     const dispatch = useDispatch()
     const netId = useSelector(selectNetId)
@@ -57,7 +62,9 @@ export const OptionsMenu = () => {
     const optionsPanelRef = useRef()
     const optionsToggleRef = useRef()
 
-    useOffElementClickListener([optionsPanelRef, optionsToggleRef], isOptionsOpen, updateIsOptionsOpen)
+    const refArray = useMemo(() => [optionsPanelRef, optionsToggleRef], [optionsPanelRef, optionsToggleRef])
+
+    useOffElementClickListener(refArray, isOptionsOpen, updateIsOptionsOpen)
     useSecondaryConnectButtonAction(connectButtonActionId, setConnectButtonActionId)
   
     const toggleOptions = () => {
@@ -86,8 +93,8 @@ export const OptionsMenu = () => {
                 {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
                 {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
                 <ButtonsRow>
-                    <StyledButton onClick={() => goToCollectionView('coins', 1)}>Coins</StyledButton>
-                    <StyledButton onClick={() => goToCollectionView('ants', 1)}>Ants</StyledButton>
+                    <SelectableStyledButton isSelected={isFormattedCoinCollectionView()} onClick={() => goToCollectionView('coins', 1)}>Coins</SelectableStyledButton>
+                    <SelectableStyledButton isSelected={isFormattedAntCollectionView()} onClick={() => goToCollectionView('ants', 1)}>Ants</SelectableStyledButton>
                 </ButtonsRow>
             </StyledOptionsPanel>
         </StyledOptions>

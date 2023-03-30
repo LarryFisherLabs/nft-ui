@@ -36,11 +36,36 @@ export const isFormattedCollectionView = () => {
         const pageId = parseFloat(splitPath[2])
         const isPageIdInt = Number.isInteger(pageId)
         const isFormatted = (isCoinUrl || splitPath[1] === 'ants')
-        const isInRange = isCoinUrl ? 1 <= pageId && pageId <= 375 : 1 <= pageId && pageId <= 1000
+        const isInRange = isCoinUrl ? 1 <= pageId && pageId <= 375 : 1 <= pageId && pageId <= 1250
         if (isFormatted && isInRange && isPageIdInt) return !isNaN(splitPath[2]) && splitPath[2] !== ''
     }
     return false
 }
+
+export const isFormattedCoinCollectionView = () => {
+    const splitPath = window.location.pathname.split('/')
+    const isCoinUrl = splitPath[1] === 'coins'
+    if (splitPath.length === 3 || (splitPath.length === 4 && splitPath[3] === '')) {
+        const pageId = parseFloat(splitPath[2])
+        const isPageIdInt = Number.isInteger(pageId)
+        const isInRange = 1 <= pageId && pageId <= 375
+        if (isCoinUrl && isInRange && isPageIdInt) return !isNaN(splitPath[2]) && splitPath[2] !== ''
+    }
+    return false
+}
+
+export const isFormattedAntCollectionView = () => {
+    const splitPath = window.location.pathname.split('/')
+    const isAntUrl = splitPath[1] === 'ants'
+    if (splitPath.length === 3 || (splitPath.length === 4 && splitPath[3] === '')) {
+        const pageId = parseFloat(splitPath[2])
+        const isPageIdInt = Number.isInteger(pageId)
+        const isInRange = 1 <= pageId && pageId <= 1250
+        if (isAntUrl && isInRange && isPageIdInt) return !isNaN(splitPath[2]) && splitPath[2] !== ''
+    }
+    return false
+}
+
 
 // /coin-builder || /coin-builder/ for isForCoinBuilder === true
 // /ant-builder || /ant-builder/ for isForCoinBuilder === false

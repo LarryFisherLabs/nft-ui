@@ -1,13 +1,15 @@
-import React, { useEffect, useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 
 import { connect } from './redux/thunks/connectThunk'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectIsConnected, selectStatus, selectViewLevel, updateNetId, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
+import { selectIsConnected, selectNetId, selectStatus, selectViewLevel, updateIsConnected, updateNetId, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
 import { AppView } from './views/AppView'
 
 import styled from 'styled-components'
 import { viewLevelMaxWidth } from './utils/deviceType'
 import { getUrlParam } from './utils/url-utils/getUrlParam'
+import { Popup } from './components/popups/Popup'
+import Cookies from 'js-cookie'
 
 
 const AppWrapper = styled.div`
@@ -21,6 +23,9 @@ function App() {
   const status = useSelector(selectStatus)
   const isConnected = useSelector(selectIsConnected)
   const viewLevel = useSelector(selectViewLevel)
+  const netId = useSelector(selectNetId)
+  const [cookieNetId, setCookieNetId] = useState(null)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     if (window.ethereum) {
@@ -35,9 +40,21 @@ function App() {
       else {
         dispatch(updateStatus({ status: 'offline' }))
         dispatch(updateNetId({ netId: passedNetId }))
+        dispatch(updateIsConnected({ isConnected: false }))
       }
     }
   }, [status, dispatch, isConnected])
+
+  useEffect(() => {
+    if (netId !== null && cookieNetId !== netId) {
+      const lastNetId = parseInt(Cookies.get('netId'))
+      if (lastNetId !== netId) {
+        setIsVisible(true)
+        Cookies.set('netId', netId, { expires: 40 })
+        setCookieNetId(netId)
+      } else if (netId !== cookieNetId) setCookieNetId(netId)
+    }
+  }, [netId, cookieNetId])
 
   useLayoutEffect(() => {
     const viewWidth = window.innerWidth
@@ -46,7 +63,12 @@ function App() {
     dispatch(updateViewLevel({ viewLevel: newViewLevel }))
   }, [viewLevel, dispatch])
   
-  return (<AppWrapper><AppView/></AppWrapper>)
+  return (
+    <AppWrapper>
+      <AppView/>
+      <Popup isVisible={isVisible} setIsVisible={setIsVisible} />
+    </AppWrapper>
+  )
 }
 
 export default App;

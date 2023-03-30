@@ -20,6 +20,9 @@ export const connectSlice = createSlice({
     updateStatus: (state, action) => {
       state.status = action.payload.status
     },
+    updateIsConnected: (state, action) => {
+      state.isConnected = action.payload.isConnected
+    },
     updateViewLevel: (state, action) => {
       state.viewLevel = action.payload.viewLevel
     },
@@ -53,6 +56,7 @@ export const connectSlice = createSlice({
         } else if (action.payload.isWrongNet) {
           state.status = 'succeeded'
           state.isWrongNet = true
+          state.isConnected = false
           state.netId = 1
         } else {
           state.status = 'succeeded'
@@ -63,7 +67,7 @@ export const connectSlice = createSlice({
   },
 })
 
-export const { updateStatus, updateViewLevel, updateNetId, error } = connectSlice.actions
+export const { updateStatus, updateIsConnected, updateViewLevel, updateNetId, error } = connectSlice.actions
 export default connectSlice.reducer
 
 export const selectStatus = state => state.connectSlice.status
