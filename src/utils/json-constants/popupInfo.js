@@ -1,8 +1,7 @@
-const antConflictsStartIndex = 10
+const antConflictsStartIndex = 11
 const shortTimer = 3
 const normTimer = 7
-const longTimer = 11
-// const extraLongTimer = 40
+const longTimer = 10
 
 export const popupTypes = {
     sepoliaData: 0,
