@@ -114,8 +114,10 @@ export const buyAntThunk = createAsyncThunk(
       if (err.message.includes("User denied") || err.message.includes("User rejected")) {
         legalErr = true
         dispatch(addPopup({ id: popupTypes.txDenied }))
+      } else if (err.message.includes("insufficient funds")) {
+        legalErr = true
+        dispatch(addPopup({ id: popupTypes.insufficientFunds }))
       }
-      else if (err.message.includes("insufficient funds")) legalErr = true
       if (!legalErr) {
         dispatch(antError({error: err.message}))
       }

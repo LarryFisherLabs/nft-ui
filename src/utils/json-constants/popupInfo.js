@@ -1,7 +1,7 @@
 const antConflictsStartIndex = 10
 const shortTimer = 3
 const normTimer = 7
-const longTimer = 10
+const longTimer = 11
 // const extraLongTimer = 40
 
 export const popupTypes = {
@@ -15,6 +15,7 @@ export const popupTypes = {
     badBuyCoinVal: 7,
     coinPricesChanged: 8,
     txFailed: 9,
+    insufficientFunds: 10,
     antConflict: {
         gasMask: {
             eod: antConflictsStartIndex,
@@ -89,6 +90,10 @@ export const popupDetailsById = [
     {
         msg: 'Transaction failed',
         timer: longTimer
+    },
+    {
+        msg: 'Not enough eth in wallet',
+        timer: normTimer
     },
     {
         msg: 'Gas Mask incompatible with EOD',
