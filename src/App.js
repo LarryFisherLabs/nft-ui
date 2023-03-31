@@ -2,14 +2,14 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 
 import { connect } from './redux/thunks/connectThunk'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectIsConnected, selectNetId, selectStatus, selectViewLevel, updateIsConnected, updateNetId, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
+import { addPopup, selectIsConnected, selectNetId, selectStatus, selectViewLevel, updateIsConnected, updateNetId, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
 import { AppView } from './views/AppView'
 
 import styled from 'styled-components'
 import { viewLevelMaxWidth } from './utils/deviceType'
 import { getUrlParam } from './utils/url-utils/getUrlParam'
-import { Popup } from './components/popups/Popup'
 import Cookies from 'js-cookie'
+import { PopupBar } from './components/popups/PopupBar'
 
 
 const AppWrapper = styled.div`
@@ -25,7 +25,6 @@ function App() {
   const viewLevel = useSelector(selectViewLevel)
   const netId = useSelector(selectNetId)
   const [cookieNetId, setCookieNetId] = useState(null)
-  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     if (window.ethereum) {
@@ -49,12 +48,12 @@ function App() {
     if (netId !== null && cookieNetId !== netId) {
       const lastNetId = parseInt(Cookies.get('netId'))
       if (lastNetId !== netId) {
-        setIsVisible(true)
+        dispatch(addPopup({ id: netId }))
         Cookies.set('netId', netId, { expires: 40 })
         setCookieNetId(netId)
       } else if (netId !== cookieNetId) setCookieNetId(netId)
     }
-  }, [netId, cookieNetId])
+  }, [dispatch, netId, cookieNetId])
 
   useLayoutEffect(() => {
     const viewWidth = window.innerWidth
@@ -66,7 +65,7 @@ function App() {
   return (
     <AppWrapper>
       <AppView/>
-      <Popup isVisible={isVisible} setIsVisible={setIsVisible} />
+      <PopupBar />
     </AppWrapper>
   )
 }

@@ -3,7 +3,9 @@ import { isDiscountUsed } from '../../apis/antContractApi'
 import { balanceOf, createExactCoin, createFounderCoin, getCoin, getCounters, getFounder, getTierPrices, isOnFounderList, ownerOf } from '../../apis/coinContractApi'
 import { getOwnersNfts } from '../../apis/coinDbApi'
 import { getCoinContract } from '../../utils/ethers-utils'
+import { popupTypes } from '../../utils/json-constants/popupInfo'
 import { coinError, updateCoins } from '../slices/coinSlice'
+import { addPopup } from '../slices/connectSlice'
 
 const _getCoinIds = async (account) => {
     const coinContract = await getCoinContract()
@@ -156,7 +158,7 @@ export const loadBuilder = createAsyncThunk(
 
 export const buyCoin = createAsyncThunk(
     'coinSlice/buyCoin',
-    async({ value, color }, { getState }) => {
+    async({ value, color }, { dispatch, getState }) => {
         try {
             const account = getState().connectSlice.account
             const founder = await _getFounder(account)
@@ -169,6 +171,8 @@ export const buyCoin = createAsyncThunk(
             if (isFounder) {
                 if (color === 4 && !founder.isFCMinted) {
                     tx = await createFounderCoin(value)
+                    dispatch(addPopup({ id: popupTypes.buyingCoin }))
+                    dispatch(addPopup({ id: popupTypes.profileRedirect }))
                 } else if (founder.isFCMinted && !founder.isFCDiscountUsed) {
                     prices = await getTierPrices(true)
                 } 
@@ -183,27 +187,36 @@ export const buyCoin = createAsyncThunk(
                 }
                 if (prices[color] > value) {
                     if (prices[color] !== statePricesAsArray[color]) {
+                        dispatch(addPopup({ id: popupTypes.coinPricesChanged }))
                         return {
                             builderStatus: 'bad pricing',
                             prices: prices,
                         }
                     }
-                    return {
-                        builderStatus: 'bad value',
-                        prices: prices,
+                    else {
+                        dispatch(addPopup({ id: popupTypes.badBuyCoinVal }))
+                        return {
+                            builderStatus: 'bad value',
+                            prices: prices,
+                        }
                     }
                 } else {
                     tx = await createExactCoin(value, color)
+                    dispatch(addPopup({ id: popupTypes.buyingCoin }))
+                    dispatch(addPopup({ id: popupTypes.profileRedirect }))
                 }
             }
             const receipt = await tx.wait()
             if (receipt.status === 1) {
                 window.location.href = '/'
             } else {
+                dispatch(addPopup({ id: popupTypes.txFailed }))
                 throw new Error('Bad tx. Logs: ' + receipt.logs)
             }
         } catch (err) {
-            return {
+            if (err.message.includes("User denied")) {
+                dispatch(addPopup({ id: popupTypes.txDenied }))
+            } else return {
                 builderStatus: 'failed',
                 err: err.message
             }

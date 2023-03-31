@@ -10,6 +10,7 @@ const initialState = {
   account: null,
   netId: null,
   viewLevel: null,
+  popupIds: [],
   errMsg: ""
 }
 
@@ -28,6 +29,21 @@ export const connectSlice = createSlice({
     },
     updateNetId: (state, action) => {
       state.netId = action.payload.netId
+    },
+    addPopup: (state, action) => {
+      const isPresent = state.popupIds.includes(action.payload.id)
+      if (!isPresent) state.popupIds.push(action.payload.id)
+      else {
+        const index = state.popupIds.indexOf(action.payload.id)
+        if (index !== -1) {
+          state.popupIds.splice(index, 1)
+          state.popupIds.push(action.payload.id)
+        }
+      }
+    },
+    removePopup: (state, action) => {
+      const index = state.popupIds.indexOf(action.payload.id)
+      if (index !== -1) state.popupIds.splice(index, 1)
     },
     error: (state, action) => {
       state.status = 'failed'
@@ -67,7 +83,7 @@ export const connectSlice = createSlice({
   },
 })
 
-export const { updateStatus, updateIsConnected, updateViewLevel, updateNetId, error } = connectSlice.actions
+export const { updateStatus, updateIsConnected, updateViewLevel, updateNetId, addPopup, removePopup, error } = connectSlice.actions
 export default connectSlice.reducer
 
 export const selectStatus = state => state.connectSlice.status
@@ -76,4 +92,5 @@ export const selectIsWrongNet = state => state.connectSlice.isWrongNet
 export const selectAccount = state => state.connectSlice.account
 export const selectNetId = state => state.connectSlice.netId
 export const selectViewLevel = state => state.connectSlice.viewLevel
+export const selectPopupIds = state => state.connectSlice.popupIds
 export const selectErr = state => state.connectSlice.errMsg

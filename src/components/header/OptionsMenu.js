@@ -61,7 +61,6 @@ export const OptionsMenu = () => {
     const [connectButtonActionId, setConnectButtonActionId] = useState('disabled')
     const optionsPanelRef = useRef()
     const optionsToggleRef = useRef()
-
     const refArray = useMemo(() => [optionsPanelRef, optionsToggleRef], [optionsPanelRef, optionsToggleRef])
 
     useOffElementClickListener(refArray, isOptionsOpen, updateIsOptionsOpen)
