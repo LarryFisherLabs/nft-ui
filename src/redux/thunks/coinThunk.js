@@ -214,7 +214,7 @@ export const buyCoin = createAsyncThunk(
                 throw new Error('Bad tx. Logs: ' + receipt.logs)
             }
         } catch (err) {
-            if (err.message.includes("User denied")) {
+            if (err.message.includes("User denied") || err.message.includes("User rejected")) {
                 dispatch(addPopup({ id: popupTypes.txDenied }))
             } else return {
                 builderStatus: 'failed',
