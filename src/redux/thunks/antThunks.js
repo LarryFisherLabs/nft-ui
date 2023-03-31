@@ -111,7 +111,7 @@ export const buyAntThunk = createAsyncThunk(
       }
     } catch (err) {
       let legalErr = false
-      if (err.message.includes("User denied")) {
+      if (err.message.includes("User denied") || err.message.includes("User rejected")) {
         legalErr = true
         dispatch(addPopup({ id: popupTypes.txDenied }))
       }
