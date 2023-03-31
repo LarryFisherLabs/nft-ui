@@ -7,8 +7,9 @@ import { recursiveDraw, baseElements } from "../../utils/ant-utils/antCanvasUtil
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
-import { selectIsConnected, selectIsWrongNet, selectStatus } from "../../redux/slices/connectSlice"
+import { addPopup, selectIsConnected, selectIsWrongNet, selectStatus } from "../../redux/slices/connectSlice"
 import { getViewLevel } from "../../utils/deviceType"
+import { popupTypes } from "../../utils/json-constants/popupInfo"
 
 const updateAntCanvas = (ctx, indexes) => {
     ctx.clearRect(0, 0, 328, 328)
@@ -140,6 +141,7 @@ export const AntCanvas = () => {
 
     const buyAnt = () => {
         dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))
+        dispatch(addPopup({ id: popupTypes.txWaiting }))
     }
 
     return (

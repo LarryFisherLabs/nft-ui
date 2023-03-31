@@ -5,8 +5,9 @@ import { CanvasPanel, CenteredLargeText, IndentedText, LargeText, SmallText, Sty
 import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
 import { CoinCanvas, getColor } from '../components/canvas/CoinCanvas'
-import { selectIsConnected, selectIsWrongNet } from '../redux/slices/connectSlice'
+import { addPopup, selectIsConnected, selectIsWrongNet } from '../redux/slices/connectSlice'
 import styled from 'styled-components'
+import { popupTypes } from '../utils/json-constants/popupInfo'
 
 const BronzeText = styled(LargeText)`
     padding-left: .7rem;
@@ -66,7 +67,10 @@ export const CoinBuilder = () => {
     const sendTransaction = () => {
         const amount = canvasAmount ? canvasAmount : 0
         const color = isFounderCoinBuilder ? 4 : getColor(canvasAmount, minPrices)
-        dispatch(buyCoin({ value: amount, color: color }))
+        if (color !== -1){
+            dispatch(buyCoin({ value: amount, color: color }))
+            dispatch(addPopup({ id: popupTypes.txWaiting }))
+        } else dispatch(addPopup({ id: popupTypes.badBuyCoinVal }))
     }
 
     useEffect(() => {

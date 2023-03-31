@@ -93,17 +93,15 @@ export const coinSlice = createSlice({
         state.coinStatus = 'buying coin'
       })
       .addCase(buyCoin.fulfilled, (state, action) => {
-        if (action.payload.builderStatus === 'failed') {
-          if (action.payload.err.includes("User denied")) {
-            state.coinStatus = "succeeded"
-          } else {
+        if (action.payload) {
+          if (action.payload.builderStatus === 'failed') {
             state.coinStatus = 'failed'
             state.coinErrMsg = action.payload.err
-          }
-        } else if (action.payload.builderStatus === 'bad pricing' || action.payload.builderStatus === 'bad value') {
-          state.coinStatus = action.payload.builderStatus
-          state.prices = action.payload.prices
-        }
+          } else if (action.payload.builderStatus === 'bad pricing' || action.payload.builderStatus === 'bad value') {
+            state.coinStatus = 'succeeded'
+            state.prices = action.payload.prices
+          } 
+        } else state.coinStatus = 'succeeded'
       })
       .addCase(loadCoinsForAntBuilder.pending, state => {
         state.coinStatus = 'Loading coins...'

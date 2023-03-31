@@ -3,7 +3,9 @@ import { antBalanceOf, antOwnerOf, createAnt, createDiscountAnt, getDnaPrice, ge
 import { getOwnersNfts } from "../../apis/coinDbApi";
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo";
 import { getAntContract } from "../../utils/ethers-utils";
+import { popupTypes } from "../../utils/json-constants/popupInfo";
 import { antError, updateAntIds, updatePartAvailability, updateRarityPrices } from "../slices/antSlice";
+import { addPopup } from "../slices/connectSlice";
 
 // loadAntBuilder
 export const getPartInventories = createAsyncThunk(
@@ -99,6 +101,8 @@ export const buyAntThunk = createAsyncThunk(
       const dnaPrice = await getDnaPrice(selectedIndexes, discountIndex)
       if (dnaPrice.toString() !== totalPrice.toString()) throw new Error("Price does not match!" + dnaPrice.toString() + " " + totalPrice.toString())
       const tx = discountIndex === 0 ? await createAnt(selectedIndexes, totalPrice) : await createDiscountAnt(coinId, selectedIndexes, totalPrice)
+      dispatch(addPopup({ id: popupTypes.buyingAnt }))
+      dispatch(addPopup({ id: popupTypes.profileRedirect }))
       const receipt = await tx.wait()
       if (receipt.status === 1) {
         window.location.href = '/'
@@ -107,7 +111,11 @@ export const buyAntThunk = createAsyncThunk(
       }
     } catch (err) {
       let legalErr = false
-      if (err.message === "MetaMask Tx Signature: User denied transaction signature." || err.message.includes("insufficient funds")) legalErr = true
+      if (err.message.includes("User denied")) {
+        legalErr = true
+        dispatch(addPopup({ id: popupTypes.txDenied }))
+      }
+      else if (err.message.includes("insufficient funds")) legalErr = true
       if (!legalErr) {
         dispatch(antError({error: err.message}))
       }

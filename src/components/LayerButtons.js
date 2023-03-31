@@ -6,6 +6,8 @@ import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
 
 import styled from 'styled-components'
 import { getViewLevel } from '../utils/deviceType.js'
+import { popupTypes } from '../utils/json-constants/popupInfo.js'
+import { addPopup } from '../redux/slices/connectSlice.js'
 
 export const Button = styled.div`
     display: flex;
@@ -81,11 +83,16 @@ export const LayerButtons = ({ layerIndex }) => {
             dispatch(selectAntFile({ layerIndex: 9, elementIndex: 0 }))
             if (selectedIndexes[3] === 2) {
                 dispatch(removeAntFile({ layerIndex: 3 }))
+                dispatch(addPopup({ id: popupTypes.antConflict.eod.gasMask }))
             }
             if (selectedIndexes[5] === 1) {
                 dispatch(removeAntFile({ layerIndex: 5 }))
+                dispatch(addPopup({ id: popupTypes.antConflict.eod.shemagh }))
             }
-            if (selectedIndexes[2] !== 0) dispatch(removeAntFile({ layerIndex: 2 }))
+            if (selectedIndexes[2] !== 0) {
+                dispatch(removeAntFile({ layerIndex: 2 }))
+                dispatch(addPopup({ id: popupTypes.antConflict.eod.mouth }))
+            }
         } else {
             dispatch(removeAntFile({ layerIndex: 9 }))
             dispatch(removeAntFile({ layerIndex: 0 }))
@@ -103,25 +110,46 @@ export const LayerButtons = ({ layerIndex }) => {
                 // else then select option
                 if (element.name === '2-gas-mask') {
                     // gas mask incompatible with eod, optical, mouth and face gear
-                    if (selectedIndexes[0] === 2) toggleEod(false)
-                    if (selectedIndexes[1] !== staticLayerInfo[1].defaultIndex) dispatch(removeAntFile({ layerIndex: 1 }))
-                    if (selectedIndexes[2] !== staticLayerInfo[2].defaultIndex) dispatch(removeAntFile({ layerIndex: 2 }))
-                    if (selectedIndexes[4] !== staticLayerInfo[4].defaultIndex) dispatch(removeAntFile({ layerIndex: 4 }))
+                    if (selectedIndexes[0] === 2) {
+                        toggleEod(false)
+                        dispatch(addPopup({ id: popupTypes.antConflict.gasMask.eod }))
+                    }
+                    if (selectedIndexes[1] !== staticLayerInfo[1].defaultIndex) {
+                        dispatch(removeAntFile({ layerIndex: 1 }))
+                        dispatch(addPopup({ id: popupTypes.antConflict.gasMask.optical }))
+                    }
+                    if (selectedIndexes[2] !== staticLayerInfo[2].defaultIndex) {
+                        dispatch(removeAntFile({ layerIndex: 2 }))
+                        dispatch(addPopup({ id: popupTypes.antConflict.gasMask.mouth }))
+                    }
+                    if (selectedIndexes[4] !== staticLayerInfo[4].defaultIndex) {
+                        dispatch(removeAntFile({ layerIndex: 4 }))
+                        dispatch(addPopup({ id: popupTypes.antConflict.gasMask.face }))
+                    }
                     dispatch(selectAntFile({ layerIndex: 3, elementIndex: 2 }))
                 } else if (element.name === '2-eod-mask' || element.name === '0-eod-suit') {
                     // add eod together eod incompatible with shemagh and gas mask and mouth accessories
                     toggleEod(true)
                 } else if (element.name === '1-shemagh') {
                     // shemagh incompatible with eod
-                    if (selectedIndexes[0] === 2) toggleEod(false)
+                    if (selectedIndexes[0] === 2) {
+                        toggleEod(false)
+                        dispatch(addPopup({ id: popupTypes.antConflict.shemagh.eod }))
+                    }
                     dispatch(selectAntFile({ layerIndex: 5, elementIndex: 1 }))
                 } else if (selectedIndexes[3] === 2 && (layerIndex === 1 || layerIndex === 2 || layerIndex === 4)) {
                     // remove gas mask for optical, mouth or face accessories
                     dispatch(removeAntFile({ layerIndex: 3 }))
+                    if (layerIndex === 1) dispatch(addPopup({ id: popupTypes.antConflict.optical.gasMask }))
+                    else if (layerIndex === 2) dispatch(addPopup({ id: popupTypes.antConflict.mouth.gasMask }))
+                    else if (layerIndex === 4) dispatch(addPopup({ id: popupTypes.antConflict.face.gasMask }))
                     dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))
                 } else if (selectedIndexes[0] === 2 && (layerIndex === 0 || layerIndex === 9 || layerIndex === 2)) {
                     // remove eod for head, body or mouth accessory change
                     toggleEod(false)
+                    if (layerIndex === 0) dispatch(addPopup({ id: popupTypes.antConflict.head.eod }))
+                    else if (layerIndex === 2) dispatch(addPopup({ id: popupTypes.antConflict.mouth.eod }))
+                    else if (layerIndex === 9) dispatch(addPopup({ id: popupTypes.antConflict.body.eod }))
                     dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))
                 } else {
                     dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))
