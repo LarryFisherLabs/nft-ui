@@ -216,6 +216,8 @@ export const buyCoin = createAsyncThunk(
         } catch (err) {
             if (err.message.includes("User denied") || err.message.includes("User rejected")) {
                 dispatch(addPopup({ id: popupTypes.txDenied }))
+            } else if (err.message.includes("insufficient funds")) {
+                dispatch(addPopup({ id: popupTypes.insufficientFunds }))
             } else return {
                 builderStatus: 'failed',
                 err: err.message
