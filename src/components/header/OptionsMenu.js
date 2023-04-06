@@ -95,6 +95,7 @@ export const OptionsMenu = () => {
                     <SelectableStyledButton isSelected={isFormattedCoinCollectionView()} onClick={() => goToCollectionView('coins', 1)}>Coins</SelectableStyledButton>
                     <SelectableStyledButton isSelected={isFormattedAntCollectionView()} onClick={() => goToCollectionView('ants', 1)}>Ants</SelectableStyledButton>
                 </ButtonsRow>
+                <StyledButton onClick={() => window.location = "/tools"}>Tools</StyledButton>
             </StyledOptionsPanel>
         </StyledOptions>
     )

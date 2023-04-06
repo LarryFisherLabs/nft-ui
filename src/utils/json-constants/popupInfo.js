@@ -1,4 +1,4 @@
-const antConflictsStartIndex = 11
+const antConflictsStartIndex = 15
 const shortTimer = 3
 const normTimer = 7
 const longTimer = 10
@@ -15,6 +15,10 @@ export const popupTypes = {
     coinPricesChanged: 8,
     txFailed: 9,
     insufficientFunds: 10,
+    gettingApprovals: 11,
+    gettingApprovalsForAll: 12,
+    removingApproval: 13,
+    removingApprovalForAll: 14,
     antConflict: {
         gasMask: {
             eod: antConflictsStartIndex,
@@ -93,6 +97,22 @@ export const popupDetailsById = [
     {
         msg: 'Not enough eth in wallet',
         timer: normTimer
+    },
+    {
+        msg: 'Getting approvals',
+        timer: shortTimer
+    },
+    {
+        msg: 'Getting approvals for all',
+        timer: shortTimer
+    },
+    {
+        msg: 'Removing approval, page will update when transaction is complete',
+        timer: longTimer
+    },
+    {
+        msg: 'Removing approval for all, page will update when transaction is complete',
+        timer: longTimer
     },
     {
         msg: 'Gas Mask incompatible with EOD',
