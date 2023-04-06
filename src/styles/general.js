@@ -26,6 +26,10 @@ export const Text = styled.div`
     }
 `
 
+export const CenteredText = styled(Text)`
+    text-align: center;
+`
+
 export const TextLink = styled.a`
     margin-left: .3rem;
     color: #fed600;

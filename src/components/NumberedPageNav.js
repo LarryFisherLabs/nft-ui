@@ -4,7 +4,7 @@ import { InputWithFlatSide, Text, ThinStyledButton } from "../styles/general"
 import { useOffElementClickListener } from "../utils/hooks/hooks-general"
 import { goToCollectionView } from "../utils/redirect"
 
-const SmallInput = styled(InputWithFlatSide)`
+export const SmallInput = styled(InputWithFlatSide)`
     width: ${props => `${1.8 + (props.size * .4)}em`};
     max-width: 4.3em;
     padding-left: .3rem;

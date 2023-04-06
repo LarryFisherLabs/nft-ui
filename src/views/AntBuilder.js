@@ -24,7 +24,7 @@ export const Editor = styled.div`
     align-items: center;
     gap: .6rem;
   }
-`;
+`
 
 export const CenteredColumn4Mbl = styled.div`
   display: flex;
