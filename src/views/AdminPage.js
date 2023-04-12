@@ -55,11 +55,11 @@ export const AdminPage = () => {
     }
 
     const updateCoinURI = async () => {
-        await updateBaseCoinURI(coinRefURI.value)
+        await updateBaseCoinURI(coinRefURI.current.value)
     }
 
     const updateAntURI = async () => {
-        await updateBaseAntURI(antRefURI.value)
+        await updateBaseAntURI(antRefURI.current.value)
     }
 
     const refreshCoinURI = async () => {
