@@ -9,6 +9,7 @@ import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
 import { addApproval, addApprovalForAll, getApprovals, getApprovalsForAll, removeApproval, removeApprovalForAll } from '../redux/thunks/toolThunks'
 import { selectApprovals, selectApprovalsForAll, selectIsLoading, selectIsLoadingForAll, selectToolErr } from '../redux/slices/toolSlice'
 import { popupTypes } from '../utils/json-constants/popupInfo'
+import { goToNFTApprovals } from '../utils/redirect'
 
 export const ProfilePanel = styled(Panel)`
     display: flex;
@@ -153,7 +154,7 @@ export const ToolsPage = ({ toolIndex }) => {
             {
                 toolIndex === null ? (
                     <ProfilePanel>
-                        <CenteredButton onClick={() => window.location = '/tools/nft-approvals'}>NFT Approvals</CenteredButton>
+                        <CenteredButton onClick={goToNFTApprovals}>NFT Approvals</CenteredButton>
                         <Text>This tool can be used to detect and revoke:</Text>
                         <TextShiftRight>- All active "approvals" on NFTs in your wallet</TextShiftRight>
                         <TextShiftRight>- All active "approvals for all" on NFT collections you have interacted with</TextShiftRight>

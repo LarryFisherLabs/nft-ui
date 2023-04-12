@@ -9,7 +9,7 @@ import { getViewLevel } from "../../utils/deviceType"
 import { useSecondaryConnectButtonAction } from "../../utils/hooks/connectButtonActionHook"
 import { useOffElementClickListener } from "../../utils/hooks/hooks-general"
 import { urls } from "../../utils/json-constants/urls"
-import { goToCollectionView } from "../../utils/redirect"
+import { goToCollectionView, goToTools } from "../../utils/redirect"
 import { isFormattedAntCollectionView, isFormattedCoinCollectionView } from "../../utils/url-utils/isUrlFormatted"
 import { SecondaryConnectButton } from "./SecondaryConnectButton"
 
@@ -97,7 +97,7 @@ export const OptionsMenu = () => {
                     <SelectableStyledButton isSelected={isFormattedCoinCollectionView()} onClick={() => goToCollectionView('coins', 1)}>Coins</SelectableStyledButton>
                     <SelectableStyledButton isSelected={isFormattedAntCollectionView()} onClick={() => goToCollectionView('ants', 1)}>Ants</SelectableStyledButton>
                 </ButtonsRow>
-                <StyledButton onClick={() => window.location = "/tools"}>Tools</StyledButton>
+                <StyledButton onClick={goToTools}>Tools</StyledButton>
             </StyledOptionsPanel>
         </StyledOptions>
     )
