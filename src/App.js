@@ -1,8 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 
-import { connect } from './redux/thunks/connectThunk'
+import { idleConnect } from './redux/thunks/connectThunk'
 import { useDispatch, useSelector } from 'react-redux'
-import { addPopup, selectIsConnected, selectNetId, selectStatus, selectViewLevel, updateIsConnected, updateNetId, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
+import { addPopup, selectAccount, selectNetId, selectStatus, selectViewLevel, updateNetId, updateStatus, updateViewLevel } from './redux/slices/connectSlice'
 import { AppView } from './views/AppView'
 
 import styled from 'styled-components'
@@ -10,6 +10,7 @@ import { viewLevelMaxWidth } from './utils/deviceType'
 import { getUrlParam } from './utils/url-utils/getUrlParam'
 import Cookies from 'js-cookie'
 import { PopupBar } from './components/popups/PopupBar'
+import { netInfo } from './utils/json-constants/networkInfo'
 
 
 const AppWrapper = styled.div`
@@ -21,34 +22,34 @@ const AppWrapper = styled.div`
 function App() {
   const dispatch = useDispatch()
   const status = useSelector(selectStatus)
-  const isConnected = useSelector(selectIsConnected)
   const viewLevel = useSelector(selectViewLevel)
   const netId = useSelector(selectNetId)
+  const address = useSelector(selectAccount)
   const [cookieNetId, setCookieNetId] = useState(null)
 
   useEffect(() => {
     if (window.ethereum) {
       if (status === 'idle') {
-        window.ethereum.on('accountsChanged', (_account) => {if (isConnected) window.location.reload()})
+        window.ethereum.on('accountsChanged', (_account) => {if (address !== null) window.location.reload()})
         window.ethereum.on("chainChanged", () => window.location.reload())
-        dispatch(connect({}))
+        dispatch(idleConnect({}))
       }
     } else if (status === 'idle') {
       const passedNetId = getUrlParam('netId', true)
-      if (passedNetId !== 0 && passedNetId !== 1) window.location = window.location.pathname + '?netId=1'
+      // no data yet on main net aka 1
+      if (!netInfo.hasOwnProperty(passedNetId) || passedNetId === 1) window.location = window.location.pathname + '?netId=5'
       else {
         dispatch(updateStatus({ status: 'offline' }))
         dispatch(updateNetId({ netId: passedNetId }))
-        dispatch(updateIsConnected({ isConnected: false }))
       }
     }
-  }, [status, dispatch, isConnected])
+  }, [status, dispatch, address])
 
   useEffect(() => {
     if (netId !== null && cookieNetId !== netId) {
       const lastNetId = parseInt(Cookies.get('netId'))
       if (lastNetId !== netId) {
-        dispatch(addPopup({ id: netId }))
+        dispatch(addPopup({ id: netInfo[netId].popupId }))
         Cookies.set('netId', netId, { expires: 40 })
         setCookieNetId(netId)
       } else if (netId !== cookieNetId) setCookieNetId(netId)

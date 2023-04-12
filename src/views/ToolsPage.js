@@ -3,7 +3,7 @@ import { CenteredText, Panel, StyledButton, Text, ThinStyledButton, Title, Title
 
 import styled from 'styled-components'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { addPopup, selectIsConnected } from '../redux/slices/connectSlice'
+import { addPopup, selectAccount } from '../redux/slices/connectSlice'
 import { SmallInput } from '../components/NumberedPageNav'
 import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
 import { addApproval, addApprovalForAll, getApprovals, getApprovalsForAll, removeApproval, removeApprovalForAll } from '../redux/thunks/toolThunks'
@@ -52,7 +52,7 @@ const TextShiftRight = styled(Text)`
 
 export const ToolsPage = ({ toolIndex }) => {
     const dispatch = useDispatch()
-    const isConnected = useSelector(selectIsConnected)
+    const address = useSelector(selectAccount)
     const isAdmin = useSelector(selectIsCoinAdmin)
     const approvals = useSelector(selectApprovals, shallowEqual)
     const approvalsForAll = useSelector(selectApprovalsForAll, shallowEqual)
@@ -159,7 +159,7 @@ export const ToolsPage = ({ toolIndex }) => {
                         <TextShiftRight>- All active "approvals for all" on NFT collections you have interacted with</TextShiftRight>
                     </ProfilePanel>
                 ) : (toolIndex === 0) ? (
-                    isConnected ? (
+                    address !== null ? (
                         <ViewStyle>
                             <ProfilePanel>
                                 <Title2>Approval Search</Title2>

@@ -7,12 +7,16 @@ import { selectNftViewErr, selectTotalNftCount } from "../redux/slices/nftViewSl
 import { loadNftCount } from "../redux/thunks/nftViewThunks"
 import { AntImg, CoinImg, NftGrid, Panel, Text, Title, ViewStyle } from "../styles/general"
 import { goToCollectionView, goToNftView } from "../utils/redirect"
+import { useDefaultNetwork } from "../utils/hooks/hooks-general"
 
 const nftsPerPage = 8
 
 export const MappedNfts = ({ startIndex, finishIndex }) => {
     if (finishIndex < startIndex) goToCollectionView(window.location.pathname.split('/')[1], (Math.floor(finishIndex / 8) + 1))
-    const netId = useSelector(selectNetId)
+    const stateNetId = useSelector(selectNetId)
+    const [netId, setNetId] = useState(null)
+
+    useDefaultNetwork(stateNetId, netId, setNetId)
     const nftType = window.location.pathname.split('/')[1] === 'coins' ? 0 : 1
     const nftSrcArray = []
 
@@ -21,6 +25,8 @@ export const MappedNfts = ({ startIndex, finishIndex }) => {
         const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/' + pathName + '/images/' + i
         nftSrcArray.push(imgSrc)
     }
+
+    if (netId === null) return null
 
     return (
         <NftGrid>{

@@ -56,3 +56,13 @@ export const useClickListener = (isOnPage, setIsOnPage, isWaitingForClick) => {
         }
     }, [isOnPage, isListening, setIsListening, handleClick, isWaitingForClick])
 }
+
+export const useDefaultNetwork = (stateNetId, netId, setNetId) => {
+    useEffect(() => {
+        if (stateNetId === 0 || stateNetId === 1) {
+            if (netId !== 5) setNetId(5)
+        } else {
+            if (netId !== stateNetId) setNetId(stateNetId)
+        }
+    }, [netId, stateNetId, setNetId])
+}

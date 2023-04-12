@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, Text, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import styled from 'styled-components'
@@ -9,12 +9,16 @@ import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../redux/slices/
 import { getAntIds, loadAntIdsOffline } from '../redux/thunks/antThunks'
 import { selectAccount, selectNetId, selectStatus } from '../redux/slices/connectSlice'
 import { goTo, goToNftView } from '../utils/redirect'
+import { useDefaultNetwork } from '../utils/hooks/hooks-general'
 
 export const MappedCoins = () => {
     const coinStatus = useSelector(selectCoinStatus)
     const coinErrMsg = useSelector(selectCoinErr)
     const coins = useSelector(selectCoins, shallowEqual)
-    const netId = useSelector(selectNetId)
+    const stateNetId = useSelector(selectNetId)
+    const [netId, setNetId] = useState(null)
+
+    useDefaultNetwork(stateNetId, netId, setNetId)
 
     if (coinStatus === 'succeeded') {
         if (coins.length < 1) {
@@ -51,7 +55,10 @@ export const MappedAnts = () => {
     const antStatus = useSelector(selectAntStatus)
     const antErrMsg = useSelector(selectAntErrMsg)
     const antIds = useSelector(selectAntIds, shallowEqual)
-    const netId = useSelector(selectNetId)
+    const stateNetId = useSelector(selectNetId)
+    const [netId, setNetId] = useState(null)
+
+    useDefaultNetwork(stateNetId, netId, setNetId)
 
     if (antStatus === 'succeeded') {
         if (antIds.length < 1) {
@@ -92,22 +99,23 @@ export const Profile = ({ remoteAddress = null }) => {
     const founder = useSelector(selectFounder, shallowEqual)
     const isAdmin = useSelector(selectIsCoinAdmin)
     const antStatus = useSelector(selectAntStatus)
+    const netId = useSelector(selectNetId)
 
     useEffect(() => {
         if (coinStatus === 'idle' && isAdmin !== null) {
             dispatch(coinsConnect(remoteAddress))
-        } else if (remoteAddress !== null && coinStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))){
+        } else if ((remoteAddress !== null && coinStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))) || ((netId === 1 || netId === 0) && coinStatus === 'idle' && account !== null)) {
             dispatch(loadCoinIdsOffline(remoteAddress))
         }
-    }, [coinStatus, dispatch, isAdmin, remoteAddress, status, account])
+    }, [coinStatus, dispatch, isAdmin, remoteAddress, status, account, netId])
 
     useEffect(() => {
         if (antStatus === 'idle' && isAdmin !== null) {
             dispatch(getAntIds(remoteAddress))
-        } else if (remoteAddress !== null && antStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))){
+        } else if ((remoteAddress !== null && antStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))) || ((netId === 1 || netId === 0) && antStatus === 'idle' && account !== null)) {
             dispatch(loadAntIdsOffline(remoteAddress))
         }
-    }, [antStatus, dispatch, isAdmin, remoteAddress, status, account])
+    }, [antStatus, dispatch, isAdmin, remoteAddress, status, account, netId])
 
     return (
         <ViewStyle>

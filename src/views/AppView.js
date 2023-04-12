@@ -7,7 +7,7 @@ import { AdminPage } from './AdminPage'
 import { CoinBuilder } from './CoinBuilder'
 
 import { Text } from '../styles/general'
-import { selectErr, selectIsConnected, selectStatus } from '../redux/slices/connectSlice'
+import { selectAccount, selectErr, selectNetId, selectStatus } from '../redux/slices/connectSlice'
 import { loadCoinAdmin } from '../redux/thunks/coinAdminThunks'
 import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
 
@@ -22,12 +22,13 @@ export const AppView = () => {
 
   const status = useSelector(selectStatus)
   const errorMsg = useSelector(selectErr)
-  const isConnected = useSelector(selectIsConnected)
   const isAdmin = useSelector(selectIsCoinAdmin)
+  const netId = useSelector(selectNetId)
+  const address = useSelector(selectAccount)
 
   useEffect(() => {
-    if (status === 'succeeded' && isConnected && isAdmin === null) dispatch(loadCoinAdmin())
-  }, [status, dispatch, isConnected, isAdmin])
+    if (status === 'succeeded' && address !== null && isAdmin === null && netId !== 0 && netId !== 1) dispatch(loadCoinAdmin())
+  }, [status, dispatch, address, isAdmin, netId])
 
   return (
     <div>

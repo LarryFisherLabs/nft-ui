@@ -2,7 +2,7 @@ import { getUrlParam } from "./url-utils/getUrlParam"
 
 export const getCurrentUrlParam = (paramName) => {
     const param = getUrlParam(paramName, true)
-    if (param !== 0 && param !== 1) return null
+    if (param !== 5 && param !== 11155111) return null
     else return '?netId=' + param
 }
 

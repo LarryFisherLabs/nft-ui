@@ -8,6 +8,7 @@ import { changeAntName, loadNftCount, loadNftInfo } from "../redux/thunks/nftVie
 import { CanvasPanel, InputWithFlatSide, LargeAntImg, LargeCoinImg, LargeText, Text, TextLink, ThinStyledButton, Title, ViewStyle } from "../styles/general"
 import { getViewLevel } from "../utils/deviceType"
 import { getHref, goToNftView } from "../utils/redirect"
+import { useDefaultNetwork } from "../utils/hooks/hooks-general"
 
 const NftPanel = styled(CanvasPanel)`
     align-items: center;
@@ -60,7 +61,10 @@ export const NftView = () => {
     const isOwnedByUser = useSelector(selectIsOwnedByUser)
     const antDiscountString = useSelector(selectAntDiscountString)
     const nftViewErr = useSelector(selectNftViewErr)
-    const netId = useSelector(selectNetId)
+    const stateNetId = useSelector(selectNetId)
+    const [netId, setNetId] = useState(null)
+
+    useDefaultNetwork(stateNetId, netId, setNetId)
     const nftOwner = useSelector(selectNftOwner)
     const totalNftCount = useSelector(selectTotalNftCount)
 

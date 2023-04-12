@@ -7,7 +7,7 @@ import { recursiveDraw, baseElements } from "../../utils/ant-utils/antCanvasUtil
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
-import { addPopup, selectIsConnected, selectIsWrongNet, selectStatus } from "../../redux/slices/connectSlice"
+import { addPopup, selectAccount, selectNetId, selectStatus } from "../../redux/slices/connectSlice"
 import { getViewLevel } from "../../utils/deviceType"
 import { popupTypes } from "../../utils/json-constants/popupInfo"
 
@@ -115,8 +115,8 @@ const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
 export const AntCanvas = () => {
     const dispatch = useDispatch()
     const connectStatus = useSelector(selectStatus)
-    const isConnected = useSelector(selectIsConnected)
-    const isWrongNet = useSelector(selectIsWrongNet)
+    const address = useSelector(selectAccount)
+    const netId = useSelector(selectNetId)
     const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
     const antStatus = useSelector(selectAntStatus)
     const pricesFromState = useSelector(selectRarityPrices, shallowEqual)
@@ -157,7 +157,7 @@ export const AntCanvas = () => {
                 <PurpleText>{"Very Rare Price: " + prices[3] + " eth"}</PurpleText>
                 <TopPaddingText>{"Total Ant Price: " + totalPrice + " eth"}</TopPaddingText>
             </ColoredTextBlock>
-            { isWrongNet === false ? <ColoredTextBlock>Please Change Network</ColoredTextBlock> : isConnected === false ? <ColoredTextBlock>Please Connect</ColoredTextBlock> : null}
+            { netId === 0 || netId === 1 ? <ColoredTextBlock>Please Change Network</ColoredTextBlock> : address === null ? <ColoredTextBlock>Please Connect</ColoredTextBlock> : null}
             {
                 antStatus === 'succeeded' ? <StickyButton onClick={buyAnt}>Buy Ant</StickyButton> : 
                 (antStatus === 'Buying ant...') || (antStatus.includes('Loading')) ? <ColoredTextBlock>{antStatus}</ColoredTextBlock> : null

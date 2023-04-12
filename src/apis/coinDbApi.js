@@ -4,7 +4,8 @@ const url = 'https://nft-api-bphk.onrender.com';
 // nftType:
 // 0 coins
 // 1 ants
-export const getNftInfo = async (netId, nftId, nftType) => {
+export const getNftInfo = async (passedNetId, nftId, nftType) => {
+  const netId = passedNetId === 0 || passedNetId === 1 ? 5 : passedNetId
   const nftTypePath = nftType === 0 ? 'coins' : 'ants'
   const response = await fetch(url + '/' + netId + '/' + nftTypePath + '/' + nftId, {
     method: 'GET',
@@ -12,7 +13,8 @@ export const getNftInfo = async (netId, nftId, nftType) => {
   return await response.json();
 }
 
-export const getNftCount = async (netId, nftType) => {
+export const getNftCount = async (passedNetId, nftType) => {
+  const netId = passedNetId === 0 || passedNetId === 1 ? 5 : passedNetId
   const nftTypePath = nftType === 0 ? 'coins' : 'ants'
   const response = await fetch(url + '/' + netId + '/' + nftTypePath + '/count', {
     method: 'GET'
@@ -21,7 +23,8 @@ export const getNftCount = async (netId, nftType) => {
   return jsonResponse.count;
 }
 
-export const getOwnersNfts = async (netId, ownerAddress, nftType) => {
+export const getOwnersNfts = async (passedNetId, ownerAddress, nftType) => {
+  const netId = passedNetId === 0 || passedNetId === 1 ? 5 : passedNetId
   const nftTypePath = nftType === 0 ? 'coin-ids' : 'ant-ids'
   const response = await fetch(url + '/' + netId + '/' + nftTypePath + '/' + ownerAddress, {
     method: 'GET',
