@@ -2,7 +2,7 @@ import { useMemo, useRef } from "react"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import { selectNetId } from "../../redux/slices/connectSlice"
+import { selectNetId, selectStatus } from "../../redux/slices/connectSlice"
 import { changeNet } from "../../redux/thunks/connectThunk"
 import { StyledButton } from "../../styles/general"
 import { getViewLevel } from "../../utils/deviceType"
@@ -57,6 +57,7 @@ const SelectableStyledButton = styled(StyledButton)`
 export const OptionsMenu = () => {
     const dispatch = useDispatch()
     const netId = useSelector(selectNetId)
+    const status = useSelector(selectStatus)
     const [isOptionsOpen, updateIsOptionsOpen] = useState(false)
     const [connectButtonActionId, setConnectButtonActionId] = useState('disabled')
     const optionsPanelRef = useRef()
@@ -72,15 +73,14 @@ export const OptionsMenu = () => {
   
     const openFaucet = () => {
         if (netId !== null) {
-            const link = netId === 0 ? urls.sepoliaFaucet : urls.goerliFaucet
+            const link = netId === 5 ? urls.goerliFaucet : urls.sepoliaFaucet
             window.open(link, "_blank")
         }
     }
   
-    const switchNet = () => {
+    const switchNet = (newNetId) => {
         if (netId !== null) {
-            const newNet = netId === 0 ? 1 : 0
-            dispatch(changeNet(newNet))
+            dispatch(changeNet(newNetId))
         }
     }
   
@@ -89,8 +89,10 @@ export const OptionsMenu = () => {
             <StyledOptionsButton ref={optionsToggleRef} type='button' onClick={toggleOptions}>...</StyledOptionsButton>
             <StyledOptionsPanel isOpen={isOptionsOpen} id={'options-panel'} ref={optionsPanelRef}>
                 {connectButtonActionId === 'disabled' ? null : <SecondaryConnectButton buttonActionId={connectButtonActionId} />}
-                {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
-                {netId === null ? null : <StyledButton onClick={switchNet}>{netId === 0 ? "Switch to Goerli" : "Switch to Sepolia"}</StyledButton>}
+                {netId === null || netId === 0 || netId === 1 ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
+                {netId === null || netId === 11155111 ? null : <StyledButton onClick={() => switchNet(11155111)}>Switch to Sepolia</StyledButton>}
+                {netId === null || netId === 5 ? null : <StyledButton onClick={() => switchNet(5)}>Switch to Goerli</StyledButton>}
+                {netId === null || netId === 1 || status === 'offline' ? null : <StyledButton onClick={() => switchNet(1)}>Main Net</StyledButton>}
                 <ButtonsRow>
                     <SelectableStyledButton isSelected={isFormattedCoinCollectionView()} onClick={() => goToCollectionView('coins', 1)}>Coins</SelectableStyledButton>
                     <SelectableStyledButton isSelected={isFormattedAntCollectionView()} onClick={() => goToCollectionView('ants', 1)}>Ants</SelectableStyledButton>

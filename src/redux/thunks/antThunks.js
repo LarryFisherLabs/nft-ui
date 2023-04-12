@@ -48,7 +48,8 @@ export const loadAntIdsOffline = createAsyncThunk(
   "antSlice/loadAntIdsOffline",
   async (remoteAddress, { dispatch, getState }) => {
     try {
-      const antIds = await getOwnersNfts(getState().connectSlice.netId, remoteAddress, 1)
+      const address = remoteAddress || getState().connectSlice.account
+      const antIds = await getOwnersNfts(getState().connectSlice.netId, address, 1)
       dispatch(updateAntIds({ antIds: antIds }))
     } catch (err) {
       dispatch(antError({ error: err.message }))

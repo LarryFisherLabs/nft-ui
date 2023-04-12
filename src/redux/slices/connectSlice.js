@@ -1,12 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { connect } from '../thunks/connectThunk'
+import { connect, idleConnect } from '../thunks/connectThunk'
 
 // isConnected must start as null
 const initialState = {
   status: 'idle',
-  isConnected: null,
-  isWrongNet: null,
   account: null,
   netId: null,
   viewLevel: null,
@@ -21,14 +19,14 @@ export const connectSlice = createSlice({
     updateStatus: (state, action) => {
       state.status = action.payload.status
     },
-    updateIsConnected: (state, action) => {
-      state.isConnected = action.payload.isConnected
-    },
-    updateViewLevel: (state, action) => {
-      state.viewLevel = action.payload.viewLevel
+    updateAccount: (state, action) => {
+      state.account = action.payload.account
     },
     updateNetId: (state, action) => {
       state.netId = action.payload.netId
+    },
+    updateViewLevel: (state, action) => {
+      state.viewLevel = action.payload.viewLevel
     },
     addPopup: (state, action) => {
       const isPresent = state.popupIds.includes(action.payload.id)
@@ -56,39 +54,21 @@ export const connectSlice = createSlice({
         state.status = 'loading connection...'
       })
       .addCase(connect.fulfilled, (state, action) => {
-        if (action.payload.status === 'failed') {
-          if (action.payload.error === "User rejected the request.") {
-            state.status = "succeeded"
-            state.isConnected = false
-          } else {
-            state.status = 'failed'
-            state.errMsg = "Error: " + action.payload.error
-          }
-        } else if (action.payload.account) {
-          state.status = 'succeeded'
-          state.isConnected = true
-          state.account = action.payload.account
-          state.netId = action.payload.netId
-        } else if (action.payload.isWrongNet) {
-          state.status = 'succeeded'
-          state.isWrongNet = true
-          state.isConnected = false
-          state.netId = 1
-        } else {
-          state.status = 'succeeded'
-          state.netId = action.payload.netId
-          state.isConnected = false
-        }
+        if (state.status !== 'failed') state.status = 'succeeded'
+      })
+      .addCase(idleConnect.pending, state => {
+        state.status = 'loading connection...'
+      })
+      .addCase(idleConnect.fulfilled, (state, action) => {
+        if (state.status !== 'failed') state.status = 'succeeded'
       })
   },
 })
 
-export const { updateStatus, updateIsConnected, updateViewLevel, updateNetId, addPopup, removePopup, error } = connectSlice.actions
+export const { updateStatus, updateAccount, updateNetId, updateViewLevel, addPopup, removePopup, error } = connectSlice.actions
 export default connectSlice.reducer
 
 export const selectStatus = state => state.connectSlice.status
-export const selectIsConnected = state => state.connectSlice.isConnected
-export const selectIsWrongNet = state => state.connectSlice.isWrongNet
 export const selectAccount = state => state.connectSlice.account
 export const selectNetId = state => state.connectSlice.netId
 export const selectViewLevel = state => state.connectSlice.viewLevel

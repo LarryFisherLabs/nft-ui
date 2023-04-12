@@ -58,7 +58,8 @@ export const loadCoinIdsOffline = createAsyncThunk(
     'coinSlice/loadCoinIdsOffline',
     async (remoteAddress, { dispatch, getState }) => {
         try {
-            const coinIds = await getOwnersNfts(getState().connectSlice.netId, remoteAddress, 0)
+            const address = remoteAddress || getState().connectSlice.account
+            const coinIds = await getOwnersNfts(getState().connectSlice.netId, address, 0)
             dispatch(updateCoins({ coins: coinIds }))
         } catch (err) {
             dispatch(coinError({ error: err.message }))

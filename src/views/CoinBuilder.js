@@ -5,7 +5,7 @@ import { CanvasPanel, CenteredLargeText, IndentedText, LargeText, SmallText, Sty
 import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
 import { CoinCanvas, getColor } from '../components/canvas/CoinCanvas'
-import { addPopup, selectIsConnected, selectIsWrongNet } from '../redux/slices/connectSlice'
+import { addPopup, selectAccount, selectNetId } from '../redux/slices/connectSlice'
 import styled from 'styled-components'
 import { popupTypes } from '../utils/json-constants/popupInfo'
 
@@ -30,12 +30,12 @@ const DiamondText = styled(BronzeText)`
 
 export const CoinBuilder = () => {
     const dispatch = useDispatch()
-    const isWrongNet = useSelector(selectIsWrongNet)
+    const netId = useSelector(selectNetId)
     const coinStatus = useSelector(selectCoinStatus)
     const minPrices = useSelector(selectPrices, shallowEqual)
     const founder = useSelector(selectFounder, shallowEqual)
     const userBalance = useSelector(selectUserBalance)
-    const isConnected = useSelector(selectIsConnected)
+    const address = useSelector(selectAccount)
     const coinError = useSelector(selectCoinErr)
 
     const [canvasAmount, updateAmount] = useState()
@@ -74,7 +74,7 @@ export const CoinBuilder = () => {
     }
 
     useEffect(() => {
-        if (coinStatus === 'idle' && isConnected) {
+        if (coinStatus === 'idle' && address !== null && netId !== 0 && netId !== 1) {
             dispatch(loadBuilder())
         } else if (coinStatus === 'succeeded') {
             if (isFounderCoinBuilder === null) {
@@ -82,7 +82,7 @@ export const CoinBuilder = () => {
                 updateIsDCB(founder.value > 0 && founder.isFCMinted === true && founder.isFCDiscountUsed === false)
             }
         }
-    }, [coinStatus, dispatch, founder, isFounderCoinBuilder, isConnected])        
+    }, [coinStatus, dispatch, founder, isFounderCoinBuilder, address, netId])        
 
     return (
         <ViewStyle>
@@ -107,7 +107,7 @@ export const CoinBuilder = () => {
                                         <Text>Get your founder coin for free or add value to it</Text>
                                     </TextBlock>) : (
                                     <TextBlock>
-                                        <LargeText>{isConnected === false ? 'Demo ' : null}Minimum Prices:</LargeText>
+                                        <LargeText>{address === null ? 'Demo ' : null}Minimum Prices:</LargeText>
                                         <BronzeText>Bronze coin: {minPrices.bronze || .001} eth</BronzeText>
                                         <SilverText>Silver coin: {minPrices.silver || .002} eth</SilverText>
                                         <GoldText>Gold coin: {minPrices.gold || .003} eth</GoldText>
@@ -119,7 +119,7 @@ export const CoinBuilder = () => {
                             <IndentedText>Amount of eth to send:</IndentedText>
                             <StyledInput type="number" step=".0001" onChange={onInputChange} />
                             {
-                                coinStatus === 'buying coin' || !isConnected ? null : (
+                                coinStatus === 'buying coin' || address === null || netId === 0 || netId === 1 ? null : (
                                     <TopMarginBtn onClick={sendTransaction}>{
                                         isFounderCoinBuilder ? <SmallText>Buy Founder Coin</SmallText> :
                                         isDiscountedCoinBuilder ? <SmallText>Buy Discount Coin</SmallText> :
@@ -127,7 +127,7 @@ export const CoinBuilder = () => {
                                     }</TopMarginBtn>
                                 )
                             }
-                            { isWrongNet ? <CenteredLargeText>Please Change Network</CenteredLargeText> : isConnected === false ? <CenteredLargeText>Please Connect</CenteredLargeText> : null}
+                            { netId === 0 || netId === 1 ? <CenteredLargeText>Please Change Network</CenteredLargeText> : address === null ? <CenteredLargeText>Please Connect</CenteredLargeText> : null}
                         </CanvasPanel>
                     </ViewStyle>
                 )

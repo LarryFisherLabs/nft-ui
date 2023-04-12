@@ -1,77 +1,71 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
-import { getProvider } from "../../utils/ethers-utils";
-import { error } from "../slices/connectSlice";
+import { getNetId, getProvider } from "../../utils/ethers-utils";
+import { addPopup, error, updateAccount, updateNetId } from "../slices/connectSlice";
+import { walletErrors } from "../../utils/json-constants/walletErr";
+import { popupTypes } from "../../utils/json-constants/popupInfo";
+import { netInfo } from "../../utils/json-constants/networkInfo";
 
-// !!! network ids !!!
-// 0 sepolia
-// 1 goerli
-
-const expectedChainId = [11155111, 5]
-const chainParams = [
-  {
-    chainName: 'Sepolia Testnet',
-    chainId: ethers.utils.hexlify(expectedChainId[0]),
-    nativeCurrency: { name: 'SepoliaETH', decimals: 18, symbol: 'SEP' },
-    rpcUrls: ['https://sepolia.infura.io/v3/']
-  },
-  {
-    chainName: 'Goerli Testnet',
-    chainId: '0x5',
-    nativeCurrency: { name: 'GoerliETH', decimals: 18, symbol: 'GOE' },
-    rpcUrls: ['https://goerli.infura.io/v3/']
+export const idleConnect = createAsyncThunk(
+  "connectSlice/idleConnect",
+  async (_, { dispatch }) => {
+    try {
+      const accs = await window.ethereum.request({ method: "eth_accounts" })
+      if (accs[0]) dispatch(updateAccount({ account: accs[0] }))
+      const netId = await getNetId()
+      if (netId !== null) dispatch(updateNetId({ netId: netId }))
+    } catch (err) {
+      dispatch(error({ error: err.message }))
+    }
   }
-]
+)
 
 export const connect = createAsyncThunk(
   "connectSlice/connect",
-  async (_, { getState }) => {
+  async (_, { dispatch, getState }) => {
     try {
+      const netFromState = getState().connectSlice.netId
+      if (netFromState === null) {
+        const netId = await getNetId()
+        if (netId !== null) dispatch(updateNetId({ netId: netId }))
+      }
       const provider = getProvider()
-      const isConnected = getState().connectSlice.isConnected
-      const accs = await window.ethereum.request({ method: "eth_accounts" })
-      const network = await provider.getNetwork()
-      const netId = network.chainId === expectedChainId[0] ? 0 : network.chainId === expectedChainId[1] ? 1 : null
-      if (netId === null) return { isWrongNet: true }
-      else if (accs[0]) return { account: accs[0], netId: netId }
-      else if (isConnected === false) {
-        const accounts = await provider.send("eth_requestAccounts", []);
-        return { account: accounts[0], netId: netId }
-      } else return { netId: netId }
+      const accounts = await provider.send("eth_requestAccounts", []);
+      dispatch(updateAccount({ account: accounts[0] }))
     } catch (err) {
-      return {
-        status: "failed",
-        error: err.message
-      };
+      const msg = err.message
+      if (msg.includes(walletErrors.braveReject) || msg.includes(walletErrors.metamaskReject)) dispatch(addPopup({ id: popupTypes.txDenied }))
+      else dispatch(error({ error: msg }))
     }
   }
-);
+)
 
 export const changeNet = createAsyncThunk(
   "connectSlice/changeNet",
-  async (netId, { dispatch, getState }) => {
+  async (newNetId, { dispatch, getState }) => {
     try {
       const status = getState().connectSlice.status
-      if (status === 'offline') window.location = window.location.pathname + '?netId=' + netId
+      if (status === 'offline') window.location = window.location.pathname + '?netId=' + newNetId
       else {
-        // 0x5 must be hardcoded as hexlify leaves padding zeros for expectedChainId[1]
-        const chainId = netId === 0 ? ethers.utils.hexlify(expectedChainId[netId]) : '0x5'
+        const netIdHex = netInfo[newNetId].chainId
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: chainId }]
+          params: [{ chainId: netIdHex }]
         });
       }
     } catch (err) {
       if (err.code === 4902) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: [
-            chainParams[netId]
-          ]
-        });
-      } else if (!err.contains('User rejected')) {
-        dispatch(error({ error: err }))
-      }
+          params: [{
+            chainName: netInfo[newNetId].chainName,
+            chainId: netInfo[newNetId].chainId,
+            nativeCurrency: netInfo[newNetId].nativeCurrency,
+            rpcUrls: netInfo[newNetId].rpcUrls
+          }]
+        })
+      } else if (err.message.includes(walletErrors.braveReject) || err.message.includes(walletErrors.metamaskReject)) dispatch(addPopup({ id: popupTypes.txDenied }))
+        else dispatch(error({ error: err.message }))
     }
   }
 );
