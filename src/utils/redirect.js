@@ -33,3 +33,11 @@ export const goToCollectionView = (pathName, pageNumber) => {
     const fullPath = '/' + pathName + '/' + pageNumber
     if (!window.location.pathname.includes(fullPath)) goTo(fullPath)
 }
+
+export const goToTools = () => {
+    goTo('/tools')
+}
+
+export const goToNFTApprovals = () => {
+    goTo('/tools/nft-approvals')
+}
