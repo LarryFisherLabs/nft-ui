@@ -122,7 +122,7 @@ export const CoinBuilder = () => {
                             <IndentedText>Amount of eth to send:</IndentedText>
                             <StyledInput type="number" step=".0001" onChange={onInputChange} />
                             {
-                                coinStatus === 'buying coin' || address === null || netId === 0 || netId === 1 ? null : (
+                                coinStatus === 'buying coin' || minPrices.bronze === null ? null : (
                                     <TopMarginBtn onClick={sendTransaction}>{
                                         isFounderCoinBuilder ? <SmallText>Buy Founder Coin</SmallText> :
                                         isDiscountedCoinBuilder ? <SmallText>Buy Discount Coin</SmallText> :
