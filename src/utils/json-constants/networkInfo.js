@@ -10,6 +10,8 @@ export const netInfo = {
         localName: 'sepolia',
         coinContract: "0xc65480c0fcb7f2bef837aab38800a10b7e38be94",
         antContract: "0x85c995570e03051ca1e610e15e34abe2cfca649d",
+        testBitDaoContract: "0x94E58F810aB066cA932225C72b7e6Cfa948E5A70",
+        testBitDaoContract2: "0x3EdcadF16ad4474e257Dac92605e6Ba6EF04C922",
         chainName: 'Sepolia Testnet',
         chainId: ethers.utils.hexlify(11155111),
         nativeCurrency: { name: 'SepoliaETH', decimals: 18, symbol: 'SEP' },

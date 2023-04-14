@@ -45,7 +45,7 @@ export const AppView = () => {
           isFormattedRemoteProfile() ? <Profile remoteAddress={window.location.pathname.split('/')[1]} /> :
           (window.location.pathname === '/admin') && isAdmin ? <AdminPage /> :
           window.location.pathname === '/tools' ? <ToolsPage toolIndex={null} /> :
-          window.location.pathname === '/tools/nft-approvals' ? <ToolsPage toolIndex={0} /> :
+          window.location.pathname === '/tools/approval-manager' ? <ToolsPage toolIndex={0} /> :
           <p>Out of bounds!</p> :
         <Text>{status}</Text>
       }
