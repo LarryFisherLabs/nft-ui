@@ -5,10 +5,11 @@ import { NumberedPageNav } from "../components/NumberedPageNav"
 import { selectNetId, selectStatus } from "../redux/slices/connectSlice"
 import { selectAntDiscountString, selectAntName, selectIsOwnedByUser, selectNftOwner, selectNftViewErr, selectTotalNftCount } from "../redux/slices/nftViewSlice"
 import { changeAntName, loadNftCount, loadNftInfo } from "../redux/thunks/nftViewThunks"
-import { CanvasPanel, InputWithFlatSide, LargeAntImg, LargeCoinImg, LargeText, Text, TextLink, ThinStyledButton, Title, ViewStyle } from "../styles/general"
+import { CanvasPanel, CenteredText, InputWithFlatSide, LargeAntImg, LargeCoinImg, LargeText, Text, TextLink, ThinStyledButton, Title, ViewStyle } from "../styles/general"
 import { getViewLevel } from "../utils/deviceType"
 import { getHref, goToNftView } from "../utils/redirect"
 import { useDefaultNetwork } from "../utils/hooks/hooks-general"
+import { ProfilePanel } from "./ToolsPage"
 
 const NftPanel = styled(CanvasPanel)`
     align-items: center;
@@ -109,7 +110,7 @@ export const NftView = () => {
     return (
         <ViewStyle>
             {
-                nftViewErr !== null ? <Text>{nftViewErr}</Text> :
+                nftViewErr !== null ? <ProfilePanel><CenteredText>{nftViewErr}</CenteredText></ProfilePanel> :
                 totalNftCount === null ? <Text>Loading NFT...</Text> :
                 (nftIndex >= totalNftCount) && (totalNftCount !== null) ? <Text>NFT has not been minted yet</Text> :
                 [

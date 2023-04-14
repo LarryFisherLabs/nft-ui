@@ -59,7 +59,7 @@ export const owner = async () => {
 
 export const balanceOf = async (address) => {
     const coinContract = await getCoinContract()
-    return parseInt(await coinContract.balanceOf(address), 16)
+    return parseInt(await coinContract.balanceOf(address))
 }
 
 export const getCoin = async (id) => {

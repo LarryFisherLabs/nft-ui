@@ -6,7 +6,7 @@ import { AntBuilder } from './AntBuilder'
 import { AdminPage } from './AdminPage'
 import { CoinBuilder } from './CoinBuilder'
 
-import { Text } from '../styles/general'
+import { CenteredText, Text } from '../styles/general'
 import { selectAccount, selectErr, selectNetId, selectStatus } from '../redux/slices/connectSlice'
 import { loadCoinAdmin } from '../redux/thunks/coinAdminThunks'
 import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
@@ -15,7 +15,7 @@ import { NftView } from './NftView'
 import { NftCollection } from './NftCollection'
 import { Header } from '../components/header/Header'
 import { isFormattedBuilder, isFormattedCollectionView, isFormattedNftViewUrl, isFormattedRemoteProfile } from '../utils/url-utils/isUrlFormatted'
-import { ToolsPage } from './ToolsPage'
+import { ProfilePanel, ToolsPage } from './ToolsPage'
 
 export const AppView = () => {
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ export const AppView = () => {
   const address = useSelector(selectAccount)
 
   useEffect(() => {
-    if (status === 'succeeded' && address !== null && isAdmin === null && netId !== 0 && netId !== 1) dispatch(loadCoinAdmin())
+    if (status === 'succeeded' && address !== null && isAdmin === null && netId !== 0 && netId !== 1 && netId !== null) dispatch(loadCoinAdmin())
   }, [status, dispatch, address, isAdmin, netId])
 
   return (
@@ -35,7 +35,7 @@ export const AppView = () => {
       <Header />
       {
         status === 'idle' ? <Text>loading...</Text> :
-        status === 'failed' ? <p>{errorMsg}</p> :
+        status === 'failed' ? <ProfilePanel><CenteredText>{errorMsg}</CenteredText></ProfilePanel> :
         status === 'succeeded' || status === 'offline' ? 
           window.location.pathname === '/' ? <Profile /> :
           isFormattedBuilder(true) ? <CoinBuilder /> :

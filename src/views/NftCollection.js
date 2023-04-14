@@ -5,9 +5,10 @@ import { NumberedPageNav } from "../components/NumberedPageNav"
 import { selectNetId, selectStatus } from "../redux/slices/connectSlice"
 import { selectNftViewErr, selectTotalNftCount } from "../redux/slices/nftViewSlice"
 import { loadNftCount } from "../redux/thunks/nftViewThunks"
-import { AntImg, CoinImg, NftGrid, Panel, Text, Title, ViewStyle } from "../styles/general"
+import { AntImg, CenteredText, CoinImg, NftGrid, Panel, Text, Title, ViewStyle } from "../styles/general"
 import { goToCollectionView, goToNftView } from "../utils/redirect"
 import { useDefaultNetwork } from "../utils/hooks/hooks-general"
+import { ProfilePanel } from "./ToolsPage"
 
 const nftsPerPage = 8
 
@@ -71,7 +72,7 @@ export const NftCollection = () => {
     return (
         <ViewStyle>
             {
-                nftViewErr !== null ? <Text>{nftViewErr}</Text> :
+                nftViewErr !== null ? <ProfilePanel><CenteredText>{nftViewErr}</CenteredText></ProfilePanel> :
                 maxPageIndex === null ? <Text>Loading collection...</Text> :
                 [
                     <Panel key={'collection-panel'} startIndex={startIndex} finishIndex={finishIndex}>
