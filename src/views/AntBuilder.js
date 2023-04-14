@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from "../components/LayerButtons.js";
-import { ViewStyle, Title, Text, Title2CrossHair, Title4 } from "../styles/general.js";
+import { ViewStyle, Title, Text, Title2CrossHair, Title4, CenteredText } from "../styles/general.js";
 import { getAntPrices, getPartInventories } from "../redux/thunks/antThunks.js";
 import { selectAntErrMsg, selectAntStatus, selectDiscountInfo, updateCoinInfo } from "../redux/slices/antSlice.js";
 import { AntCanvas } from "../components/canvas/AntCanvas.js";
 import { staticLayerInfo } from "../utils/ant-utils/staticAntInfo.js";
 
 import styled from "styled-components";
-import { selectCoinErr, selectCoins, selectCoinStatus, selectIsCoinAdmin } from "../redux/slices/coinSlice.js";
+import { selectCoinErr, selectCoins, selectCoinStatus } from "../redux/slices/coinSlice.js";
 import { loadCoinsForAntBuilder } from "../redux/thunks/coinThunk.js";
-import { selectNetId } from "../redux/slices/connectSlice.js";
+import { selectAccount, selectNetId } from "../redux/slices/connectSlice.js";
 import { getViewLevel } from "../utils/deviceType.js";
+import { ProfilePanel } from "./ToolsPage.js";
 
 export const Editor = styled.div`
   display: flex;
@@ -46,20 +47,18 @@ const BlackTitle = styled(Title4)`
 
 export const AntBuilder = () => {
   const dispatch = useDispatch();
+  const address = useSelector(selectAccount)
   const antStatus = useSelector(selectAntStatus);
-  const isAdmin = useSelector(selectIsCoinAdmin);
-  const err = useSelector(selectAntErrMsg);
+  const errorMsg = useSelector(selectAntErrMsg);
   const coinStatus = useSelector(selectCoinStatus);
   const coins = useSelector(selectCoins, shallowEqual);
   const coinErr = useSelector(selectCoinErr);
   const selectedCoinInfo = useSelector(selectDiscountInfo, shallowEqual);
   const netId = useSelector(selectNetId);
   const [isCoinPanelOpen, toggleCoinPanel] = useState(true);
-  const [isFirstCoin, updateIsFirstCoin] = useState(true);
-  const [isFirstAnt, updateIsFirstAnt] = useState(true);
 
-  const coinClick = (isDisabled, coinId, coinColor) => {
-    if (!isDisabled && antStatus !== "Buying ant...") {
+  const coinClick = (coinId, coinColor) => {
+    if (antStatus !== "Buying ant...") {
       if (selectedCoinInfo[1] === coinId) {
         dispatch(updateCoinInfo({ discountIndex: 0, coinId: null }));
         dispatch(getAntPrices({ discountIndex: 0 }));
@@ -75,24 +74,22 @@ export const AntBuilder = () => {
   };
 
   useEffect(() => {
-    if (antStatus === "idle" && isAdmin !== null && isFirstAnt) {
-      dispatch(getPartInventories());
-      updateIsFirstAnt(false);
+    if (antStatus === 'idle' && address !== null && netId !== 0 && netId !== 1 && netId !== null) {
+      dispatch(getPartInventories())
     }
-  }, [antStatus, isAdmin, dispatch, isFirstAnt]);
+  }, [antStatus, dispatch, netId, address])
 
   useEffect(() => {
-    if (coinStatus === "idle" && isAdmin !== null && isFirstCoin) {
-      dispatch(loadCoinsForAntBuilder());
-      updateIsFirstCoin(false);
+    if (antStatus === 'succeeded' && coinStatus === 'idle' && address !== null && netId !== 0 && netId !== 1 && netId !== null) {
+      dispatch(loadCoinsForAntBuilder())
     }
-  }, [isAdmin, dispatch, coinStatus, isFirstCoin]);
+  }, [antStatus, coinStatus, dispatch, netId, address])
 
   return (
     <ViewStyle>
       <Title>Ant Builder</Title>
       {antStatus === "failed" ? (
-        <Text>{err}</Text>
+        <ProfilePanel><CenteredText>{errorMsg}</CenteredText></ProfilePanel>
       ) : (
         <Editor>
           <AntCanvas />
@@ -112,16 +109,15 @@ export const AntBuilder = () => {
                       "/coins/images/" +
                       coin.id;
                     const isSelected = selectedCoinInfo[1] === coin.id;
-
+                    if (coin.isDiscountUsed) return null
                     return (
                       <Button
                         key={index}
                         onClick={() =>
-                          coinClick(coin.isDiscountUsed, coin.id, coin.color)
+                          coinClick(coin.id, coin.color)
                         }
                         srcFile={srcFile}
                         isSelected={isSelected}
-                        isDisabled={coin.isDiscountUsed}
                       >
                         <BlackTitle>
                           {coin.color === 0

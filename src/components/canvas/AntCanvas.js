@@ -7,7 +7,7 @@ import { recursiveDraw, baseElements } from "../../utils/ant-utils/antCanvasUtil
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
-import { addPopup, selectAccount, selectNetId, selectStatus } from "../../redux/slices/connectSlice"
+import { addPopup, selectAccount, selectNetId } from "../../redux/slices/connectSlice"
 import { getViewLevel } from "../../utils/deviceType"
 import { popupTypes } from "../../utils/json-constants/popupInfo"
 
@@ -114,7 +114,6 @@ const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
 
 export const AntCanvas = () => {
     const dispatch = useDispatch()
-    const connectStatus = useSelector(selectStatus)
     const address = useSelector(selectAccount)
     const netId = useSelector(selectNetId)
     const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
@@ -126,18 +125,22 @@ export const AntCanvas = () => {
 
     useEffect(() => {
         const ctx = canvas.current.getContext('2d')
-        if (connectStatus === 'succeeded' || connectStatus === "offline") updateAntCanvas(ctx, selectedIndexes)
-        if (pricesFromState[0] !== null && pricesFromState[0] !== prices[0]) updatePrices([...pricesFromState])
-        if (antStatus !== 'Buying ant...') {
-            let price = 0
-            selectedIndexes.forEach((partIndex, sectionIndex) => {
-                if (staticLayerInfo[sectionIndex].elements[partIndex].rarity > 0) {
-                    price += parseFloat(prices[staticLayerInfo[sectionIndex].elements[partIndex].rarity - 1]) * 100000
-                }
-            })
-            updatePrice((price + parseFloat(prices[0]) * 1100000) / 100000)
-        }
-    }, [connectStatus, antStatus, selectedIndexes, prices, pricesFromState, canvas])
+        updateAntCanvas(ctx, selectedIndexes)
+    }, [selectedIndexes])
+
+    useEffect(() => {
+        updatePrices([...pricesFromState])
+    }, [pricesFromState])
+
+    useEffect(() => {
+        let price = 0
+        selectedIndexes.forEach((partIndex, sectionIndex) => {
+            if (staticLayerInfo[sectionIndex].elements[partIndex].rarity > 0) {
+                price += parseFloat(prices[staticLayerInfo[sectionIndex].elements[partIndex].rarity - 1]) * 100000
+            }
+        })
+        updatePrice((price + parseFloat(prices[0]) * 1100000) / 100000)
+    }, [selectedIndexes, prices])
 
     const buyAnt = () => {
         dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))

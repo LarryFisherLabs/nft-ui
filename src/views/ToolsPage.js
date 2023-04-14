@@ -170,7 +170,7 @@ export const ToolsPage = ({ toolIndex }) => {
     }
 
     if (toolErr !== null) return (
-        <Text>{toolErr}</Text>
+        <ProfilePanel><CenteredText>{toolErr}</CenteredText></ProfilePanel>
     )
 
     return (

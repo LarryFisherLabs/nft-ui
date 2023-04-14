@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { CanvasPanel, CenteredLargeText, IndentedText, LargeText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
+import { CanvasPanel, CenteredLargeText, CenteredText, IndentedText, LargeText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
 
 import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
@@ -8,6 +8,7 @@ import { CoinCanvas, getColor } from '../components/canvas/CoinCanvas'
 import { addPopup, selectAccount, selectNetId } from '../redux/slices/connectSlice'
 import styled from 'styled-components'
 import { popupTypes } from '../utils/json-constants/popupInfo'
+import { ProfilePanel } from './ToolsPage'
 
 const BronzeText = styled(LargeText)`
     padding-left: .7rem;
@@ -36,7 +37,7 @@ export const CoinBuilder = () => {
     const founder = useSelector(selectFounder, shallowEqual)
     const userBalance = useSelector(selectUserBalance)
     const address = useSelector(selectAccount)
-    const coinError = useSelector(selectCoinErr)
+    const errorMsg = useSelector(selectCoinErr)
 
     const [canvasAmount, updateAmount] = useState()
     const [isFounderCoinBuilder, updateIsFCB] = useState(null)
@@ -74,21 +75,23 @@ export const CoinBuilder = () => {
     }
 
     useEffect(() => {
-        if (coinStatus === 'idle' && address !== null && netId !== 0 && netId !== 1) {
+        if (coinStatus === 'idle' && address !== null && netId !== 0 && netId !== 1 && netId !== null) {
             dispatch(loadBuilder())
-        } else if (coinStatus === 'succeeded') {
-            if (isFounderCoinBuilder === null) {
-                updateIsFCB(founder.value > 0 && founder.isFCMinted === false)
-                updateIsDCB(founder.value > 0 && founder.isFCMinted === true && founder.isFCDiscountUsed === false)
-            }
         }
-    }, [coinStatus, dispatch, founder, isFounderCoinBuilder, address, netId])        
+    }, [coinStatus, dispatch, netId, address])
+
+    useEffect(() => {
+        if (founder.value > 0) {
+            updateIsFCB(founder.isFCMinted === false)
+            updateIsDCB(founder.isFCMinted === true && founder.isFCDiscountUsed === false)
+        }
+    }, [founder])        
 
     return (
         <ViewStyle>
             <Title>Coin Builder</Title>
             {
-                (coinStatus === 'failed') ? <Text>{coinError}</Text> : (
+                (coinStatus === 'failed') ? <ProfilePanel><CenteredText>{errorMsg}</CenteredText></ProfilePanel> : (
                     <ViewStyle>
                         <Title2>{
                             userBalance > 0 ? "Add to your collection" :
@@ -107,7 +110,7 @@ export const CoinBuilder = () => {
                                         <Text>Get your founder coin for free or add value to it</Text>
                                     </TextBlock>) : (
                                     <TextBlock>
-                                        <LargeText>{address === null ? 'Demo ' : null}Minimum Prices:</LargeText>
+                                        <LargeText>{minPrices.bronze === null ? 'Demo ' : null}Minimum Prices:</LargeText>
                                         <BronzeText>Bronze coin: {minPrices.bronze || .001} eth</BronzeText>
                                         <SilverText>Silver coin: {minPrices.silver || .002} eth</SilverText>
                                         <GoldText>Gold coin: {minPrices.gold || .003} eth</GoldText>
