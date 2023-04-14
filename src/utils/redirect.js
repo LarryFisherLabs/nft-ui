@@ -38,6 +38,6 @@ export const goToTools = () => {
     goTo('/tools')
 }
 
-export const goToNFTApprovals = () => {
-    goTo('/tools/nft-approvals')
+export const goToApprovalManager = () => {
+    goTo('/tools/approval-manager')
 }

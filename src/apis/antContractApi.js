@@ -33,7 +33,6 @@ export const createAnt = async (dna, value) => {
 
 export const createDiscountAnt = async (coinId, dna, value) => {
     const antContract = await getAntContract()
-    console.log("coin id: " + coinId + " dna: " + dna + " value: " + ethers.utils.parseEther(value.toString()))
     return await antContract.createDiscountAnt(coinId, dna, { value: ethers.utils.parseEther(value.toString()) })
 }
 
