@@ -9,6 +9,7 @@ import { useConnectButtonAction } from "../../utils/hooks/connectButtonActionHoo
 import { useReduxErrCheckAll } from "../../utils/hooks/reduxErrHooks"
 
 const StyledConnectButton = styled(StyledButton)`
+  pointer-events: auto;
   padding: .2rem;
   font-size: 1.1rem;
   margin-right: 1rem;
