@@ -8,7 +8,7 @@ import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
 import { addPopup, selectAccount, selectNetId } from "../../redux/slices/connectSlice"
-import { getViewLevel } from "../../utils/deviceType"
+import { getHeightViewLevel, getViewLevel, getWidthOrHeightViewLevel, getWidthAndHeightViewLevel } from "../../utils/deviceType"
 import { popupTypes } from "../../utils/json-constants/popupInfo"
 
 const updateAntCanvas = (ctx, indexes) => {
@@ -26,8 +26,13 @@ const updateAntCanvas = (ctx, indexes) => {
 
 export const StickyButton = styled(StyledButton)`
     margin-top: 5px; 
-    @media ${getViewLevel(3)} {
+    @media ${getWidthOrHeightViewLevel(3, 3)} {
+        margin-top: 3px; 
         font-size: 1rem;
+    }
+    @media ${getHeightViewLevel(4)} {
+        margin-top: 1px; 
+        font-size: .83rem;
     }
 `
 
@@ -47,20 +52,26 @@ export const LargerText = styled.div`
     @media ${getViewLevel(2)} {
         font-size: 1.1rem;
     }
-    @media ${getViewLevel(3)} {
+    @media ${getWidthOrHeightViewLevel(3, 0)} {
         font-size: 1rem;
     }
-    @media ${getViewLevel(4)} {
+    @media ${getWidthOrHeightViewLevel(4, 2)}, ${getWidthAndHeightViewLevel(3, 1)} {
         font-size: .9rem;
     }
-    @media ${getViewLevel(5)} {
+    @media ${getWidthOrHeightViewLevel(5, 3)}, ${getWidthAndHeightViewLevel(3, 2)} {
         font-size: .8rem;
+    }
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 3)} {
+        font-size: .73rem;
     }
 `
 
 const BlackText = styled(LargerText)`
     color: black;
     padding-bottom: .3rem;
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 3)} {
+        padding-bottom: .2rem;
+    }
 `
 
 const BrownText = styled(LargerText)`
@@ -86,14 +97,18 @@ const TopPaddingText = styled(LargerText)`
     @media ${getViewLevel(2)} {
         font-size: 1.2rem;
     }
-    @media ${getViewLevel(3)} {
+    @media ${getWidthOrHeightViewLevel(3, 0)} {
         font-size: 1.1rem;
     }
-    @media ${getViewLevel(4)} {
+    @media ${getWidthOrHeightViewLevel(4, 2)}, ${getWidthAndHeightViewLevel(3, 1)} {
         font-size: 1rem;
     }
-    @media ${getViewLevel(5)} {
+    @media ${getWidthOrHeightViewLevel(5, 3)}, ${getWidthAndHeightViewLevel(3, 2)} {
         font-size: .9rem;
+    }
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 3)} {
+        padding-top: .25rem;
+        font-size: .83rem;
     }
 `
 
@@ -129,7 +144,7 @@ export const AntCanvas = () => {
     }, [selectedIndexes])
 
     useEffect(() => {
-        updatePrices([...pricesFromState])
+        if (pricesFromState[0] !== null) updatePrices([...pricesFromState])
     }, [pricesFromState])
 
     useEffect(() => {

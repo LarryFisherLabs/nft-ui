@@ -14,6 +14,7 @@ import { isFormattedAntCollectionView, isFormattedCoinCollectionView } from "../
 import { SecondaryConnectButton } from "./SecondaryConnectButton"
 
 const StyledOptions = styled.div`
+  pointer-events: auto;
   justify-self: flex-end;
   flex-flow: column nowrap;
   @media ${getViewLevel(4)} {

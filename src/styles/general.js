@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { getViewLevel } from '../utils/deviceType'
+import { getHeightViewLevel, getViewLevel, getWidthAndHeightViewLevel, getWidthOrHeightViewLevel } from '../utils/deviceType'
 
 // pagelayout
 export const ViewStyle = styled.div`
@@ -146,21 +146,31 @@ export const Canvas = styled.canvas`
 `
 
 export const StyledAntCanvas = styled(Canvas)`
-    @media ${getViewLevel(0)} {
+    @media ${getWidthOrHeightViewLevel(0, 0)} {
         width: 355px;
         height: 355px;
     }
-    @media ${getViewLevel(1)} {
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
         width: 300px;
         height: 300px;
     }
-    @media ${getViewLevel(2)} {
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
         width: 250px;
         height: 250px;
     }
-    @media ${getViewLevel(4)} {
+    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
         width: 220px;
         height: 220px;
+        margin: 7px;
+    }
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
+        width: 200px;
+        height: 200px;
+        margin: 4px;
+    }
+    @media ${getWidthAndHeightViewLevel(3, 3)} {
+        width: 190px;
+        height: 190px;
     }
 `
 

@@ -5,6 +5,7 @@ import { getViewLevel } from "../../utils/deviceType"
 import { getHref } from "../../utils/redirect"
 
 const Nav = styled.div`
+  pointer-events: auto;
   margin-left: 2rem;
   background-color: rgb(145, 162, 230);
   width: fit-content;

@@ -7,6 +7,7 @@ import { OptionsMenu } from './OptionsMenu'
 
 const StickyHeader = styled.header`
     z-index: 2;
+    pointer-events: none;
     position: sticky;
     top: 0;
     display: flex;
@@ -29,6 +30,7 @@ const HeaderWrapper = styled.header`
 `
 
 const HomeButton = styled.a`
+    pointer-events: auto;
     background-image: url('/favicon.ico');
     background-size: contain;
     width: 45px;
