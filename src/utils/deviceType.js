@@ -10,7 +10,7 @@ export const getHeightViewLevel = (viewLevelIndex) => {
 }
 
 export const getWidthOrHeightViewLevel = (widthPixelIndex, heightPixelIndex) => {
-    return `(max-width: ${viewLevelMaxWidth[widthPixelIndex]}px) or (max-height: ${viewLevelMaxHeight[heightPixelIndex]}px)`
+    return `(max-width: ${viewLevelMaxWidth[widthPixelIndex]}px), (max-height: ${viewLevelMaxHeight[heightPixelIndex]}px)`
 }
 
 export const getWidthAndHeightViewLevel = (widthPixelIndex, heightPixelIndex) => {
