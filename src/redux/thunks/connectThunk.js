@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ethers } from "ethers";
 import { getNetId, getProvider } from "../../utils/ethers-utils";
-import { addPopup, error, updateAccount, updateNetId } from "../slices/connectSlice";
+import { addPopup, error, updateAccount, updateNetId, updateStatus } from "../slices/connectSlice";
 import { walletErrors } from "../../utils/json-constants/walletErr";
 import { popupTypes } from "../../utils/json-constants/popupInfo";
 import { netInfo } from "../../utils/json-constants/networkInfo";
@@ -15,7 +14,12 @@ export const idleConnect = createAsyncThunk(
       const netId = await getNetId()
       if (netId !== null) dispatch(updateNetId({ netId: netId }))
     } catch (err) {
-      dispatch(error({ error: err.message }))
+      if (err.message.includes("internal error")) {
+        dispatch(updateStatus({ status: 'offline' }))
+        dispatch(updateNetId({ netId: 5 }))
+        dispatch(addPopup({ id: popupTypes.reconnect }))
+      }
+      else dispatch(error({ error: err.message }))
     }
   }
 )

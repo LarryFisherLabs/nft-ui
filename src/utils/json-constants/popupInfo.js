@@ -1,4 +1,4 @@
-const antConflictsStartIndex = 16
+const antConflictsStartIndex = 17
 const shortTimer = 3
 const normTimer = 7
 const longTimer = 10
@@ -20,6 +20,7 @@ export const popupTypes = {
     gettingApprovalsForAll: 13,
     removingApproval: 14,
     removingApprovalForAll: 15,
+    reconnect: 16,
     antConflict: {
         gasMask: {
             eod: antConflictsStartIndex,
@@ -117,6 +118,10 @@ export const popupDetailsById = [
     },
     {
         msg: 'Removing approval for all, page will update when transaction is complete',
+        timer: longTimer
+    },
+    {
+        msg: 'Please reconnect',
         timer: longTimer
     },
     {
