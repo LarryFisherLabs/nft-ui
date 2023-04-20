@@ -27,6 +27,11 @@ const StyledOptionsButton = styled(StyledButton)`
   padding: .5rem;
   background-color: #946cb0;
   min-width: 45px;
+  @media ${getViewLevel(6)} {
+    min-width: 37px;
+    padding: .32rem;
+    margin-right: -.1rem;
+  }
 `
 
 const StyledOptionsPanel = styled.div`

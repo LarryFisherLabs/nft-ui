@@ -168,7 +168,8 @@ export const StyledAntCanvas = styled(Canvas)`
         height: 200px;
         margin: 4px;
     }
-    @media ${getWidthAndHeightViewLevel(3, 3)} {
+    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
+        margin: 2.5px;
         width: 190px;
         height: 190px;
     }

@@ -30,7 +30,7 @@ export const StickyButton = styled(StyledButton)`
         margin-top: 3px; 
         font-size: 1rem;
     }
-    @media ${getHeightViewLevel(4)} {
+    @media ${getHeightViewLevel(4), getViewLevel(6)} {
         margin-top: 1px; 
         font-size: .83rem;
     }
@@ -42,6 +42,9 @@ export const ColoredTextBlock = styled(TextBlock)`
     border-radius: 16px;
     @media ${getViewLevel(3)} {
         background-color: #8f7ae3;
+    }
+    @media ${getViewLevel(6)} {
+        padding: 2px;
     }
 `
 
@@ -71,6 +74,9 @@ const BlackText = styled(LargerText)`
     padding-bottom: .3rem;
     @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 3)} {
         padding-bottom: .2rem;
+    }
+    @media ${getViewLevel(6)} {
+        padding-bottom: .1rem;
     }
 `
 
@@ -110,6 +116,9 @@ const TopPaddingText = styled(LargerText)`
         padding-top: .25rem;
         font-size: .83rem;
     }
+    @media ${getViewLevel(6)} {
+        padding-top: .1rem;
+    }
 `
 
 export const AntCanvasPanel = styled(Panel)`
@@ -123,6 +132,9 @@ export const AntCanvasPanel = styled(Panel)`
     }
     @media ${getViewLevel(4)} {
         top: 4.7rem;
+    }
+    @media ${getViewLevel(6)} {
+        top: 4.2rem;
     }
 `
 const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
