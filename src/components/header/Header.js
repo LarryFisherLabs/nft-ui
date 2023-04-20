@@ -39,6 +39,11 @@ const HomeButton = styled.a`
         margin-top: -.6rem;
         margin-left: -.4rem;
     }
+    @media ${getViewLevel(6)} {
+        width: 38px;
+        height: 38px;
+        margin-left: -.5rem;
+    }
 `
 
 export const Header = () => {

@@ -37,6 +37,10 @@ export const Button = styled.div`
         width: 120px;
         height: 120px;
     }
+    @media ${getViewLevel(6)} {
+        width: 100px;
+        height: 100px;
+    }
 `
 
 export const ButtonsPanel = styled(CanvasPanel)`
