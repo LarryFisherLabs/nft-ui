@@ -33,7 +33,7 @@ export const MappedNfts = ({ startIndex, finishIndex }) => {
         <NftGrid>{
             nftSrcArray.map((imgSrc, i) => {
                 if (nftType === 0) return (<CoinImg onClick={() => goToNftView('coin', i + startIndex)} src={imgSrc} key={i} />)
-                else return (<AntImg onClick={() => goToNftView('ant', i)} src={imgSrc} key={i} />)
+                else return (<AntImg onClick={() => goToNftView('ant', i + startIndex)} src={imgSrc} key={i} />)
             })
         }</NftGrid>
     )

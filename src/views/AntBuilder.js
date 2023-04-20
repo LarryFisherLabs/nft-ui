@@ -56,6 +56,7 @@ export const AntBuilder = () => {
   const selectedCoinInfo = useSelector(selectDiscountInfo, shallowEqual);
   const netId = useSelector(selectNetId);
   const [isCoinPanelOpen, toggleCoinPanel] = useState(true);
+  const [areAllCoinsSpent, setAreCoinsSpent] = useState(null)
 
   const coinClick = (coinId, coinColor) => {
     if (antStatus !== "Buying ant...") {
@@ -109,7 +110,11 @@ export const AntBuilder = () => {
                       "/coins/images/" +
                       coin.id;
                     const isSelected = selectedCoinInfo[1] === coin.id;
-                    if (coin.isDiscountUsed) return null
+                    if (coin.isDiscountUsed) {
+                      if (index === coins.length - 1 && areAllCoinsSpent === null) setAreCoinsSpent(true)
+                      return null
+                    }
+                    if (areAllCoinsSpent === null) setAreCoinsSpent(false)
                     return (
                       <Button
                         key={index}
@@ -132,7 +137,7 @@ export const AntBuilder = () => {
                         </BlackTitle>
                         <ButtonBottom>
                           <ToggledRemove isDisabled={isSelected}>
-                            <Text>Remove</Text>
+                            <BlackTitle>Remove</BlackTitle>
                           </ToggledRemove>
                         </ButtonBottom>
                       </Button>
@@ -146,6 +151,7 @@ export const AntBuilder = () => {
                     all future collections!
                   </Text>
                 )}
+                {areAllCoinsSpent === true ? <Text>All coin discounts used! Mint another from the coin builder.</Text> : null}
               </SectionButtons>
             </ButtonsPanel>
             {staticLayerInfo.map((_, index) => {

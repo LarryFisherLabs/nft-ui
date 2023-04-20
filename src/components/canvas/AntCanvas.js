@@ -30,7 +30,7 @@ export const StickyButton = styled(StyledButton)`
         margin-top: 3px; 
         font-size: 1rem;
     }
-    @media ${getHeightViewLevel(4), getViewLevel(6)} {
+    @media ${getHeightViewLevel(4)}, ${getViewLevel(6)} {
         margin-top: 1px; 
         font-size: .83rem;
     }
