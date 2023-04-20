@@ -1,4 +1,4 @@
-export const viewLevelMaxWidth = [1183, 1034, 937, 847, 647, 500]
+export const viewLevelMaxWidth = [1183, 1034, 937, 847, 647, 500, 450]
 export const viewLevelMaxHeight = [747, 632, 579, 513, 472]
 
 export const getViewLevel = (viewLevelIndex) => {

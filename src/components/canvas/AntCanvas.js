@@ -124,6 +124,9 @@ export const AntCanvasPanel = styled(Panel)`
     @media ${getViewLevel(4)} {
         top: 4.7rem;
     }
+    @media ${getViewLevel(6)} {
+        top: 4.5rem;
+    }
 `
 const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
 

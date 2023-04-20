@@ -27,6 +27,9 @@ const StyledConnectButton = styled(StyledButton)`
     margin-top: -.6rem;
     font-size: .85rem;
   }
+  @media ${getViewLevel(6)} {
+    font-size: .78rem;
+  }
 `
 
 // index 0 is inline connect button for desktop/larger screen
