@@ -15,6 +15,7 @@ const PopupPanel = styled.div`
     border-color: buttonborder;
     position: fixed;
     text-align: center;
+    margin-left: .7rem;
     cursor: pointer;
     padding: 0rem;
     right: -14rem;

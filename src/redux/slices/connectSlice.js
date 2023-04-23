@@ -60,7 +60,7 @@ export const connectSlice = createSlice({
         state.status = 'loading connection...'
       })
       .addCase(idleConnect.fulfilled, (state, action) => {
-        if (state.status !== 'failed') state.status = 'succeeded'
+        if (state.status === 'loading connection...') state.status = 'succeeded'
       })
   },
 })
