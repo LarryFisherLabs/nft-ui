@@ -13,7 +13,8 @@ export const loadNftCount = createAsyncThunk(
   async (nftType, { dispatch, getState }) => {
     try {
       const address = getState().connectSlice.account
-      const counter = address === null ? await getNftCount(getState().connectSlice.netId, nftType) : nftType === 0 ? (await getCounters())[0] : await getCount()
+      const netId = getState().connectSlice.netId
+      const counter = (address === null || netId === 0 || netId === 1) ? await getNftCount(getState().connectSlice.netId, nftType) : nftType === 0 ? (await getCounters())[0] : await getCount()
       dispatch(updateTotalNftCount({ totalNftCount: counter }))
     } catch (err) {
       dispatch(updateNftViewErr({ nftViewErr: err.message }))
@@ -26,7 +27,8 @@ export const loadNftInfo = createAsyncThunk(
   async ({ nftType, nftIndex }, { dispatch, getState }) => {
     try {
       const user = getState().connectSlice.account;
-      if (user === null) {
+      const netId = getState().connectSlice.netId
+      if (user === null || netId === 0 || netId === 1) {
         const nftInfo = await getNftInfo(getState().connectSlice.netId, nftIndex, nftType)
         const owner = nftInfo.owner
         dispatch(updateIsOwnedByUser({ isOwnedByUser: false, owner: owner }))

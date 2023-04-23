@@ -35,7 +35,17 @@ export const AppView = () => {
       <Header />
       {
         status === 'idle' ? <Text>loading...</Text> :
-        status === 'failed' ? <ProfilePanel><CenteredText>{errorMsg}</CenteredText></ProfilePanel> :
+        status === 'failed' ? (
+          <ProfilePanel>
+            <CenteredText>
+              Connection error. Please check wallet/network. Metamask plugin for chrome(on desktop) or brave browser are 
+              the preferred methods for accessing this site.
+            </CenteredText>
+            <CenteredText>
+              {errorMsg}
+            </CenteredText>
+          </ProfilePanel>
+        ) :
         status === 'succeeded' || status === 'offline' ? 
           window.location.pathname === '/' ? <Profile /> :
           isFormattedBuilder(true) ? <CoinBuilder /> :

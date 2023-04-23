@@ -14,6 +14,7 @@ export const idleConnect = createAsyncThunk(
       const netId = await getNetId()
       if (netId !== null) dispatch(updateNetId({ netId: netId }))
     } catch (err) {
+      // this is for when brave wallets timeout
       if (err.message.includes("internal error")) {
         dispatch(updateStatus({ status: 'offline' }))
         dispatch(updateNetId({ netId: 5 }))

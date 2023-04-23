@@ -72,7 +72,7 @@ export const NftCollection = () => {
     return (
         <ViewStyle>
             {
-                nftViewErr !== null ? <ProfilePanel><CenteredText>{nftViewErr}</CenteredText></ProfilePanel> :
+                nftViewErr !== null ? <ProfilePanel><CenteredText>Error connecting to contract: {nftViewErr}</CenteredText></ProfilePanel> :
                 maxPageIndex === null ? <Text>Loading collection...</Text> :
                 [
                     <Panel key={'collection-panel'} startIndex={startIndex} finishIndex={finishIndex}>
