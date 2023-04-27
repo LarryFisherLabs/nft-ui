@@ -95,9 +95,19 @@ const updateCoinCanvas = ({ ctx, color = -1, amount, id }) => {
 export const StyledCoinCanvas = styled(Canvas)`
   display: ${props => props.isDisabled ? 'block' : 'none'};
   @media ${getViewLevel(4)} {
-    width: 350px;
-    height: 350px;
-    margin-top: 5px;
+    width: 370px;
+    height: 370px;
+    margin-top: 7px;
+  }
+  @media ${getViewLevel(5)} {
+    width: 310px;
+    height: 310px;
+    margin-top: 4px;
+  }
+  @media ${getViewLevel(6)} {
+    width: 300px;
+    height: 300px;
+    margin-top: 3px;
   }
 `
 

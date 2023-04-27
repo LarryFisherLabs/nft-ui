@@ -39,7 +39,7 @@ export const CoinBuilder = () => {
     const address = useSelector(selectAccount)
     const errorMsg = useSelector(selectCoinErr)
 
-    const [canvasAmount, updateAmount] = useState()
+    const [canvasAmount, updateAmount] = useState('')
     const [isFounderCoinBuilder, updateIsFCB] = useState(null)
     const [isDiscountedCoinBuilder, updateIsDCB] = useState()
 
@@ -51,18 +51,17 @@ export const CoinBuilder = () => {
 
     const onInputChange = (event) => {
         if (coinStatus !== 'buying coin') {
-            const bronzePrice = minPrices.bronze || .001
-            const initialVal = (event.target.value !== null) ? parseFloat(event.target.value) : 0
-            let finalVal = initialVal
-            if (initialVal > 0 && initialVal <= 100000) {
-                finalVal = parseFloat(initialVal.toFixed(4))
-            } else if (initialVal > 100000) {
-                finalVal = 100000
-            }
-            let previousAmount = (canvasAmount !== null) ? canvasAmount : 0
-            if (finalVal.toString() !== initialVal.toString()) event.target.value = finalVal
-            if (finalVal !== previousAmount && ((finalVal >= bronzePrice) || (previousAmount >= bronzePrice) || isFounderCoinBuilder)) updateAmount(finalVal)
-        } else event.target.value = canvasAmount
+            const val = parseFloat(event.target.value)
+            if (val > 0) {
+                const finalVal = parseFloat(val > 100000 ? 100000 : val < 0.0001 ? '' : val)
+                const finalValString = finalVal.toString()
+                const decimalIndex = finalValString.indexOf('.')
+                const isFormatted = (decimalIndex === -1) || (finalValString.length < decimalIndex + 5)
+                const formattedVal = isFormatted ? finalVal : parseFloat(finalValString.slice(0, decimalIndex + 5))
+                if (canvasAmount !== formattedVal) updateAmount(formattedVal)
+            } else if (isNaN(val)) updateAmount('')
+            else if (val === 0) updateAmount(0)
+        }
     }
 
     const sendTransaction = () => {
@@ -120,7 +119,7 @@ export const CoinBuilder = () => {
                             }
                             <CoinCanvas amount={canvasAmount}/>
                             <IndentedText>Amount of eth to send:</IndentedText>
-                            <StyledInput type="number" step=".0001" onChange={onInputChange} />
+                            <StyledInput type="number" step=".0001" value={canvasAmount} onChange={onInputChange} />
                             {
                                 coinStatus === 'buying coin' || minPrices.bronze === null ? null : (
                                     <TopMarginBtn onClick={sendTransaction}>{
