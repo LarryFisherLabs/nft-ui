@@ -6,7 +6,7 @@ import { buyAntThunk, getAntIds, getAntPrices, getPartInventories, loadAntIdsOff
 const initialState = {
   antStatus: 'idle',
   antIds: [],
-  rarityPrices: [null, null, null, null],
+  rarityPrices: [null, null, null, null, null, null],
   antPartsInfo: [...layerInfo],
   discountIndex: 0,
   coinId: null,
@@ -26,7 +26,7 @@ export const antSlice = createSlice({
       }
     },
     updateRarityPrices: (state, action) => {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 6; i++) {
         state.rarityPrices[i] = action.payload.prices[i]
       }
     },

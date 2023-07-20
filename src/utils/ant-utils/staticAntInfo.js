@@ -71,6 +71,26 @@ const headGear = [
         name: '14-green-helmet',
         rarity: 2,
         layerLevel: 4,
+    },
+    {
+        name: '15-uncle-sam-hat',
+        rarity: 5,
+        layerLevel: 4,
+    },
+    {
+        name: '16-tiger-cap',
+        rarity: 5,
+        layerLevel: 4,
+    },
+    {
+        name: '17-desperado-hat',
+        rarity: 5,
+        layerLevel: 4,
+    },
+    {
+        name: '18-purp-helmet-with-webbing',
+        rarity: 5,
+        layerLevel: 4,
     }
 ]
 
@@ -97,6 +117,21 @@ const opticalGear = [
         name: '3-goggles',
         rarity: 2,
         layerLevel: 5,
+    },
+    {
+        name: '4-uncle-sam-glasses',
+        rarity: 5,
+        layerLevel: 5,
+    },
+    {
+        name: '5-general-sunglasses',
+        rarity: 5,
+        layerLevel: 5,
+    },
+    {
+        name: '6-vaquero-sunglasses',
+        rarity: 5,
+        layerLevel: 5,
     }
 ]
 
@@ -112,6 +147,16 @@ const mouthAccessories = [
     {
         name: '2-cigar',
         rarity: 4,
+        layerLevel: 1,
+    },
+    {
+        name: '3-cuban-cigar',
+        rarity: 5,
+        layerLevel: 1,
+    },
+    {
+        name: '4-cigarillo',
+        rarity: 5,
         layerLevel: 1,
     }
 ]
@@ -129,7 +174,17 @@ const faceGear = [
         name: '2-gas-mask',
         rarity: 4,
         layerLevel: 3,
-    }
+    },
+    {
+        name: '3-bandito-balaclava',
+        rarity: 5,
+        layerLevel: 3,
+    },
+    {
+        name: '4-gas-mask-bong',
+        rarity: 6,
+        layerLevel: 3,
+    },
 ]
 
 const faceAccessories = [
@@ -237,6 +292,26 @@ const gunsEquipment = [
         name: '11-assault-rifle',
         rarity: 2,
         layerLevel: 4,
+    },
+    {
+        name: '12-fireworks-gun',
+        rarity: 5,
+        layerLevel: 4,
+    },
+    {
+        name: '13-tommygun-smg',
+        rarity: 6,
+        layerLevel: 4,
+    },
+    {
+        name: '14-oldie-assault-rifle',
+        rarity: 6,
+        layerLevel: 4,
+    },
+    {
+        name: '15-blazed-flamethrower',
+        rarity: 6,
+        layerLevel: 4,
     }
 ]
 
@@ -326,6 +401,26 @@ const bodyGear = [
         name: '12-green-plate-carrier',
         rarity: 3,
         layerLevel: 2,
+    },
+    {
+        name: '13-uncle-sam-shirt',
+        rarity: 5,
+        layerLevel: 2,
+    },
+    {
+        name: '14-tiger-plate-carrier',
+        rarity: 6,
+        layerLevel: 2,
+    },
+    {
+        name: '15-sand-tiger-plate-carrier-camo',
+        rarity: 6,
+        layerLevel: 2,
+    },
+    {
+        name: '16-purp-flak-vest',
+        rarity: 6,
+        layerLevel: 2,
     }
 ]
 
@@ -407,6 +502,26 @@ const abdomenAccessories = [
     {
         name: '10-btk',
         rarity: 4,
+        layerLevel: 1,
+    },
+    {
+        name: '11-star',
+        rarity: 5,
+        layerLevel: 1,
+    },
+    {
+        name: '12-flag-patch',
+        rarity: 6,
+        layerLevel: 1,
+    },
+    {
+        name: '13-blued',
+        rarity: 6,
+        layerLevel: 1,
+    },
+    {
+        name: '14-most-dope',
+        rarity: 6,
         layerLevel: 1,
     }
 ]
@@ -507,6 +622,58 @@ const backgrounds = [
         name: '2-common',
         rarity: 0,
         layerLevel: 0,
+    },
+    {
+        name: '3-light-blue',
+        rarity: 5,
+        layerLevel: 0,
+    }
+]
+
+const dogTags = [
+    {
+        name: '0-dog-tags',
+        rarity: 0,
+        layerLevel: 1,
+    },
+    {
+        name: '1-gold-dog-tags',
+        rarity: 5,
+        layerLevel: 1,
+    }
+]
+
+const holster = [
+    {
+        name: '0-holster',
+        rarity: 0,
+        layerLevel: 1,
+    },
+    {
+        name: '1-leather-holster',
+        rarity: 5,
+        layerLevel: 1,
+    },
+    {
+        name: '2-santa-maria-holster',
+        rarity: 5,
+        layerLevel: 1,
+    },
+    {
+        name: '3-purp-holster',
+        rarity: 5,
+        layerLevel: 1,
+    }
+]
+
+const watch = [
+    {
+        name: 'empty',
+    },
+    {
+        name: '1-gold-watch',
+        rarity: 5,
+        layerLevel: 2,
     }
 ]
 
@@ -585,5 +752,20 @@ export const staticLayerInfo = [
         fileName: '15-backgrounds',
         elements: backgrounds,
         defaultIndex: 2
+    },
+    {
+        fileName: '16-dog-tags',
+        elements: dogTags,
+        defaultIndex: 0
+    },
+    {
+        fileName: '17-holster',
+        elements: holster,
+        defaultIndex: 0
+    },
+    {
+        fileName: '18-watch',
+        elements: watch,
+        defaultIndex: 0
     }
 ]

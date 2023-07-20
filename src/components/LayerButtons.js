@@ -85,7 +85,7 @@ export const LayerButtons = ({ layerIndex }) => {
         if (isAdding) {
             dispatch(selectAntFile({ layerIndex: 0, elementIndex: 2 }))
             dispatch(selectAntFile({ layerIndex: 9, elementIndex: 0 }))
-            if (selectedIndexes[3] === 2) {
+            if (selectedIndexes[3] === 2 || selectedIndexes[3] === 4) {
                 dispatch(removeAntFile({ layerIndex: 3 }))
                 dispatch(addPopup({ id: popupTypes.antConflict.eod.gasMask }))
             }
@@ -112,7 +112,7 @@ export const LayerButtons = ({ layerIndex }) => {
                 else dispatch(removeAntFile({ layerIndex: layerIndex }))
             } else {
                 // else then select option
-                if (element.name === '2-gas-mask') {
+                if (element.name === '2-gas-mask' || element.name === '4-gas-mask-bong') {
                     // gas mask incompatible with eod, optical, mouth and face gear
                     if (selectedIndexes[0] === 2) {
                         toggleEod(false)
@@ -141,7 +141,7 @@ export const LayerButtons = ({ layerIndex }) => {
                         dispatch(addPopup({ id: popupTypes.antConflict.shemagh.eod }))
                     }
                     dispatch(selectAntFile({ layerIndex: 5, elementIndex: 1 }))
-                } else if (selectedIndexes[3] === 2 && (layerIndex === 1 || layerIndex === 2 || layerIndex === 4)) {
+                } else if ((selectedIndexes[3] === 2 || selectedIndexes[3] === 4) && (layerIndex === 1 || layerIndex === 2 || layerIndex === 4)) {
                     // remove gas mask for optical, mouth or face accessories
                     dispatch(removeAntFile({ layerIndex: 3 }))
                     if (layerIndex === 1) dispatch(addPopup({ id: popupTypes.antConflict.optical.gasMask }))

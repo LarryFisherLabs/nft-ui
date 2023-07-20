@@ -27,7 +27,7 @@ export const getPartInventories = createAsyncThunk(
         }
       }
     } catch (err) {
-      dispatch(antError({error: err}))
+      dispatch(antError({error: err.message}))
     }
   }
 )
@@ -39,7 +39,7 @@ export const getAntPrices = createAsyncThunk(
       const prices = await getRarityPrices(discountIndex)
       dispatch(updateRarityPrices({ prices: prices }))
     } catch (err) {
-      dispatch(antError({error: err}))
+      dispatch(antError({error: err.message}))
     }
   }
 )
