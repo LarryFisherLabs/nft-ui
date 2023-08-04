@@ -97,6 +97,10 @@ export const LayerButtons = ({ layerIndex }) => {
                 dispatch(removeAntFile({ layerIndex: 2 }))
                 dispatch(addPopup({ id: popupTypes.antConflict.eod.mouth }))
             }
+            if (selectedIndexes[8] !== 0) {
+                dispatch(removeAntFile({ layerIndex: 8 }))
+                dispatch(addPopup({ id: popupTypes.antConflict.eod.bandolier }))
+            }
         } else {
             dispatch(removeAntFile({ layerIndex: 9 }))
             dispatch(removeAntFile({ layerIndex: 0 }))
@@ -132,7 +136,7 @@ export const LayerButtons = ({ layerIndex }) => {
                     }
                     dispatch(selectAntFile({ layerIndex: 3, elementIndex: 2 }))
                 } else if (element.name === '2-eod-mask' || element.name === '0-eod-suit') {
-                    // add eod together eod incompatible with shemagh and gas mask and mouth accessories
+                    // add eod together eod incompatible with shemagh, gas mask, mouth accessories and bandolier belts
                     toggleEod(true)
                 } else if (element.name === '1-shemagh') {
                     // shemagh incompatible with eod
@@ -148,12 +152,13 @@ export const LayerButtons = ({ layerIndex }) => {
                     else if (layerIndex === 2) dispatch(addPopup({ id: popupTypes.antConflict.mouth.gasMask }))
                     else if (layerIndex === 4) dispatch(addPopup({ id: popupTypes.antConflict.face.gasMask }))
                     dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))
-                } else if (selectedIndexes[0] === 2 && (layerIndex === 0 || layerIndex === 9 || layerIndex === 2)) {
-                    // remove eod for head, body or mouth accessory change
+                } else if (selectedIndexes[0] === 2 && (layerIndex === 0 || layerIndex === 9 || layerIndex === 2 || layerIndex === 8)) {
+                    // remove eod for head, body, mouth or bandolier accessory change
                     toggleEod(false)
                     if (layerIndex === 0) dispatch(addPopup({ id: popupTypes.antConflict.head.eod }))
                     else if (layerIndex === 2) dispatch(addPopup({ id: popupTypes.antConflict.mouth.eod }))
                     else if (layerIndex === 9) dispatch(addPopup({ id: popupTypes.antConflict.body.eod }))
+                    else if (layerIndex === 8) dispatch(addPopup({ id: popupTypes.antConflict.body.eod }))
                     dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))
                 } else {
                     dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))

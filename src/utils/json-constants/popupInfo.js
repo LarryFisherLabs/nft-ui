@@ -1,4 +1,5 @@
 const antConflictsStartIndex = 17
+const antConflictEndIndex = 16 + antConflictsStartIndex
 const shortTimer = 3
 const normTimer = 7
 const longTimer = 10
@@ -32,26 +33,32 @@ export const popupTypes = {
             shemagh: antConflictsStartIndex + 4,
             gasMask: antConflictsStartIndex + 5,
             mouth: antConflictsStartIndex + 6,
+            bandolier: antConflictsStartIndex + 7,
         },
         shemagh: {
-            eod: antConflictsStartIndex + 7,
+            eod: antConflictsStartIndex + 8,
         },
         optical: {
-            gasMask: antConflictsStartIndex + 8,
+            gasMask: antConflictsStartIndex + 9,
         },
         mouth: {
-            gasMask: antConflictsStartIndex + 9,
-            eod: antConflictsStartIndex + 10,
+            gasMask: antConflictsStartIndex + 10,
+            eod: antConflictsStartIndex + 11,
         },
         face: {
-            gasMask: antConflictsStartIndex + 11,
+            gasMask: antConflictsStartIndex + 12,
         },
         head: {
-            eod: antConflictsStartIndex + 12,
+            eod: antConflictsStartIndex + 13,
         }, 
         body: {
-            eod: antConflictsStartIndex + 13,
-        }
+            eod: antConflictsStartIndex + 14,
+        },
+        bandolier: {
+            eod: antConflictsStartIndex + 15,
+        },
+        epicMax: antConflictEndIndex,
+        legendaryMax: antConflictEndIndex + 1
     }
 }
 
@@ -153,6 +160,10 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
+        msg: 'EOD incompatible with Bandolier Belts',
+        timer: shortTimer
+    },
+    {
         msg: 'Shemagh incompatible with EOD',
         timer: shortTimer
     },
@@ -178,6 +189,18 @@ export const popupDetailsById = [
     },
     {
         msg: 'EOD Suit must be paired with EOD Mask',
+        timer: shortTimer
+    },
+    {
+        msg: 'Bandolier Belts incompatible with EOD',
+        timer: shortTimer
+    },
+    {
+        msg: '2 epic or better traits max',
+        timer: shortTimer
+    },
+    {
+        msg: '1 legendary trait max',
         timer: shortTimer
     },
 ]

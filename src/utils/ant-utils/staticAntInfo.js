@@ -205,12 +205,19 @@ const faceAccessories = [
 
 const neckGear = [
     {
-        name: 'empty',
+        name: '0-dog-tags',
+        rarity: 0,
+        layerLevel: 1,
     },
     {
         name: '1-shemagh',
         rarity: 3,
         layerLevel: 4,
+    },
+    {
+        name: '2-gold-dog-tags',
+        rarity: 5,
+        layerLevel: 1,
     }
 ]
 
@@ -630,19 +637,6 @@ const backgrounds = [
     }
 ]
 
-const dogTags = [
-    {
-        name: '0-dog-tags',
-        rarity: 0,
-        layerLevel: 1,
-    },
-    {
-        name: '1-gold-dog-tags',
-        rarity: 5,
-        layerLevel: 1,
-    }
-]
-
 const holster = [
     {
         name: '0-holster',
@@ -754,17 +748,12 @@ export const staticLayerInfo = [
         defaultIndex: 2
     },
     {
-        fileName: '16-dog-tags',
-        elements: dogTags,
-        defaultIndex: 0
-    },
-    {
-        fileName: '17-holster',
+        fileName: '16-holster',
         elements: holster,
         defaultIndex: 0
     },
     {
-        fileName: '18-watch',
+        fileName: '17-watch',
         elements: watch,
         defaultIndex: 0
     }
