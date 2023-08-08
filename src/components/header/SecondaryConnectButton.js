@@ -8,7 +8,7 @@ export const SecondaryConnectButton = ({ buttonActionId }) => {
     return (
         <StyledButton onClick={() => connectButtonAction(dispatch, buttonActionId)}>
             {
-                buttonActionId === connectButtonActionIds.changeNet ? "Change Network" :
+                buttonActionId === connectButtonActionIds.reload ? "Reload" :
                 buttonActionId === connectButtonActionIds.downloadMM || buttonActionId === connectButtonActionIds.downloadBrave ? "Get Wallet" :
                 "out of bounds"
             }

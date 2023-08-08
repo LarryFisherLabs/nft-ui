@@ -1,10 +1,11 @@
 import { ethers } from "ethers"
+import { popupTypes } from "./popupInfo"
 
 export const netInfo = {
     1: {
         localName: 'mainNet',
         chainId: '0x1',
-        popupId: 2
+        popupId: popupTypes.mainNetData
     },
     11155111: {
         localName: 'sepolia',
@@ -16,7 +17,7 @@ export const netInfo = {
         chainId: ethers.utils.hexlify(11155111),
         nativeCurrency: { name: 'SepoliaETH', decimals: 18, symbol: 'SEP' },
         rpcUrls: ['https://sepolia.infura.io/v3/'],
-        popupId: 0
+        popupId: popupTypes.sepoliaData
     },
     5: {
         localName: 'goerli',
@@ -26,6 +27,6 @@ export const netInfo = {
         chainId: '0x5',
         nativeCurrency: { name: 'GoerliETH', decimals: 18, symbol: 'GOE' },
         rpcUrls: ['https://goerli.infura.io/v3/'],
-        popupId: 1
+        popupId: popupTypes.goerliData
     }
 }

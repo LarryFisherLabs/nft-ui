@@ -1,4 +1,4 @@
-const antConflictsStartIndex = 17
+const antConflictsStartIndex = 18
 const antConflictEndIndex = 16 + antConflictsStartIndex
 const shortTimer = 3
 const normTimer = 7
@@ -8,20 +8,21 @@ export const popupTypes = {
     sepoliaData: 0,
     goerliData: 1,
     mainNetData: 2,
-    buyingCoin: 3,
-    buyingAnt: 4,
-    profileRedirect: 5,
-    txWaiting: 6,
-    txDenied: 7,
-    badBuyCoinVal: 8,
-    coinPricesChanged: 9,
-    txFailed: 10,
-    insufficientFunds: 11,
-    gettingApprovals: 12,
-    gettingApprovalsForAll: 13,
-    removingApproval: 14,
-    removingApprovalForAll: 15,
-    reconnect: 16,
+    wrongNetData: 3,
+    buyingCoin: 4,
+    buyingAnt: 5,
+    profileRedirect: 6,
+    txWaiting: 7,
+    txDenied: 8,
+    badBuyCoinVal: 9,
+    coinPricesChanged: 10,
+    txFailed: 11,
+    insufficientFunds: 12,
+    gettingApprovals: 13,
+    gettingApprovalsForAll: 14,
+    removingApproval: 15,
+    removingApprovalForAll: 16,
+    reconnect: 17,
     antConflict: {
         gasMask: {
             eod: antConflictsStartIndex,
@@ -73,6 +74,10 @@ export const popupDetailsById = [
     },
     {
         msg: 'Connected to main net, viewing goerli data for everything besides the tools page',
+        timer: normTimer
+    },
+    {
+        msg: 'Connected to wrong net, viewing data from goerli test network',
         timer: normTimer
     },
     {

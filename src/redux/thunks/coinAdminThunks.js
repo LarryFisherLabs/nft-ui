@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { owner } from "../../apis/coinContractApi"
 import { coinError, updateIsCoinAdmin } from "../slices/coinSlice"
 
-export  const loadCoinAdmin = createAsyncThunk(
+export const loadCoinAdmin = createAsyncThunk(
     'coinSlice/loadCoinAdmin',
     async (_, { dispatch, getState }) => {
         try {

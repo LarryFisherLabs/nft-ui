@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, Text, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
+import { AntImg, CoinImg, LeftTitle, NftGrid, Panel, Text, Title, Title2, TopMarginBtn, ViewStyle } from '../../styles/general'
 
 import styled from 'styled-components'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { selectCoinErr, selectCoins, selectCoinStatus, selectFounder, selectIsCoinAdmin } from '../redux/slices/coinSlice'
-import { coinsConnect, loadCoinIdsOffline } from '../redux/thunks/coinThunk'
-import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../redux/slices/antSlice'
-import { getAntIds, loadAntIdsOffline } from '../redux/thunks/antThunks'
-import { selectAccount, selectNetId, selectStatus } from '../redux/slices/connectSlice'
-import { goTo, goToNftView } from '../utils/redirect'
-import { useDefaultNetwork } from '../utils/hooks/hooks-general'
+import { selectCoinErr, selectCoins, selectCoinStatus, selectFounder, selectIsCoinAdmin } from '../../redux/slices/coinSlice'
+import { coinsConnect, loadCoinIdsOffline } from '../../redux/thunks/coinThunk'
+import { selectAntErrMsg, selectAntIds, selectAntStatus } from '../../redux/slices/antSlice'
+import { getAntIds, loadAntIdsOffline } from '../../redux/thunks/antThunks'
+import { selectAccount, selectNetId, selectStatus } from '../../redux/slices/connectSlice'
+import { goTo, goToNftView } from '../../utils/redirect'
+import { useDefaultNetwork } from '../../utils/hooks/hooks-general'
 
 export const MappedCoins = () => {
     const coinStatus = useSelector(selectCoinStatus)

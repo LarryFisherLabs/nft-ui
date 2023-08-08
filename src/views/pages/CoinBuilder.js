@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { CanvasPanel, CenteredLargeText, CenteredText, IndentedText, LargeText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../styles/general'
+import { CanvasPanel, CenteredLargeText, CenteredText, IndentedText, LargeText, SmallText, StyledInput, Text, TextBlock, Title, Title2, TopMarginBtn, ViewStyle } from '../../styles/general'
 
-import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../redux/slices/coinSlice'
-import { buyCoin, loadBuilder } from '../redux/thunks/coinThunk'
-import { CoinCanvas, getColor } from '../components/canvas/CoinCanvas'
-import { addPopup, selectAccount, selectNetId } from '../redux/slices/connectSlice'
+import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../../redux/slices/coinSlice'
+import { buyCoin, loadBuilder } from '../../redux/thunks/coinThunk'
+import { CoinCanvas, getColor } from '../../components/canvas/CoinCanvas'
+import { addPopup, selectAccount, selectNetId } from '../../redux/slices/connectSlice'
 import styled from 'styled-components'
-import { popupTypes } from '../utils/json-constants/popupInfo'
+import { popupTypes } from '../../utils/json-constants/popupInfo'
 import { ProfilePanel } from './ToolsPage'
 
 const BronzeText = styled(LargeText)`

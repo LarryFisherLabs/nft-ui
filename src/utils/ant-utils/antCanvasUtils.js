@@ -10,12 +10,12 @@ export const recursiveDraw = (files, index, ctx) => {
 }
 
 export const baseElements = [
-    'ant/base/6-ant-right-foreleg.png',
+    'ant/base/5-ant-right-foreleg.png',
     'ant/base/3-ant-head.png',
-    'ant/base/5-ant-thorax.png',
-    'ant/base/8-ant-abdomen.png',
+    'ant/base/4-ant-thorax.png',
+    'ant/base/6-ant-abdomen.png',
     'ant/base/1-ant-eyes.png', 
     'ant/base/2-ant-mandibles.png', 
-    'ant/base/4-dog-tags.png',
-    'ant/base/7-holster.png'
+    'ant/base/7-dog-tags.png',
+    'ant/base/8-holster.png'
 ]

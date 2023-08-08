@@ -6,12 +6,13 @@ import { selectNetId, selectStatus } from "../../redux/slices/connectSlice"
 import { changeNet } from "../../redux/thunks/connectThunk"
 import { StyledButton } from "../../styles/general"
 import { getViewLevel } from "../../utils/deviceType"
-import { useSecondaryConnectButtonAction } from "../../utils/hooks/connectButtonActionHook"
 import { useOffElementClickListener } from "../../utils/hooks/hooks-general"
 import { urls } from "../../utils/json-constants/urls"
 import { goToCollectionView, goToTools } from "../../utils/redirect"
 import { isFormattedAntCollectionView, isFormattedCoinCollectionView } from "../../utils/url-utils/isUrlFormatted"
 import { SecondaryConnectButton } from "./SecondaryConnectButton"
+import { connectButtonActionIds } from "../../utils/connectButtonAction"
+import { useEffect } from "react"
 
 const StyledOptions = styled.div`
   pointer-events: auto;
@@ -60,42 +61,44 @@ const SelectableStyledButton = styled(StyledButton)`
     background-color: ${props => props.isSelected ? 'rgb(241 132 200)' : null};
 `
 
-export const OptionsMenu = () => {
+export const OptionsMenu = ({ connectButtonActionId }) => {
     const dispatch = useDispatch()
     const netId = useSelector(selectNetId)
     const status = useSelector(selectStatus)
     const [isOptionsOpen, updateIsOptionsOpen] = useState(false)
-    const [connectButtonActionId, setConnectButtonActionId] = useState('disabled')
+    const [isCnctBtnDis, setIsCnctBtnDis] = useState(true)
     const optionsPanelRef = useRef()
     const optionsToggleRef = useRef()
     const refArray = useMemo(() => [optionsPanelRef, optionsToggleRef], [optionsPanelRef, optionsToggleRef])
 
     useOffElementClickListener(refArray, isOptionsOpen, updateIsOptionsOpen)
-    useSecondaryConnectButtonAction(connectButtonActionId, setConnectButtonActionId)
+
+    useEffect(() => {
+        // button should only be present for reload or get wallet
+        if (connectButtonActionId === connectButtonActionIds.reload || connectButtonActionId === connectButtonActionIds.downloadBrave || connectButtonActionId === connectButtonActionIds.downloadMM) {
+            setIsCnctBtnDis(false)
+        } else setIsCnctBtnDis(true)
+    }, [connectButtonActionId])
   
     const toggleOptions = () => {
         updateIsOptionsOpen(!isOptionsOpen)
     }
   
     const openFaucet = () => {
-        if (netId !== null) {
-            const link = netId === 5 ? urls.goerliFaucet : urls.sepoliaFaucet
-            window.open(link, "_blank")
-        }
+        const link = netId === 5 ? urls.goerliFaucet : urls.sepoliaFaucet
+        window.open(link, "_blank")
     }
   
     const switchNet = (newNetId) => {
-        if (netId !== null) {
-            dispatch(changeNet(newNetId))
-        }
+        dispatch(changeNet(newNetId))
     }
   
     return (
         <StyledOptions>
             <StyledOptionsButton ref={optionsToggleRef} type='button' onClick={toggleOptions}>...</StyledOptionsButton>
             <StyledOptionsPanel isOpen={isOptionsOpen} id={'options-panel'} ref={optionsPanelRef}>
-                {connectButtonActionId === 'disabled' ? null : <SecondaryConnectButton buttonActionId={connectButtonActionId} />}
-                {netId === null || netId === 0 || netId === 1 ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
+                {isCnctBtnDis === true ? null : <SecondaryConnectButton buttonActionId={connectButtonActionId} />}
+                {netId === null ? null : <StyledButton onClick={openFaucet}>Go to faucet</StyledButton>}
                 {netId === null || netId === 11155111 ? null : <StyledButton onClick={() => switchNet(11155111)}>Switch to Sepolia</StyledButton>}
                 {netId === null || netId === 5 ? null : <StyledButton onClick={() => switchNet(5)}>Switch to Goerli</StyledButton>}
                 {netId === null || netId === 1 || status === 'offline' ? null : <StyledButton onClick={() => switchNet(1)}>Main Net</StyledButton>}

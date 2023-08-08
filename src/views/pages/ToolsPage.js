@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { CenteredText, Panel, StyledButton, Text, ThinStyledButton, Title, Title2, ViewStyle } from '../styles/general'
+import { CenteredText, Panel, StyledButton, Text, ThinStyledButton, Title, Title2, ViewStyle } from '../../styles/general'
 
 import styled from 'styled-components'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { addPopup, selectAccount } from '../redux/slices/connectSlice'
-import { SmallInput } from '../components/NumberedPageNav'
-import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
-import { addApproval, addApprovalForAll, addERC20Approval, getApprovals, getApprovalsForAll, removeApproval, removeApprovalForAll, removeERC20Approval } from '../redux/thunks/toolThunks'
-import { selectApprovals, selectApprovalsForAll, selectERC20Approvals, selectIsLoading, selectIsLoadingERC20, selectIsLoadingForAll, selectToolErr } from '../redux/slices/toolSlice'
-import { popupTypes } from '../utils/json-constants/popupInfo'
-import { goToApprovalManager } from '../utils/redirect'
+import { addPopup, selectAccount } from '../../redux/slices/connectSlice'
+import { SmallInput } from '../../components/NumberedPageNav'
+import { selectIsCoinAdmin } from '../../redux/slices/coinSlice'
+import { addApproval, addApprovalForAll, addERC20Approval, getApprovals, getApprovalsForAll, removeApproval, removeApprovalForAll, removeERC20Approval } from '../../redux/thunks/toolThunks'
+import { selectApprovals, selectApprovalsForAll, selectERC20Approvals, selectIsLoading, selectIsLoadingERC20, selectIsLoadingForAll, selectToolErr } from '../../redux/slices/toolSlice'
+import { popupTypes } from '../../utils/json-constants/popupInfo'
+import { goToApprovalManager } from '../../utils/redirect'
 
 export const ProfilePanel = styled(Panel)`
     display: flex;

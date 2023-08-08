@@ -1,34 +1,28 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
-import { Profile } from './Profile'
-import { AntBuilder } from './AntBuilder'
-import { AdminPage } from './AdminPage'
-import { CoinBuilder } from './CoinBuilder'
+import { Profile } from './pages/Profile'
+import { AntBuilder } from './pages/AntBuilder'
+import { AdminPage } from './pages/AdminPage'
+import { CoinBuilder } from './pages/CoinBuilder'
+import { NftView } from './pages/NftView'
+import { NftCollection } from './pages/NftCollection'
+import { ProfilePanel, ToolsPage } from './pages/ToolsPage'
 
 import { CenteredText, Text } from '../styles/general'
-import { selectAccount, selectErr, selectNetId, selectStatus } from '../redux/slices/connectSlice'
-import { loadCoinAdmin } from '../redux/thunks/coinAdminThunks'
+import { selectErr, selectStatus } from '../redux/slices/connectSlice'
 import { selectIsCoinAdmin } from '../redux/slices/coinSlice'
-
-import { NftView } from './NftView'
-import { NftCollection } from './NftCollection'
 import { Header } from '../components/header/Header'
 import { isFormattedBuilder, isFormattedCollectionView, isFormattedNftViewUrl, isFormattedRemoteProfile } from '../utils/url-utils/isUrlFormatted'
-import { ProfilePanel, ToolsPage } from './ToolsPage'
+import useContractOwnerVerifier from '../utils/hooks/view-hooks/useContractOwnerVerifier'
 
 export const AppView = () => {
-  const dispatch = useDispatch()
-
   const status = useSelector(selectStatus)
   const errorMsg = useSelector(selectErr)
   const isAdmin = useSelector(selectIsCoinAdmin)
-  const netId = useSelector(selectNetId)
-  const address = useSelector(selectAccount)
 
-  useEffect(() => {
-    if (status === 'succeeded' && address !== null && isAdmin === null && netId !== 0 && netId !== 1 && netId !== null) dispatch(loadCoinAdmin())
-  }, [status, dispatch, address, isAdmin, netId])
+  // once user's wallet address is set in redux figure out if user is owner
+  useContractOwnerVerifier()
 
   return (
     <div>

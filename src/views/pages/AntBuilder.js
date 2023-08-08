@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from "../components/LayerButtons.js";
-import { ViewStyle, Title, Text, Title2CrossHair, Title4, CenteredText } from "../styles/general.js";
-import { getAntPrices, getPartInventories } from "../redux/thunks/antThunks.js";
-import { selectAntErrMsg, selectAntStatus, selectDiscountInfo, updateCoinInfo } from "../redux/slices/antSlice.js";
-import { AntCanvas } from "../components/canvas/AntCanvas.js";
-import { staticLayerInfo } from "../utils/ant-utils/staticAntInfo.js";
+import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from "../../components/LayerButtons.js";
+import { ViewStyle, Title, Text, Title2CrossHair, Title4, CenteredText } from "../../styles/general.js";
+import { getAntPrices, getPartInventories } from "../../redux/thunks/antThunks.js";
+import { selectAntErrMsg, selectAntStatus, selectDiscountInfo, updateCoinInfo } from "../../redux/slices/antSlice.js";
+import { AntCanvas } from "../../components/canvas/AntCanvas.js";
+import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo.js";
 
 import styled from "styled-components";
-import { selectCoinErr, selectCoins, selectCoinStatus } from "../redux/slices/coinSlice.js";
-import { loadCoinsForAntBuilder } from "../redux/thunks/coinThunk.js";
-import { selectAccount, selectNetId } from "../redux/slices/connectSlice.js";
-import { getViewLevel } from "../utils/deviceType.js";
+import { selectCoinErr, selectCoins, selectCoinStatus } from "../../redux/slices/coinSlice.js";
+import { loadCoinsForAntBuilder } from "../../redux/thunks/coinThunk.js";
+import { selectAccount, selectNetId } from "../../redux/slices/connectSlice.js";
+import { getViewLevel } from "../../utils/deviceType.js";
 import { ProfilePanel } from "./ToolsPage.js";
 
 export const Editor = styled.div`

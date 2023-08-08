@@ -1,12 +1,9 @@
-import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
 import { selectAccount } from "../../redux/slices/connectSlice"
 import { StyledButton } from "../../styles/general"
 import { connectButtonAction, connectButtonActionIds } from "../../utils/connectButtonAction"
 import { getViewLevel } from "../../utils/deviceType"
-import { useConnectButtonAction } from "../../utils/hooks/connectButtonActionHook"
-import { useReduxErrCheckAll } from "../../utils/hooks/reduxErrHooks"
 
 const StyledConnectButton = styled(StyledButton)`
   pointer-events: auto;
@@ -36,16 +33,10 @@ const StyledConnectButton = styled(StyledButton)`
 // index 0 is inline connect button for desktop/larger screen
 // index 1 is below nav for phone/smaller screen
 // only one index should be showing at a time
-export const ConnectButton = ({ index }) => {
+export const ConnectButton = ({ index, connectButtonActionId }) => {
   const account = useSelector(selectAccount)
   const dispatch = useDispatch()
-  const [isErrInRedux, setIsErrInRedux] = useState(false)
-  const [connectButtonActionId, setConnectButtonActionId] = useState(null)
   const isHome = window.location.pathname === '/'
-
-  useReduxErrCheckAll(isErrInRedux, setIsErrInRedux)
-
-  useConnectButtonAction(connectButtonActionId, setConnectButtonActionId, isErrInRedux)
 
   return (
     <StyledConnectButton isHome={isHome} buttonActionId={connectButtonActionId} type="button" onClick={() => connectButtonAction(dispatch, connectButtonActionId)} index={index}>

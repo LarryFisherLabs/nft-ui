@@ -18,7 +18,7 @@ export const connectButtonAction = (dispatch, connectButtonActionId) => {
             window.location.reload()
             break
         case connectButtonActionIds.changeNet:
-            dispatch(changeNet(1))
+            dispatch(changeNet(11155111))
             break
         case connectButtonActionIds.connect:
             dispatch(connect())

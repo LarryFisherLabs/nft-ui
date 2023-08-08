@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Text, Title2, ViewStyle } from '../styles/general.js'
+import { Text, Title2, ViewStyle } from '../../styles/general.js'
 import { ethers } from 'ethers'
-import { getAntContract, getCoinContract, getProvider } from '../utils/ethers-utils.js'
-import { selectCoinErr } from '../redux/slices/coinSlice.js'
-import { addFounder, coinBaseURI, updateBaseCoinURI, withdraw } from '../apis/coinContractApi.js'
-import { antBaseURI, antWithdraw, updateBaseAntURI } from '../apis/antContractApi.js'
-import { selectAntErrMsg } from '../redux/slices/antSlice.js'
+import { getAntContract, getCoinContract, getProvider } from '../../utils/ethers-utils.js'
+import { selectCoinErr } from '../../redux/slices/coinSlice.js'
+import { addFounder, coinBaseURI, updateBaseCoinURI, withdraw } from '../../apis/coinContractApi.js'
+import { antBaseURI, antWithdraw, updateBaseAntURI } from '../../apis/antContractApi.js'
+import { selectAntErrMsg } from '../../redux/slices/antSlice.js'
 
 export const AdminPage = () => {
     const provider = getProvider()
