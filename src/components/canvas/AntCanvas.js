@@ -13,14 +13,15 @@ import { popupTypes } from "../../utils/json-constants/popupInfo"
 
 const updateAntCanvas = (ctx, indexes) => {
     ctx.clearRect(0, 0, 328, 328)
-    const fileNameArray = [[], [], [], [], [], []]
+    const fileNameArray = [[], [], [], [], [], [], []]
     indexes.forEach((selectedIndex, layerIndex) => {
+        const isEmpty = staticLayerInfo[layerIndex].elements[selectedIndex].name === 'empty'
         const layer = staticLayerInfo[layerIndex]
-        if ((selectedIndex !== layer.defaultIndex) || selectedIndex > 0) {
+        if (!isEmpty) {
             fileNameArray[layer.elements[selectedIndex].layerLevel].push(`ant/${layer.fileName}/${layer.elements[selectedIndex].name}.png`)
         }
     })
-    recursiveDraw([...fileNameArray[0], ...baseElements, ...fileNameArray[1], ...fileNameArray[2], ...fileNameArray[3], ...fileNameArray[4], ...fileNameArray[5]], 0, ctx)
+    recursiveDraw([...fileNameArray[0], ...baseElements, ...fileNameArray[1], ...fileNameArray[2], ...fileNameArray[3], ...fileNameArray[4], ...fileNameArray[5], ...fileNameArray[6]], 0, ctx)
 }
 
 
@@ -80,21 +81,37 @@ const BlackText = styled(LargerText)`
     }
 `
 
-const BrownText = styled(LargerText)`
+const GrayText = styled(LargerText)`
     text-shadow: black 1px 1px 0px;
-    color: #ff7983;
+    color: lightgray;
 `
 
-const GreenText = styled(BrownText)`
-    color: #68dd6b;
+const BrownText = styled(GrayText)`
+    color: #eab0b4;
 `
 
-const GoldText = styled(BrownText)`
+const GreenText = styled(GrayText)`
+    color: #f39332;
+`
+
+const GoldText = styled(GrayText)`
+    color: #57ec5a;
+`
+
+const PurpleText = styled(GrayText)`
+    color: #54f4fd;
+`
+
+const SpecialText = styled(GrayText)`
     color: #feff00;
 `
 
-const PurpleText = styled(BrownText)`
-    color: #ffa3ff;
+const EpicText = styled(GrayText)`
+    color: #ff3790;
+`
+
+const LegendText = styled(GrayText)`
+    color: #eb65ff;
 `
 
 const TopPaddingText = styled(LargerText)`
@@ -137,7 +154,9 @@ export const AntCanvasPanel = styled(Panel)`
         top: 4.2rem;
     }
 `
-const _prices = [0.0009, 0.0018, 0.0054, 0.0135]
+// Vcom, com, rare, Vrare, Erare, special, epic, legendary
+// 10,000, 10,000, 690, 420, 69, 42, 8, 2
+const _prices = [0.0009, 0.0018, 0.0054, 0.0162, 0.09, 0.18, 0.9, 1.5]
 
 export const AntCanvas = () => {
     const dispatch = useDispatch()
@@ -170,8 +189,16 @@ export const AntCanvas = () => {
     }, [selectedIndexes, prices])
 
     const buyAnt = () => {
-        dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))
-        dispatch(addPopup({ id: popupTypes.txWaiting }))
+        let isUpcomingSelected = false
+        for (let i = 0; i < selectedIndexes.length; i++) {
+            if (staticLayerInfo[i].elements[selectedIndexes[i]].hasOwnProperty('isComingSoon')) {
+                isUpcomingSelected = true
+            }
+        }
+        if (isUpcomingSelected) {
+            dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))
+            dispatch(addPopup({ id: popupTypes.txWaiting }))
+        } else dispatch(addPopup({ id: popupTypes.antConflict.upcomingSelected}))
     }
 
     return (
@@ -181,10 +208,14 @@ export const AntCanvas = () => {
             </StyledAntCanvas>
             <ColoredTextBlock>
                 <BlackText>{"Ant Base Price: " + (prices[0] * 1100000 / 100000) + " eth"}</BlackText>
-                <BrownText>{"Very Common Price: " + prices[0] + " eth"}</BrownText>
-                <GreenText>{"Common Price: " + prices[1] + " eth"}</GreenText>
-                <GoldText>{"Rare Price: " + prices[2] + " eth"}</GoldText>
-                <PurpleText>{"Very Rare Price: " + prices[3] + " eth"}</PurpleText>
+                <GrayText>{"Very Common Price: " + prices[0] + " eth"}</GrayText>
+                <BrownText>{"Common Price: " + prices[1] + " eth"}</BrownText>
+                <GreenText>{"Rare Price: " + prices[2] + " eth"}</GreenText>
+                <GoldText>{"Very Rare Price: " + prices[3] + " eth"}</GoldText>
+                <PurpleText>{"Extra Rare Price: " + prices[4] + " eth"}</PurpleText>
+                <SpecialText>{"Special Price: " + prices[5] + " eth"}</SpecialText>
+                <EpicText>{"Epic Price: " + prices[6] + " eth"}</EpicText>
+                <LegendText>{"Legendary Price: " + prices[7] + " eth"}</LegendText>
                 <TopPaddingText>{"Total Ant Price: " + totalPrice + " eth"}</TopPaddingText>
             </ColoredTextBlock>
             { netId === 0 || netId === 1 ? <ColoredTextBlock>Please Change Network</ColoredTextBlock> : address === null ? <ColoredTextBlock>Please Connect</ColoredTextBlock> : null}

@@ -18,7 +18,7 @@ export const getPartInventories = createAsyncThunk(
         const parts = staticLayerInfo[layerIndex].elements
         for (let partIndex = 0; partIndex < parts.length; partIndex++) {
           const part = parts[partIndex]
-          const available = (part.rarity > 2) ? await getPartInventory(layerIndex, partIndex) : 10000
+          const available = (part.rarity > 2 && !part.hasOwnProperty('isComingSoon')) ? await getPartInventory(layerIndex, partIndex) : 10000
           dispatch(updatePartAvailability({
             layerIndex: layerIndex,
             elementIndex: partIndex,

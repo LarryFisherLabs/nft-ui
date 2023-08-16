@@ -1,5 +1,8 @@
 const antConflictsStartIndex = 18
-const antConflictEndIndex = 16 + antConflictsStartIndex
+// end indexes are the next index after that section (really the start index for whatever section comes after)
+const antConflictOpticalEndIndex = antConflictsStartIndex + 13
+const antConflictBandolierEndIndex = antConflictOpticalEndIndex + 10
+const antConflictEndIndex = antConflictBandolierEndIndex + 6
 const shortTimer = 3
 const normTimer = 7
 const longTimer = 10
@@ -35,31 +38,57 @@ export const popupTypes = {
             gasMask: antConflictsStartIndex + 5,
             mouth: antConflictsStartIndex + 6,
             bandolier: antConflictsStartIndex + 7,
+            overEarOptical: antConflictsStartIndex + 8,
         },
         shemagh: {
-            eod: antConflictsStartIndex + 8,
+            eod: antConflictsStartIndex + 9,
         },
         optical: {
-            gasMask: antConflictsStartIndex + 9,
+            gasMask: antConflictsStartIndex + 10,
+            shrouded: antConflictsStartIndex + 11,
+            overEar: {
+                eod: antConflictsStartIndex + 12,
+            },
         },
         mouth: {
-            gasMask: antConflictsStartIndex + 10,
-            eod: antConflictsStartIndex + 11,
+            gasMask: antConflictOpticalEndIndex,
+            eod: antConflictOpticalEndIndex + 1,
+            shrouded: antConflictsStartIndex + 2,
         },
         face: {
-            gasMask: antConflictsStartIndex + 12,
+            gasMask: antConflictOpticalEndIndex + 3,
+            shrouded: antConflictOpticalEndIndex + 4,
         },
         head: {
-            eod: antConflictsStartIndex + 13,
+            eod: antConflictOpticalEndIndex + 5,
         }, 
         body: {
-            eod: antConflictsStartIndex + 14,
+            eod: antConflictOpticalEndIndex + 6,
+            sleeved: {
+                reflective: antConflictOpticalEndIndex + 7,
+            },
         },
         bandolier: {
-            eod: antConflictsStartIndex + 15,
+            eod: antConflictOpticalEndIndex + 8,
+            reflective: {
+                sleevedBody: antConflictOpticalEndIndex + 9,
+            },
+        },
+        tallHeadGear: {
+            antenna: antConflictBandolierEndIndex,
+        },
+        antenna: {
+            tallHeadGear: antConflictBandolierEndIndex + 1,
+        },
+        shrouded: {
+            faceGear: antConflictBandolierEndIndex + 2,
+            optical: antConflictBandolierEndIndex + 3,
+            faceAcc: antConflictBandolierEndIndex + 4,
+            mouth: antConflictBandolierEndIndex + 5,
         },
         epicMax: antConflictEndIndex,
-        legendaryMax: antConflictEndIndex + 1
+        legendaryMax: antConflictEndIndex + 1,
+        upcomingSelected: antConflictEndIndex + 2,
     }
 }
 
@@ -169,11 +198,23 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
+        msg: 'EOD incompatible with "Over Ear Optical Gear"',
+        timer: shortTimer
+    },
+    {
         msg: 'Shemagh incompatible with EOD',
         timer: shortTimer
     },
     {
         msg: 'Optical Gear incompatible with Gas Mask',
+        timer: shortTimer
+    },
+    {
+        msg: 'Optical Gear incompatible with Shrouded Helmet',
+        timer: shortTimer
+    },
+    {
+        msg: '"Over Ear Optical Gear" incompatible with EOD',
         timer: shortTimer
     },
     {
@@ -185,7 +226,15 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
+        msg: 'Mouth Accessories incompatible with Shrouded Helmet',
+        timer: shortTimer
+    },
+    {
         msg: 'Face Accessories incompatible with Gas Mask',
+        timer: shortTimer
+    },
+    {
+        msg: 'Face Accessories and Gear incompatible with Shrouded Helmet',
         timer: shortTimer
     },
     {
@@ -197,7 +246,39 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
+        msg: '"Sleeved Body Gear" incompatible with Reflective Belt',
+        timer: shortTimer
+    },
+    {
         msg: 'Bandolier Belts incompatible with EOD',
+        timer: shortTimer
+    },
+    {
+        msg: 'Reflective Belt incompatible with "Sleeved Body Gear"',
+        timer: shortTimer
+    },
+    {
+        msg: 'Tall Head Gear incompatible with special antenna',
+        timer: shortTimer
+    },
+    {
+        msg: 'Special antenna incompatible with tall Head Gear',
+        timer: shortTimer
+    },
+    {
+        msg: 'Shrouded Helmet incompatible with Face Gear',
+        timer: shortTimer
+    },
+    {
+        msg: 'Shrouded Helmet incompatible with Optical Gear',
+        timer: shortTimer
+    },
+    {
+        msg: 'Shrouded Helmet incompatible with Face Accessories',
+        timer: shortTimer
+    },
+    {
+        msg: 'Shrouded Helmet incompatible with Mouth Accessories',
         timer: shortTimer
     },
     {
@@ -207,5 +288,9 @@ export const popupDetailsById = [
     {
         msg: '1 legendary trait max',
         timer: shortTimer
+    },
+    {
+        msg: 'Please remove upcoming demo traits',
+        timer: normTimer
     },
 ]

@@ -99,6 +99,18 @@ export const Title2CrossHair = styled(Title2)`
     cursor: crosshair;
 `
 
+export const TitleCrossHair2 = styled(Text)`
+    cursor: crosshair;
+    font-size: 2rem;
+    font-weight: 800;
+    @media ${getViewLevel(3)} {
+        font-size: 1.7rem;
+    }
+    @media ${getViewLevel(5)} {
+        font-size: 1.3rem;
+    }
+`
+
 export const Title4 = styled(Title2)`
     font-size: .9rem;
     @media ${getViewLevel(0)} {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from "../../components/LayerButtons.js";
-import { ViewStyle, Title, Text, Title2CrossHair, Title4, CenteredText } from "../../styles/general.js";
+import { ViewStyle, Title, Text, Title2CrossHair, Title4, CenteredText, TitleCrossHair2 } from "../../styles/general.js";
 import { getAntPrices, getPartInventories } from "../../redux/thunks/antThunks.js";
-import { selectAntErrMsg, selectAntStatus, selectDiscountInfo, updateCoinInfo } from "../../redux/slices/antSlice.js";
+import { removeAntFile, selectAntErrMsg, selectAntStatus, selectDiscountInfo, selectSelectedIndexes, updateCoinInfo } from "../../redux/slices/antSlice.js";
 import { AntCanvas } from "../../components/canvas/AntCanvas.js";
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo.js";
 
@@ -55,8 +55,10 @@ export const AntBuilder = () => {
   const coinErr = useSelector(selectCoinErr);
   const selectedCoinInfo = useSelector(selectDiscountInfo, shallowEqual);
   const netId = useSelector(selectNetId);
+  const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
   const [isCoinPanelOpen, toggleCoinPanel] = useState(true);
   const [areAllCoinsSpent, setAreCoinsSpent] = useState(null)
+  const [isUpcomingDisplayed, setIsUpcomingDis] = useState(true)
 
   const coinClick = (coinId, coinColor) => {
     if (antStatus !== "Buying ant...") {
@@ -73,6 +75,17 @@ export const AntBuilder = () => {
       }
     }
   };
+
+  const toggleUpcoming = () => {
+    if (isUpcomingDisplayed) {
+      for (let i = 0; i < selectedIndexes.length; i++) {
+        if (staticLayerInfo[i].elements[selectedIndexes[i]].hasOwnProperty('isComingSoon')) {
+          dispatch(removeAntFile({ layerIndex: i }))
+        }
+      }
+      setIsUpcomingDis(false)
+    } else setIsUpcomingDis(true)
+  }
 
   useEffect(() => {
     if (antStatus === 'idle' && address !== null && netId !== 0 && netId !== 1 && netId !== null) {
@@ -95,6 +108,11 @@ export const AntBuilder = () => {
         <Editor>
           <AntCanvas />
           <CenteredColumn4Mbl>
+            <ButtonsPanel>
+              <TitleCrossHair2 onClick={toggleUpcoming} >
+                {isUpcomingDisplayed ? 'Remove upcoming demo traits' : 'Show upcoming demo traits'}
+              </TitleCrossHair2>
+            </ButtonsPanel>
             <ButtonsPanel>
               <Title2CrossHair
                 onClick={() => toggleCoinPanel(!isCoinPanelOpen)}
@@ -155,7 +173,7 @@ export const AntBuilder = () => {
               </SectionButtons>
             </ButtonsPanel>
             {staticLayerInfo.map((_, index) => {
-              return <LayerButtons key={index} layerIndex={index} />;
+              return <LayerButtons key={index} layerIndex={index} isUpcomingDisplayed={isUpcomingDisplayed} />;
             })}
           </CenteredColumn4Mbl>
         </Editor>

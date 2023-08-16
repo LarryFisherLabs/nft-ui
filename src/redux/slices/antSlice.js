@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { layerInfo } from '../../utils/ant-utils/antInfo'
-import { staticLayerInfo } from '../../utils/ant-utils/staticAntInfo'
 import { buyAntThunk, getAntIds, getAntPrices, getPartInventories, loadAntIdsOffline } from '../thunks/antThunks'
 
 const initialState = {
@@ -37,7 +36,7 @@ export const antSlice = createSlice({
       state.antPartsInfo[action.payload.layerIndex].selectedIndex = action.payload.elementIndex
     },
     removeAntFile: (state, action) => {
-      state.antPartsInfo[action.payload.layerIndex].selectedIndex = staticLayerInfo[action.payload.layerIndex].defaultIndex
+      state.antPartsInfo[action.payload.layerIndex].selectedIndex = 0
     },
     updateCoinInfo: (state, action) => {
       state.discountIndex = action.payload.discountIndex

@@ -1,62 +1,87 @@
 export const layerInfo = [
     {
-        partStocks: ['empty', null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        // 1-antenna
+        partStocks: [null, null, null],
+        selectedIndex: 0,
+    },
+    {
+        // 2-head-gear
+        partStocks: ['empty', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
         selectedIndex: 0
     },
     {
+        // 3-face-gear
         partStocks: ['empty', null, null, null, null],
         selectedIndex: 0,
     },
     {
+        // 4-optical-gear
+        partStocks: ['empty', null, null, null, null, null, null, null, null, null],
+        selectedIndex: 0,
+    },
+    {
+        // 5-face-accessories
         partStocks: ['empty', null, null],
         selectedIndex: 0,
     },
     {
-        partStocks: ['empty', null, null],
+        // 6-mouth-accessories
+        partStocks: ['empty', null, null, null, null],
         selectedIndex: 0,
     },
     {
-        partStocks: ['empty', null, null],
+        // 7-neck-gear
+        partStocks: [null, null, null, null, null, null, null, null, null],
         selectedIndex: 0,
     },
     {
-        partStocks: ['empty', null],
-        selectedIndex: 0,
-    },
-    {
-        partStocks: [null, null, null],
-        selectedIndex: 2,
-    },
-    {
-        partStocks: [null, null, null, null, null, null, null, null, null, null, null, null],
-        selectedIndex: 3,
-    },
-    {
+        // 8-bandolier-belts
         partStocks: ['empty', null, null, null],
         selectedIndex: 0,
     },
     {
-        partStocks: [null, null, null, null, null, null, null, null, null, null, null, null, null],
-        selectedIndex: 4,
-    },
-    {
-        partStocks: [null, null],
-        selectedIndex: 1,
-    },
-    {
-        partStocks: [null, null],
-        selectedIndex: 1,
-    },
-    {
-        partStocks: ['empty', null, null, null, null, null, null, null, null, null, null],
+        // 9-body-gear
+        partStocks: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
         selectedIndex: 0,
     },
     {
+        // 10-left-foreleg
+        partStocks: [null, null, null, null],
+        selectedIndex: 0,
+    },
+    {
+        // 11-guns
+        partStocks: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        selectedIndex: 0,
+    },
+    {
+        // 12-watch
+        partStocks: ['empty', null, null, null, null, null, null, null, null],
+        selectedIndex: 0
+    },
+    {
+        // 13-holster
+        partStocks: [null, null, null, null, null, null, null, null],
+        selectedIndex: 0
+    },
+    {
+        // 14-abdomen-accessories
+        partStocks: ['empty', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        selectedIndex: 0,
+    },
+    {
+        // 15-hind-legs
+        partStocks: [null, null, null],
+        selectedIndex: 0,
+    },
+    {
+        // 16-vehicles
         partStocks: ['empty', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
         selectedIndex: 0,
     },
     {
-        partStocks: [null, null, null],
-        selectedIndex: 2,
+        // 17-backgrounds
+        partStocks: [null, null, null, null],
+        selectedIndex: 0,
     }
 ]
