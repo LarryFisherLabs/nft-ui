@@ -6,7 +6,7 @@ const antenna = [
     },
     {
         name: '1-tied-antenna',
-        rarity: 2,
+        rarity: 1,
         layerLevel: 2,
     },
     {
@@ -110,7 +110,7 @@ const headGear = [
     },
     {
         name: '18-desperado-hat',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 6,
         isComingSoon: true
     },
@@ -144,7 +144,7 @@ const faceGear = [
     },
     {
         name: '3-bandito-balaclava',
-        rarity: 6,
+        rarity: 5,
         layerLevel: 4,
         isComingSoon: true
     },
@@ -195,14 +195,14 @@ const opticalGear = [
         isComingSoon: true
     },
     {
-        name: '7-uni-shades',
-        rarity: 6,
+        name: '7-general-sunglasses',
+        rarity: 5,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
     },
     {
-        name: '8-general-sunglasses',
+        name: '8-uni-shades',
         rarity: 6,
         layerLevel: 5,
         isOverEar: true,
@@ -210,7 +210,7 @@ const opticalGear = [
     },
     {
         name: '9-vaquero-sunglasses',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
@@ -249,13 +249,13 @@ const mouthAccessories = [
     },
     {
         name: '3-cigarillo',
-        rarity: 6,
+        rarity: 5,
         layerLevel: 1,
         isComingSoon: true
     },
     {
         name: '4-cuban-cigar',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 1,
         isComingSoon: true
     }
@@ -386,21 +386,21 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '9-flak-vest',
+        name: '9-uncle-sam-shirt',
         rarity: 4,
-        layerLevel: 2,
-    },
-    {
-        name: '10-green-flak-vest',
-        rarity: 4,
-        layerLevel: 2,
-    },
-    {
-        name: '11-uncle-sam-shirt',
-        rarity: 5,
         layerLevel: 2,
         hasSleeves: true,
         isComingSoon: true
+    },
+    {
+        name: '10-flak-vest',
+        rarity: 4,
+        layerLevel: 2,
+    },
+    {
+        name: '11-green-flak-vest',
+        rarity: 4,
+        layerLevel: 2,
     },
     {
         name: '12-eod-suit',
@@ -414,7 +414,7 @@ const bodyGear = [
     },
     {
         name: '14-tiger-plate-carrier',
-        rarity: 6,
+        rarity: 5,
         layerLevel: 2,
         isComingSoon: true
     },
@@ -426,7 +426,7 @@ const bodyGear = [
     },
     {
         name: '16-uni-plate-carrier',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 2,
         isComingSoon: true
     },
@@ -604,13 +604,13 @@ const watch = [
         isComingSoon: true
     },
     {
-        name: '6-gold-uni-watch',
+        name: '6-gold-watch',
         rarity: 5,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '7-gold-watch',
+        name: '7-gold-uni-watch',
         rarity: 6,
         layerLevel: 6,
         isComingSoon: true
