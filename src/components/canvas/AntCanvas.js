@@ -155,8 +155,8 @@ export const AntCanvasPanel = styled(Panel)`
     }
 `
 // Vcom, com, rare, Vrare, Erare, special, epic, legendary
-// 10,000, 10,000, 690, 420, 69, 42, 8, 2
-const _prices = [0.0009, 0.0018, 0.0054, 0.0162, 0.09, 0.18, 0.9, 1.5]
+// 5,000, 3,000, 500, 200, 69, 15, 8, 4
+const _prices = [0.0009, 0.0018, 0.0054, 0.0162, 0.08, 0.35, 0.8, 1]
 
 export const AntCanvas = () => {
     const dispatch = useDispatch()
