@@ -86,9 +86,8 @@ export const popupTypes = {
             faceAcc: antConflictBandolierEndIndex + 4,
             mouth: antConflictBandolierEndIndex + 5,
         },
-        epicMax: antConflictEndIndex,
-        legendaryMax: antConflictEndIndex + 1,
-        upcomingSelected: antConflictEndIndex + 2,
+        traitPoints: antConflictEndIndex,
+        upcomingSelected: antConflictEndIndex + 1,
     }
 }
 
@@ -282,12 +281,8 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: '2 epic or better traits max',
-        timer: shortTimer
-    },
-    {
-        msg: '1 legendary trait max',
-        timer: shortTimer
+        msg: 'You have negative Trait Points and must remove traits of the top three rarities in order to mint',
+        timer: normTimer
     },
     {
         msg: 'Please remove upcoming demo traits',

@@ -17,7 +17,7 @@ import { ProfilePanel } from "./ToolsPage.js";
 export const Editor = styled.div`
   display: flex;
   flex-flow: row;
-  width: 90%;
+  width: 93%;
   gap: 1rem;
   align-items: normal;
   @media ${getViewLevel(3)} {
