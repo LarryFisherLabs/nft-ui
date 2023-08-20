@@ -1,21 +1,23 @@
+// nothing goes beneath antenna so bottom non-background layer
 const antenna = [
     {
         name: '0-ant-antenna',
         rarity: 0,
-        layerLevel: 2,
+        layerLevel: 1,
     },
     {
         name: '1-tied-antenna',
         rarity: 1,
-        layerLevel: 2,
+        layerLevel: 1,
     },
     {
         name: '2-broken-antenna',
         rarity: 3,
-        layerLevel: 2,
+        layerLevel: 1,
     }
 ]
 
+// optical gear sometimes goes over head gear so one of top two levels
 const headGear = [
     {
         name: 'empty',
@@ -23,27 +25,27 @@ const headGear = [
     {
         name: '1-baseball-cap',
         rarity: 0,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '2-desert-baseball-cap',
         rarity: 0,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '3-helmet',
         rarity: 0,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '4-desert-helmet',
         rarity: 0,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '5-helmet-with-strap',
         rarity: 0,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '6-tanker-cap',
@@ -53,12 +55,12 @@ const headGear = [
     {
         name: '7-boonie',
         rarity: 2,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '8-desert-boonie',
         rarity: 2,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '9-beret',
@@ -73,12 +75,12 @@ const headGear = [
     {
         name: '11-dress-cap',
         rarity: 3,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '12-desert-dress-cap',
         rarity: 3,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '13-eod-mask',
@@ -88,46 +90,47 @@ const headGear = [
     {
         name: '14-helmet-with-webbing',
         rarity: 4,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '15-uni-hat',
         rarity: 5,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '16-uncle-sam-hat',
         rarity: 6,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '17-tiger-cap',
         rarity: 6,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '18-desperado-hat',
         rarity: 6,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '19-purple-helmet',
         rarity: 7,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '20-shrouded-helmet',
         rarity: 8,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     }
 ]
 
+// should always be beneath head gear so below top two layers
 const faceGear = [
     {
         name: 'empty',
@@ -135,74 +138,76 @@ const faceGear = [
     {
         name: '1-surgeon-mask',
         rarity: 1,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '2-respirator',
         rarity: 1,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '3-balaclava',
         rarity: 2,
-        layerLevel: 4,
+        layerLevel: 5,
     },
     {
         name: '4-tech-mask',
         rarity: 2,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '5-desert-tech-mask',
         rarity: 2,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '6-full-black-mask',
         rarity: 3,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '7-bandito-balaclava',
         rarity: 3,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '8-cold-weather-mask',
         rarity: 4,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '9-gas-mask',
         rarity: 4,
-        layerLevel: 4,
+        layerLevel: 5,
     },
     {
         name: '10-skull-mask',
         rarity: 4,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '11-gas-mask-bong',
         rarity: 8,
-        layerLevel: 4,
+        layerLevel: 5,
         isComingSoon: true
     }
 ]
 
+// should generally be second to highest level to be between head gear levels
 const opticalGear = [
     {
         name: 'empty',
     },
     {
+        // eye patch should go over face accessories and nothing else
         name: '1-eyepatch',
         rarity: 1,
         layerLevel: 2,
@@ -210,62 +215,64 @@ const opticalGear = [
     {
         name: '2-goggles',
         rarity: 2,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '3-nerd-glasses',
         rarity: 2,
-        layerLevel: 5,
+        layerLevel: 6,
         isOverEar: true,
         isComingSoon: true
     },
     {
         name: '4-sunglasses',
         rarity: 3,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
+        // nvg goes over everything
         name: '5-nvg',
         rarity: 3,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '6-trooper-shades',
         rarity: 4,
-        layerLevel: 5,
+        layerLevel: 6,
         isOverEar: true,
         isComingSoon: true
     },
     {
         name: '7-uni-shades',
         rarity: 5,
-        layerLevel: 5,
+        layerLevel: 6,
         isOverEar: true,
         isComingSoon: true
     },
     {
         name: '8-general-sunglasses',
         rarity: 6,
-        layerLevel: 5,
+        layerLevel: 6,
         isOverEar: true,
         isComingSoon: true
     },
     {
         name: '9-uncle-sam-glasses',
         rarity: 7,
-        layerLevel: 5,
+        layerLevel: 6,
         isOverEar: true,
         isComingSoon: true
     },
     {
         name: '10-vaquero-sunglasses',
         rarity: 7,
-        layerLevel: 5,
+        layerLevel: 6,
         isOverEar: true,
         isComingSoon: true
     }
 ]
 
+// nothing goes beneath face accessories so bottom non-background layer
 const faceAccessories = [
     {
         name: 'empty',
@@ -332,6 +339,7 @@ const faceAccessories = [
     }
 ]
 
+// nothing goes beneath mouth accessories so bottom non-background layer
 const mouthAccessories = [
     {
         name: 'empty',
@@ -360,6 +368,7 @@ const mouthAccessories = [
     }
 ]
 
+// should go on top of body gear, belts and under face gear
 const neckGear = [
     {
         name: '0-dog-tags',
@@ -415,6 +424,7 @@ const neckGear = [
     }
 ]
 
+// goes on top of body gear but under neck
 const bandolierBelts = [
     {
         name: 'empty',
@@ -436,6 +446,7 @@ const bandolierBelts = [
     }
 ]
 
+// goes under belt but on top of arm
 const bodyGear = [
     {
         name: '0-tee-shirt',
@@ -544,6 +555,7 @@ const bodyGear = [
     }
 ]
 
+// nothing goes beneath foreLeg so bottom non-background layer
 const leftForeleg = [
     {
         name: '0-ant-left-foreleg',
@@ -569,105 +581,107 @@ const leftForeleg = [
     }
 ]
 
+// lower than watch
 const gunsEquipment = [
     {
         name: '0-knife',
         rarity: 0,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '1-uzi',
         rarity: 0,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '2-smg-sd',
         rarity: 1,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '3-assault-rifle',
         rarity: 1,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '4-shotgun',
         rarity: 2,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '5-lmg',
         rarity: 2,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '6-bazooka',
         rarity: 3,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '7-sniper-rifle',
         rarity: 3,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '8-medal',
         rarity: 4,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '9-map',
         rarity: 4,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '10-anti-materiel-rifle',
         rarity: 4,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '11-flamethrower',
         rarity: 4,
-        layerLevel: 5,
+        layerLevel: 6,
     },
     {
         name: '12-fireworks-gun',
         rarity: 5,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '13-uni-shotgun',
         rarity: 6,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '14-tommygun-smg',
         rarity: 6,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '15-oldie-assault-rifle',
         rarity: 6,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '16-intervention',
         rarity: 7,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '17-blazed-flamethrower',
         rarity: 8,
-        layerLevel: 5,
+        layerLevel: 6,
         isComingSoon: true
     }
 ]
 
+// top level
 const watch = [
     {
         name: 'empty',
@@ -675,47 +689,48 @@ const watch = [
     {
         name: '1-green-watch',
         rarity: 0,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '2-black-watch',
         rarity: 1,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '3-full-black-watch',
         rarity: 2,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '4-silver-watch',
         rarity: 2,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '5-silver-uni-watch',
         rarity: 3,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '6-gold-watch',
         rarity: 4,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     },
     {
         name: '7-gold-uni-watch',
         rarity: 5,
-        layerLevel: 6,
+        layerLevel: 7,
         isComingSoon: true
     }
 ]
 
+// on top of tattoo
 const holster = [
     {
         name: '0-holster',
@@ -766,6 +781,7 @@ const holster = [
     }
 ]
 
+// bottom non-background layer
 const abdomenAccessories = [
     {
         name: 'empty',
@@ -858,6 +874,7 @@ const abdomenAccessories = [
     }
 ]
 
+// lowest non-background level
 const hindLegs = [
     {
         name: '0-ant-hind-legs',
@@ -877,6 +894,7 @@ const hindLegs = [
     }
 ]
 
+// lowest non-background level
 const vehicles = [
     {
         name: 'empty',
@@ -960,25 +978,26 @@ const vehicles = [
         //340mil
     },
     {
-        name: '14-abrams',
+        name: '14-technical',
+        rarity: 6,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '15-abrams',
         rarity: 6,
         layerLevel: 1,
         //11mil
     },
     {
-        name: '15-stealth-bomber',
+        name: '16-stealth-bomber',
         rarity: 6,
         layerLevel: 1,
         //730mil
-    },
-    {
-        name: '16-technical',
-        rarity: 3,
-        layerLevel: 1,
-        isComingSoon: true
     }
 ]
 
+// lowest level
 const backgrounds = [
     {
         name: '0-common',

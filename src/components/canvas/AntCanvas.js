@@ -13,7 +13,7 @@ import { popupTypes } from "../../utils/json-constants/popupInfo"
 
 const updateAntCanvas = (ctx, indexes) => {
     ctx.clearRect(0, 0, 328, 328)
-    const fileNameArray = [[], [], [], [], [], [], []]
+    const fileNameArray = [[], [], [], [], [], [], [], []]
     indexes.forEach((selectedIndex, layerIndex) => {
         const isEmpty = staticLayerInfo[layerIndex].elements[selectedIndex].name === 'empty'
         const layer = staticLayerInfo[layerIndex]
@@ -21,7 +21,7 @@ const updateAntCanvas = (ctx, indexes) => {
             fileNameArray[layer.elements[selectedIndex].layerLevel].push(`ant/${layer.fileName}/${layer.elements[selectedIndex].name}.png`)
         }
     })
-    recursiveDraw([...fileNameArray[0], ...baseElements, ...fileNameArray[1], ...fileNameArray[2], ...fileNameArray[3], ...fileNameArray[4], ...fileNameArray[5], ...fileNameArray[6]], 0, ctx)
+    recursiveDraw([...fileNameArray[0], ...baseElements, ...fileNameArray[1], ...fileNameArray[2], ...fileNameArray[3], ...fileNameArray[4], ...fileNameArray[5], ...fileNameArray[6], ...fileNameArray[7]], 0, ctx)
 }
 
 
