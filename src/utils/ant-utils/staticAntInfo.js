@@ -216,6 +216,7 @@ const opticalGear = [
         name: '2-goggles',
         rarity: 2,
         layerLevel: 6,
+        isOverEar: true,
     },
     {
         name: '3-nerd-glasses',
@@ -228,6 +229,7 @@ const opticalGear = [
         name: '4-sunglasses',
         rarity: 3,
         layerLevel: 6,
+        isOverEar: true,
     },
     {
         // nvg goes over everything
