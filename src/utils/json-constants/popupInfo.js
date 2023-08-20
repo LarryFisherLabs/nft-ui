@@ -1,8 +1,8 @@
 const antConflictsStartIndex = 18
 // end indexes are the next index after that section (really the start index for whatever section comes after)
-const antConflictOpticalEndIndex = antConflictsStartIndex + 13
+const antConflictOpticalEndIndex = antConflictsStartIndex + 14
 const antConflictBandolierEndIndex = antConflictOpticalEndIndex + 10
-const antConflictEndIndex = antConflictBandolierEndIndex + 6
+const antPartConflictEndIndex = antConflictBandolierEndIndex + 9
 const shortTimer = 3
 const normTimer = 7
 const longTimer = 10
@@ -43,11 +43,14 @@ export const popupTypes = {
         shemagh: {
             eod: antConflictsStartIndex + 9,
         },
+        tags: {
+            shrouded: antConflictsStartIndex + 10,
+        },
         optical: {
-            gasMask: antConflictsStartIndex + 10,
-            shrouded: antConflictsStartIndex + 11,
+            gasMask: antConflictsStartIndex + 11,
+            shrouded: antConflictsStartIndex + 12,
             overEar: {
-                eod: antConflictsStartIndex + 12,
+                eod: antConflictsStartIndex + 13,
             },
         },
         mouth: {
@@ -79,15 +82,18 @@ export const popupTypes = {
         },
         antenna: {
             tallHeadGear: antConflictBandolierEndIndex + 1,
+            shrouded: antConflictBandolierEndIndex + 2,
         },
         shrouded: {
-            faceGear: antConflictBandolierEndIndex + 2,
-            optical: antConflictBandolierEndIndex + 3,
-            faceAcc: antConflictBandolierEndIndex + 4,
-            mouth: antConflictBandolierEndIndex + 5,
+            faceGear: antConflictBandolierEndIndex + 3,
+            optical: antConflictBandolierEndIndex + 4,
+            faceAcc: antConflictBandolierEndIndex + 5,
+            mouth: antConflictBandolierEndIndex + 6,
+            tiedAntenna: antConflictBandolierEndIndex + 7,
+            tags: antConflictBandolierEndIndex + 8,
         },
-        traitPoints: antConflictEndIndex,
-        upcomingSelected: antConflictEndIndex + 1,
+        traitPoints: antPartConflictEndIndex,
+        upcomingSelected: antPartConflictEndIndex + 1,
     }
 }
 
@@ -205,6 +211,10 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
+        msg: 'Special dog tags incompatible with Shrouded Helmet',
+        timer: shortTimer
+    },
+    {
         msg: 'Optical Gear incompatible with Gas Mask',
         timer: shortTimer
     },
@@ -265,6 +275,10 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
+        msg: 'Tied Antenna incompatible with Shrouded Helmet',
+        timer: shortTimer
+    },
+    {
         msg: 'Shrouded Helmet incompatible with Face Gear',
         timer: shortTimer
     },
@@ -281,7 +295,15 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: 'You have negative Trait Points and must remove traits of the top three rarities in order to mint',
+        msg: 'Shrouded Helmet incompatible with Tied Antenna',
+        timer: shortTimer
+    },
+    {
+        msg: 'Shrouded Helmet incompatible with special dog tags',
+        timer: shortTimer
+    },
+    {
+        msg: 'You have negative Trait Points and must remove traits of the top four rarities in order to mint',
         timer: normTimer
     },
     {

@@ -23,6 +23,16 @@ export const baseElements = [
     'ant/base/2-ant-mandibles.png'
 ]
 
+export const tiedAntennaId = 1
+export const eodMaskId_ = 13
+export const uniHatId_ = 15
+export const uncleSamHatId_ = 16
+export const shroudedHelmetId_ = 20
+export const gasMaskId_ = 3
+export const gasMaskBongId_ = 4
+export const reflectiveBeltId_ = 1
+export const eodSuitId_ = 11
+
 /**
  * This function is called when the user adds or removes eod gear by clicking on either the eod head gear or the eod
  * body gear. This function ensures they always get added and removed together. If adding, first check compatibility
@@ -36,7 +46,7 @@ export const baseElements = [
 export const toggleEod = (isAdding, dispatch, layerIndex = null, faceGearId = null, neckId = null, mouthId = null, bandolierId = null, opticalId = null) => {
     if (isAdding) {
         // no gas mask
-        if (faceGearId === 2 || faceGearId === 4) {
+        if (faceGearId === gasMaskId_ || faceGearId === gasMaskBongId_) {
             dispatch(removeAntFile({ layerIndex: 2 }))
             dispatch(addPopup({ id: popupTypes.antConflict.eod.gasMask }))
         }
@@ -61,8 +71,8 @@ export const toggleEod = (isAdding, dispatch, layerIndex = null, faceGearId = nu
             dispatch(addPopup({ id: popupTypes.antConflict.eod.overEarOptical }))
         }
         // add eod trait that was not clicked
-        if (layerIndex === 8) dispatch(selectAntFile({ layerIndex: 1, elementIndex: 13 }))
-        else dispatch(selectAntFile({ layerIndex: 8, elementIndex: 12 }))
+        if (layerIndex === 8) dispatch(selectAntFile({ layerIndex: 1, elementIndex: eodMaskId_ }))
+        else dispatch(selectAntFile({ layerIndex: 8, elementIndex: eodSuitId_ }))
     } else {
         dispatch(removeAntFile({ layerIndex: 1 }))
         dispatch(removeAntFile({ layerIndex: 8 }))
@@ -72,7 +82,7 @@ export const toggleEod = (isAdding, dispatch, layerIndex = null, faceGearId = nu
 // check compatibility rules when gas mask is selected
 export const gasMaskCheck = (dispatch, headId, opticalId, mouthId, faceAccId) => {
     // no eod
-    if (headId === 13) {
+    if (headId === eodMaskId_) {
         toggleEod(false, dispatch)
         dispatch(addPopup({ id: popupTypes.antConflict.gasMask.eod }))
     }
@@ -94,7 +104,7 @@ export const gasMaskCheck = (dispatch, headId, opticalId, mouthId, faceAccId) =>
 }
 
 // check compatibility rules when shrouded helmet is selected
-export const shroudedCheck = (dispatch, faceGearId, opticalId, faceAccId, mouthId) => {
+export const shroudedCheck = (dispatch, faceGearId, opticalId, faceAccId, mouthId, antennaId, neckId) => {
     // no face gear
     if (faceGearId !== 0) {
         dispatch(removeAntFile({ layerIndex: 2 }))
@@ -114,5 +124,15 @@ export const shroudedCheck = (dispatch, faceGearId, opticalId, faceAccId, mouthI
     if (mouthId !== 0) {
         dispatch(removeAntFile({ layerIndex: 5 }))
         dispatch(addPopup({ id: popupTypes.antConflict.shrouded.mouth }))
+    }
+    // no tied antenna
+    if (antennaId === tiedAntennaId) {
+        dispatch(removeAntFile({ layerIndex: 0 }))
+        dispatch(addPopup({ id: popupTypes.antConflict.shrouded.tiedAntenna }))
+    }
+    // no dog-tags
+    if (neckId > 1 && staticLayerInfo[6].elements[neckId].name.includes('-tags')) {
+        dispatch(removeAntFile({ layerIndex: 6 }))
+        dispatch(addPopup({ id: popupTypes.antConflict.shrouded.tags }))
     }
 }

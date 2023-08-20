@@ -87,6 +87,7 @@ const BlackText = styled.div`
     color: black;
     font-size: 1.1rem;
     font-weight: 600;
+    padding-bottom: .2rem;
     @media ${getViewLevel(1)} {
         font-size: .9rem;
     }
@@ -109,6 +110,7 @@ const BlackText = styled.div`
 
 const GrayText = styled(BlackText)`
     text-shadow: black 1px 1px 0px;
+    padding-bottom: 0;
     color: lightgray;
 `
 
@@ -129,7 +131,7 @@ const PurpleText = styled(GrayText)`
 `
 
 const ThemeGoldText = styled(GrayText)`
-    padding-bottom: .1rem;
+    padding-bottom: .2rem;
     color: #fed600;
 `
 
@@ -197,13 +199,13 @@ const Row = styled.div`
 `
 
 const LeftColCont = styled(Row)`
-    width: 60%;
+    width: 50%;
     justify-content: center;
     align-items: center;
 `
 
 const RightColCont = styled(LeftColCont)`
-    width: 40%;
+    width: 50%;
 `
 
 const Col = styled(Row)`
@@ -211,8 +213,14 @@ const Col = styled(Row)`
 `
 
 // Vcom, com, rare, Vrare, Erare, special, epic, legendary
-// 5,000, 3,000, 500, 200, 69, 15, 8, 4
-const _prices = [0.0009, 0.0018, 0.0054, 0.0162, 0.08, 0.35, 0.8, 1]
+// 5,000, 3,000, 200, 69, 30, 15, 4, 3
+const _prices = [0.0009, 0.0021, 0.006, 0.0169, 0.06, 0.2, 0.55, 0.8]
+
+const _traitPointAllowance = 9
+const _eRareTPCost = 1
+const _specialTPCost = 3
+const _epicTPCost = 4
+const _legendaryTPCost = 5
 
 export const AntCanvas = () => {
     const dispatch = useDispatch()
@@ -224,22 +232,29 @@ export const AntCanvas = () => {
     const canvas = useRef()
     const [totalPrice, updatePrice] = useState(0.0099)
     const [prices, updatePrices] = useState([..._prices])
-    const [traitPoints, setTraitPoints] = useState(5)
+    const [traitPoints, setTraitPoints] = useState(_traitPointAllowance)
+    const [isTPNeg, setIsTPNeg] = useState(false)
 
     useEffect(() => {
         const ctx = canvas.current.getContext('2d')
         updateAntCanvas(ctx, selectedIndexes)
-        let _traitPoints = 5
+        let _traitPoints = _traitPointAllowance
         for (let i = 0; i < selectedIndexes.length; i++) {
-            if (staticLayerInfo[i].elements[selectedIndexes[i]].name !== 'empty' && staticLayerInfo[i].elements[selectedIndexes[i]].rarity > 5) {
-                if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 6) _traitPoints--
-                else if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 7) _traitPoints = _traitPoints - 2
-                else if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 8) _traitPoints = _traitPoints - 3
+            if (staticLayerInfo[i].elements[selectedIndexes[i]].name !== 'empty' && staticLayerInfo[i].elements[selectedIndexes[i]].rarity > 4) {
+                if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 5) _traitPoints = _traitPoints - _eRareTPCost
+                else if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 6) _traitPoints = _traitPoints - _specialTPCost
+                else if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 7) _traitPoints = _traitPoints - _epicTPCost
+                else if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 8) _traitPoints = _traitPoints - _legendaryTPCost
             }
         }
-        if (_traitPoints < 0) dispatch(addPopup({ id: popupTypes.antConflict.traitPoints }))
+        if (_traitPoints < 0) setIsTPNeg(true)
+        else setIsTPNeg(false)
         setTraitPoints(_traitPoints)
     }, [selectedIndexes, dispatch])
+
+    useEffect(() => {
+        if (isTPNeg) dispatch(addPopup({ id: popupTypes.antConflict.traitPoints }))
+    }, [isTPNeg, dispatch])
 
     useEffect(() => {
         if (pricesFromState[0] !== null) updatePrices([...pricesFromState])
@@ -282,18 +297,15 @@ export const AntCanvas = () => {
                         <BrownText>{"Common Price: " + prices[1] + " eth"}</BrownText>
                         <GreenText>{"Rare Price: " + prices[2] + " eth"}</GreenText>
                         <GoldText>{"Very Rare Price: " + prices[3] + " eth"}</GoldText>
-                        <PurpleText>{"Extra Rare Price: " + prices[4] + " eth"}</PurpleText>
                     </Col>
                     </LeftColCont>
                     <RightColCont>
                     <Col>
-                        <ThemeGoldText>{"Trait Points: " + traitPoints}</ThemeGoldText>
-                        <SpecialText>{"Special Price: " + prices[5] + " eth"}</SpecialText>
-                        <SpecialText>{"+ 1 Trait Point"}</SpecialText>
-                        <EpicText>{"Epic Price: " + prices[6] + " eth"}</EpicText>
-                        <EpicText>{"+ 2 Trait Points"}</EpicText>
-                        <LegendText>{"Legendary Price: " + prices[7] + " eth"}</LegendText>
-                        <LegendText>{"+ 3 Trait Points"}</LegendText>
+                        <ThemeGoldText>{"Trait Points (TP): " + traitPoints}</ThemeGoldText>
+                        <PurpleText>{"Extra Rare Price: " + prices[4] + " eth + " + _eRareTPCost + " TP"}</PurpleText>
+                        <SpecialText>{"Special Price: " + prices[5] + " eth + " + _specialTPCost + " TP"}</SpecialText>
+                        <EpicText>{"Epic Price: " + prices[6] + " eth + " + _epicTPCost + " TP"}</EpicText>
+                        <LegendText>{"Legendary Price: " + prices[7] + " eth + " + _legendaryTPCost + " TP"}</LegendText>
                     </Col>
                     </RightColCont>
                 </Row>

@@ -21,63 +21,63 @@ const headGear = [
         name: 'empty',
     },
     {
-        name: '1-tanker-cap',
-        rarity: 1,
+        name: '1-baseball-cap',
+        rarity: 0,
         layerLevel: 6,
     },
     {
-        name: '2-baseball-cap',
-        rarity: 1,
+        name: '2-green-baseball-cap',
+        rarity: 0,
         layerLevel: 6,
     },
     {
-        name: '3-baseball-hat',
+        name: '3-helmet',
+        rarity: 0,
+        layerLevel: 5,
+    },
+    {
+        name: '4-green-helmet',
+        rarity: 0,
+        layerLevel: 5,
+    },
+    {
+        name: '5-helmet-with-strap',
+        rarity: 0,
+        layerLevel: 5,
+    },
+    {
+        name: '6-tanker-cap',
         rarity: 1,
         layerLevel: 6,
-    },
-    {
-        name: '4-helmet',
-        rarity: 2,
-        layerLevel: 5,
-    },
-    {
-        name: '5-green-helmet',
-        rarity: 2,
-        layerLevel: 5,
-    },
-    {
-        name: '6-helmet-with-strap',
-        rarity: 2,
-        layerLevel: 5,
     },
     {
         name: '7-boonie',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 6,
     },
     {
         name: '8-green-boonie',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 6,
     },
     {
         name: '9-beret',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 6,
     },
     {
         name: '10-headband',
-        rarity: 4,
+        rarity: 3,
         layerLevel: 6,
     },
     {
         name: '11-cap',
-        rarity: 4,
+        rarity: 3,
         layerLevel: 6,
     },
     {
         name: '12-green-cap',
-        rarity: 4,
+        rarity: 3,
         layerLevel: 6,
     },
     {
@@ -86,18 +86,18 @@ const headGear = [
         layerLevel: 6,
     },
     {
-        name: '14-uncle-sam-hat',
+        name: '14-helmet-with-webbing',
+        rarity: 4,
+        layerLevel: 5,
+    },
+    {
+        name: '15-uni-hat',
         rarity: 5,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '15-helmet-with-webbing',
-        rarity: 5,
-        layerLevel: 5,
-    },
-    {
-        name: '16-uni-hat',
+        name: '16-uncle-sam-hat',
         rarity: 6,
         layerLevel: 6,
         isComingSoon: true
@@ -134,19 +134,19 @@ const faceGear = [
     },
     {
         name: '1-balaclava',
+        rarity: 2,
+        layerLevel: 4,
+    },
+    {
+        name: '2-bandito-balaclava',
         rarity: 3,
         layerLevel: 4,
+        isComingSoon: true
     },
     {
-        name: '2-gas-mask',
+        name: '3-gas-mask',
         rarity: 4,
         layerLevel: 4,
-    },
-    {
-        name: '3-bandito-balaclava',
-        rarity: 5,
-        layerLevel: 4,
-        isComingSoon: true
     },
     {
         name: '4-gas-mask-bong',
@@ -177,7 +177,7 @@ const opticalGear = [
     },
     {
         name: '4-nvg',
-        rarity: 4,
+        rarity: 3,
         layerLevel: 6,
     },
     {
@@ -188,7 +188,7 @@ const opticalGear = [
         isComingSoon: true
     },
     {
-        name: '6-uncle-sam-glasses',
+        name: '6-uni-shades',
         rarity: 5,
         layerLevel: 5,
         isOverEar: true,
@@ -196,21 +196,21 @@ const opticalGear = [
     },
     {
         name: '7-general-sunglasses',
-        rarity: 5,
+        rarity: 6,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
     },
     {
-        name: '8-uni-shades',
-        rarity: 6,
+        name: '8-uncle-sam-glasses',
+        rarity: 7,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
     },
     {
         name: '9-vaquero-sunglasses',
-        rarity: 6,
+        rarity: 7,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
@@ -223,7 +223,7 @@ const faceAccessories = [
     },
     {
         name: '1-warpaint',
-        rarity: 2,
+        rarity: 0,
         layerLevel: 1,
     },
     {
@@ -239,23 +239,23 @@ const mouthAccessories = [
     },
     {
         name: '1-cigarette',
+        rarity: 2,
+        layerLevel: 1,
+    },
+    {
+        name: '2-cigarillo',
         rarity: 3,
-        layerLevel: 1,
-    },
-    {
-        name: '2-cigar',
-        rarity: 4,
-        layerLevel: 1,
-    },
-    {
-        name: '3-cigarillo',
-        rarity: 5,
         layerLevel: 1,
         isComingSoon: true
     },
     {
+        name: '3-cigar',
+        rarity: 4,
+        layerLevel: 1,
+    },
+    {
         name: '4-cuban-cigar',
-        rarity: 6,
+        rarity: 5,
         layerLevel: 1,
         isComingSoon: true
     }
@@ -269,36 +269,36 @@ const neckGear = [
     },
     {
         name: '1-tags-with-bumper',
-        rarity: 1,
+        rarity: 0,
         layerLevel: 4,
         isComingSoon: true
     },
     {
         name: '2-shemagh',
-        rarity: 1,
+        rarity: 0,
         layerLevel: 4,
     },
     {
         name: '3-green-shemagh',
-        rarity: 2,
+        rarity: 1,
         layerLevel: 4,
         isComingSoon: true
     },
     {
         name: '4-white-shemagh',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 4,
         isComingSoon: true
     },
     {
         name: '5-yellow-shemagh',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 4,
         isComingSoon: true
     },
     {
         name: '6-royal-shemagh',
-        rarity: 4,
+        rarity: 3,
         layerLevel: 4,
         isComingSoon: true
     },
@@ -310,7 +310,7 @@ const neckGear = [
     },
     {
         name: '8-gold-dog-tags',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 4,
         isComingSoon: true
     }
@@ -321,18 +321,18 @@ const bandolierBelts = [
         name: 'empty',
     },
     {
-        name: '1-bandolier',
+        name: '1-reflective-belt',
+        rarity: 0,
+        layerLevel: 3,
+    },
+    {
+        name: '2-bandolier',
         rarity: 1,
         layerLevel: 3,
     },
     {
-        name: '2-shotgun-bandolier',
+        name: '3-shotgun-bandolier',
         rarity: 2,
-        layerLevel: 3,
-    },
-    {
-        name: '3-reflective-belt',
-        rarity: 3,
         layerLevel: 3,
     }
 ]
@@ -359,21 +359,21 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '4-dress-uniform',
+        name: '4-beater',
+        rarity: 1,
+        layerLevel: 2,
+    },
+    {
+        name: '5-dress-uniform',
         rarity: 2,
         layerLevel: 2,
         hasSleeves: true,
     },
     {
-        name: '5-green-dress-uniform',
+        name: '6-green-dress-uniform',
         rarity: 2,
         layerLevel: 2,
         hasSleeves: true,
-    },
-    {
-        name: '6-beater',
-        rarity: 2,
-        layerLevel: 2,
     },
     {
         name: '7-plate-carrier',
@@ -386,31 +386,31 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '9-uncle-sam-shirt',
+        name: '9-flak-vest',
+        rarity: 3,
+        layerLevel: 2,
+    },
+    {
+        name: '10-green-flak-vest',
+        rarity: 3,
+        layerLevel: 2,
+    },
+    {
+        name: '11-eod-suit',
         rarity: 4,
+        layerLevel: 2,
+    },
+    {
+        name: '12-ghillie',
+        rarity: 4,
+        layerLevel: 2,
+    },
+    {
+        name: '13-uncle-sam-shirt',
+        rarity: 5,
         layerLevel: 2,
         hasSleeves: true,
         isComingSoon: true
-    },
-    {
-        name: '10-flak-vest',
-        rarity: 4,
-        layerLevel: 2,
-    },
-    {
-        name: '11-green-flak-vest',
-        rarity: 4,
-        layerLevel: 2,
-    },
-    {
-        name: '12-eod-suit',
-        rarity: 5,
-        layerLevel: 2,
-    },
-    {
-        name: '13-ghillie',
-        rarity: 5,
-        layerLevel: 2,
     },
     {
         name: '14-tiger-plate-carrier',
@@ -420,7 +420,7 @@ const bodyGear = [
     },
     {
         name: '15-sand-tiger-plate-carrier',
-        rarity: 6,
+        rarity: 5,
         layerLevel: 2,
         isComingSoon: true
     },
@@ -439,7 +439,7 @@ const bodyGear = [
     },
     {
         name: '18-purp-flak-vest',
-        rarity: 8,
+        rarity: 7,
         layerLevel: 2,
         isComingSoon: true
     }
@@ -478,7 +478,7 @@ const gunsEquipment = [
     },
     {
         name: '1-uzi',
-        rarity: 1,
+        rarity: 0,
         layerLevel: 5,
     },
     {
@@ -488,7 +488,7 @@ const gunsEquipment = [
     },
     {
         name: '3-assault-rifle',
-        rarity: 2,
+        rarity: 1,
         layerLevel: 5,
     },
     {
@@ -498,7 +498,7 @@ const gunsEquipment = [
     },
     {
         name: '5-lmg',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 5,
     },
     {
@@ -545,13 +545,13 @@ const gunsEquipment = [
     },
     {
         name: '14-tommygun-smg',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 5,
         isComingSoon: true
     },
     {
         name: '15-oldie-assault-rifle',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 5,
         isComingSoon: true
     },
@@ -575,49 +575,43 @@ const watch = [
     },
     {
         name: '1-green-watch',
+        rarity: 0,
+        layerLevel: 6,
+        isComingSoon: true
+    },
+    {
+        name: '2-black-watch',
         rarity: 1,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '2-full-black-watch',
-        rarity: 2,
-        layerLevel: 6,
-        isComingSoon: true
-    },
-    {
-        name: '3-black-watch',
+        name: '3-full-black-watch',
         rarity: 2,
         layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '4-silver-watch',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '5-silver-uni-watch',
-        rarity: 4,
+        rarity: 3,
         layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '6-gold-watch',
-        rarity: 5,
+        rarity: 4,
         layerLevel: 6,
         isComingSoon: true
     },
     {
         name: '7-gold-uni-watch',
-        rarity: 6,
-        layerLevel: 6,
-        isComingSoon: true
-    },
-    {
-        name: '8-gold-pattern-uni-watch',
-        rarity: 7,
+        rarity: 5,
         layerLevel: 6,
         isComingSoon: true
     }
@@ -637,13 +631,13 @@ const holster = [
     },
     {
         name: '2-brown-holster',
-        rarity: 2,
+        rarity: 1,
         layerLevel: 2,
         isComingSoon: true
     },
     {
         name: '3-uni-holster',
-        rarity: 3,
+        rarity: 2,
         layerLevel: 2,
         isComingSoon: true
     },
@@ -655,19 +649,19 @@ const holster = [
     },
     {
         name: '5-leather-holster',
-        rarity: 6,
+        rarity: 5,
         layerLevel: 2,
         isComingSoon: true
     },
     {
         name: '6-purp-holster',
-        rarity: 6,
+        rarity: 5,
         layerLevel: 2,
         isComingSoon: true
     },
     {
         name: '7-santa-maria-holster',
-        rarity: 7,
+        rarity: 5,
         layerLevel: 2,
         isComingSoon: true
     }
@@ -679,43 +673,42 @@ const abdomenAccessories = [
     },
     {
         name: '1-peace-sign',
-        rarity: 1,
+        rarity: 0,
         layerLevel: 1,
     },
     {
         name: '2-bomb',
-        rarity: 1,
+        rarity: 0,
         layerLevel: 1,
     },
     {
         name: '3-stars',
-        rarity: 2,
+        rarity: 1,
         layerLevel: 1,
     },
     {
         name: '4-skull',
+        rarity: 1,
+        layerLevel: 1,
+    },
+    {
+        name: '5-crosshair',
         rarity: 2,
         layerLevel: 1,
     },
     {
-        name: '5-star',
-        rarity: 3,
-        layerLevel: 1,
-        isComingSoon: true
-    },
-    {
-        name: '6-crosshair',
-        rarity: 3,
+        name: '6-wound',
+        rarity: 2,
         layerLevel: 1,
     },
     {
-        name: '7-wound',
+        name: '7-mom-tattoo',
         rarity: 3,
         layerLevel: 1,
     },
     {
-        name: '8-mom-tattoo',
-        rarity: 4,
+        name: '8-btk',
+        rarity: 3,
         layerLevel: 1,
     },
     {
@@ -724,42 +717,43 @@ const abdomenAccessories = [
         layerLevel: 1,
     },
     {
-        name: '10-btk',
+        name: '10-fire',
         rarity: 4,
         layerLevel: 1,
     },
     {
-        name: '11-fire',
+        name: '11-star',
         rarity: 5,
         layerLevel: 1,
+        isComingSoon: true
     },
     {
-        name: '12-flag-patch',
+        name: '12-uni-tat',
         rarity: 6,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '13-uni-tat',
+        name: '13-flag-patch',
+        rarity: 6,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '14-blued',
         rarity: 7,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '14-headshot-crosshair',
+        name: '15-most-dope',
         rarity: 7,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '15-blued',
-        rarity: 7,
-        layerLevel: 1,
-        isComingSoon: true
-    },
-    {
-        name: '16-most-dope',
-        rarity: 7,
+        name: '16-headshot-crosshair',
+        rarity: 8,
         layerLevel: 1,
         isComingSoon: true
     }
@@ -772,15 +766,15 @@ const hindLegs = [
         layerLevel: 1,
     },
     {
-        name: '1-silver-hind-prosthetic',
+        name: '1-black-hind-prosthetic',
         rarity: 3,
         layerLevel: 1,
-        isComingSoon: true
     },
     {
-        name: '2-black-hind-prosthetic',
+        name: '2-silver-hind-prosthetic',
         rarity: 4,
         layerLevel: 1,
+        isComingSoon: true
     }
 ]
 
@@ -893,7 +887,7 @@ const backgrounds = [
     },
     {
         name: '2-pink',
-        rarity: 5,
+        rarity: 4,
         layerLevel: 0,
     },
     {
