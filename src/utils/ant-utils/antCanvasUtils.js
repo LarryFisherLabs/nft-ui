@@ -28,8 +28,8 @@ export const eodMaskId_ = 13
 export const uniHatId_ = 15
 export const uncleSamHatId_ = 16
 export const shroudedHelmetId_ = 20
-export const gasMaskId_ = 3
-export const gasMaskBongId_ = 4
+export const gasMaskId_ = 9
+export const gasMaskBongId_ = 11
 export const reflectiveBeltId_ = 1
 export const eodSuitId_ = 11
 

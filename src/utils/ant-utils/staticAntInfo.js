@@ -133,27 +133,69 @@ const faceGear = [
         name: 'empty',
     },
     {
-        name: '1-balaclava',
+        name: '1-surgeon-mask',
+        rarity: 1,
+        layerLevel: 4,
+        isComingSoon: true
+    },
+    {
+        name: '2-respirator',
+        rarity: 1,
+        layerLevel: 4,
+        isComingSoon: true
+    },
+    {
+        name: '3-balaclava',
         rarity: 2,
         layerLevel: 4,
     },
     {
-        name: '2-bandito-balaclava',
+        name: '4-tech-mask',
+        rarity: 2,
+        layerLevel: 4,
+        isComingSoon: true
+    },
+    {
+        name: '5-desert-tech-mask',
+        rarity: 2,
+        layerLevel: 4,
+        isComingSoon: true
+    },
+    {
+        name: '6-full-black-mask',
         rarity: 3,
         layerLevel: 4,
         isComingSoon: true
     },
     {
-        name: '3-gas-mask',
+        name: '7-bandito-balaclava',
+        rarity: 3,
+        layerLevel: 4,
+        isComingSoon: true
+    },
+    {
+        name: '8-cold-weather-mask',
+        rarity: 4,
+        layerLevel: 4,
+        isComingSoon: true
+    },
+    {
+        name: '9-gas-mask',
         rarity: 4,
         layerLevel: 4,
     },
     {
-        name: '4-gas-mask-bong',
-        rarity: 8,
+        name: '10-skull-mask',
+        rarity: 4,
         layerLevel: 4,
         isComingSoon: true
     },
+    {
+        name: '11-gas-mask-bong',
+        rarity: 8,
+        layerLevel: 4,
+        isComingSoon: true
+    }
 ]
 
 const opticalGear = [
@@ -214,6 +256,27 @@ const opticalGear = [
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
+    },
+    {
+        name: '10-nerd-glasses',
+        rarity: 2,
+        layerLevel: 5,
+        isOverEar: true,
+        isComingSoon: true
+    },
+    {
+        name: '11-sunglasses',
+        rarity: 3,
+        layerLevel: 5,
+        isOverEar: true,
+        isComingSoon: true
+    },
+    {
+        name: '12-goggles',
+        rarity: 2,
+        layerLevel: 5,
+        isOverEar: true,
+        isComingSoon: true
     }
 ]
 
@@ -222,14 +285,64 @@ const faceAccessories = [
         name: 'empty',
     },
     {
-        name: '1-warpaint',
+        name: '5-black-eye',
         rarity: 0,
         layerLevel: 1,
+        isComingSoon: true
     },
     {
-        name: '2-blood-smear',
+        name: '10-eye-black',
+        rarity: 1,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '11-face-shadow',
+        rarity: 1,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '9-eye-scar',
+        rarity: 2,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '4-smooches',
+        rarity: 2,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '12-claw-mark',
+        rarity: 2,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '7-skull',
         rarity: 3,
         layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '3-kiss',
+        rarity: 4,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '8-clown',
+        rarity: 4,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '6-muertos',
+        rarity: 4,
+        layerLevel: 1,
+        isComingSoon: true
     }
 ]
 
@@ -871,6 +984,12 @@ const vehicles = [
         rarity: 6,
         layerLevel: 1,
         //730mil
+    },
+    {
+        name: '16-technical',
+        rarity: 3,
+        layerLevel: 1,
+        isComingSoon: true
     }
 ]
 
