@@ -26,7 +26,7 @@ const headGear = [
         layerLevel: 6,
     },
     {
-        name: '2-green-baseball-cap',
+        name: '2-desert-baseball-cap',
         rarity: 0,
         layerLevel: 6,
     },
@@ -36,7 +36,7 @@ const headGear = [
         layerLevel: 5,
     },
     {
-        name: '4-green-helmet',
+        name: '4-desert-helmet',
         rarity: 0,
         layerLevel: 5,
     },
@@ -56,7 +56,7 @@ const headGear = [
         layerLevel: 6,
     },
     {
-        name: '8-green-boonie',
+        name: '8-desert-boonie',
         rarity: 2,
         layerLevel: 6,
     },
@@ -71,12 +71,12 @@ const headGear = [
         layerLevel: 6,
     },
     {
-        name: '11-cap',
+        name: '11-dress-cap',
         rarity: 3,
         layerLevel: 6,
     },
     {
-        name: '12-green-cap',
+        name: '12-desert-dress-cap',
         rarity: 3,
         layerLevel: 6,
     },
@@ -344,7 +344,7 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '1-green-tee-shirt',
+        name: '1-desert-tee-shirt',
         rarity: 0,
         layerLevel: 2,
     },
@@ -354,7 +354,7 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '3-green-tank-top',
+        name: '3-desert-tank-top',
         rarity: 1,
         layerLevel: 2,
     },
@@ -370,7 +370,7 @@ const bodyGear = [
         hasSleeves: true,
     },
     {
-        name: '6-green-dress-uniform',
+        name: '6-desert-dress-uniform',
         rarity: 2,
         layerLevel: 2,
         hasSleeves: true,
@@ -381,7 +381,7 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '8-green-plate-carrier',
+        name: '8-desert-plate-carrier',
         rarity: 3,
         layerLevel: 2,
     },
@@ -391,7 +391,7 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '10-green-flak-vest',
+        name: '10-desert-flak-vest',
         rarity: 3,
         layerLevel: 2,
     },
