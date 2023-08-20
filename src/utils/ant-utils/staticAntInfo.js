@@ -213,67 +213,53 @@ const opticalGear = [
         layerLevel: 5,
     },
     {
-        name: '3-sunglasses',
+        name: '3-nerd-glasses',
+        rarity: 2,
+        layerLevel: 5,
+        isOverEar: true,
+        isComingSoon: true
+    },
+    {
+        name: '4-sunglasses',
         rarity: 3,
         layerLevel: 5,
     },
     {
-        name: '4-nvg',
+        name: '5-nvg',
         rarity: 3,
         layerLevel: 6,
     },
     {
-        name: '5-trooper-shades',
+        name: '6-trooper-shades',
         rarity: 4,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
     },
     {
-        name: '6-uni-shades',
+        name: '7-uni-shades',
         rarity: 5,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
     },
     {
-        name: '7-general-sunglasses',
+        name: '8-general-sunglasses',
         rarity: 6,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
     },
     {
-        name: '8-uncle-sam-glasses',
+        name: '9-uncle-sam-glasses',
         rarity: 7,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
     },
     {
-        name: '9-vaquero-sunglasses',
+        name: '10-vaquero-sunglasses',
         rarity: 7,
-        layerLevel: 5,
-        isOverEar: true,
-        isComingSoon: true
-    },
-    {
-        name: '10-nerd-glasses',
-        rarity: 2,
-        layerLevel: 5,
-        isOverEar: true,
-        isComingSoon: true
-    },
-    {
-        name: '11-sunglasses',
-        rarity: 3,
-        layerLevel: 5,
-        isOverEar: true,
-        isComingSoon: true
-    },
-    {
-        name: '12-goggles',
-        rarity: 2,
         layerLevel: 5,
         isOverEar: true,
         isComingSoon: true
