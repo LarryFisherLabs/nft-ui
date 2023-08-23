@@ -28,14 +28,16 @@ export const popupTypes = {
     reconnect: 17,
     antConflict: {
         gasMask: {
-            eod: antConflictsStartIndex,
-            optical: antConflictsStartIndex + 1,
-            mouth: antConflictsStartIndex + 2,
-            face: antConflictsStartIndex + 3,
+            optical: antConflictsStartIndex,
+        },
+        faceGear: {
+            eod: antConflictsStartIndex + 1,
+            face: antConflictsStartIndex + 2,
+            mouth: antConflictsStartIndex + 3,
         },
         eod: {
             shemagh: antConflictsStartIndex + 4,
-            gasMask: antConflictsStartIndex + 5,
+            faceGear: antConflictsStartIndex + 5,
             mouth: antConflictsStartIndex + 6,
             bandolier: antConflictsStartIndex + 7,
             overEarOptical: antConflictsStartIndex + 8,
@@ -54,12 +56,12 @@ export const popupTypes = {
             },
         },
         mouth: {
-            gasMask: antConflictOpticalEndIndex,
+            faceGear: antConflictOpticalEndIndex,
             eod: antConflictOpticalEndIndex + 1,
             shrouded: antConflictsStartIndex + 2,
         },
         face: {
-            gasMask: antConflictOpticalEndIndex + 3,
+            faceGear: antConflictOpticalEndIndex + 3,
             shrouded: antConflictOpticalEndIndex + 4,
         },
         head: {
@@ -77,19 +79,21 @@ export const popupTypes = {
                 sleevedBody: antConflictOpticalEndIndex + 9,
             },
         },
+        midHeadGear: {
+            tiedAntenna: antConflictBandolierEndIndex,
+        },
         tallHeadGear: {
-            antenna: antConflictBandolierEndIndex,
+            antenna: antConflictBandolierEndIndex + 1,
         },
         antenna: {
-            tallHeadGear: antConflictBandolierEndIndex + 1,
-            shrouded: antConflictBandolierEndIndex + 2,
+            tallHeadGear: antConflictBandolierEndIndex + 2,
+            midHeadGear: antConflictBandolierEndIndex + 3,
         },
         shrouded: {
-            faceGear: antConflictBandolierEndIndex + 3,
-            optical: antConflictBandolierEndIndex + 4,
-            faceAcc: antConflictBandolierEndIndex + 5,
-            mouth: antConflictBandolierEndIndex + 6,
-            tiedAntenna: antConflictBandolierEndIndex + 7,
+            faceGear: antConflictBandolierEndIndex + 4,
+            optical: antConflictBandolierEndIndex + 5,
+            faceAcc: antConflictBandolierEndIndex + 6,
+            mouth: antConflictBandolierEndIndex + 7,
             tags: antConflictBandolierEndIndex + 8,
         },
         traitPoints: antPartConflictEndIndex,
@@ -171,19 +175,19 @@ export const popupDetailsById = [
         timer: longTimer
     },
     {
-        msg: 'Gas Mask incompatible with EOD',
-        timer: shortTimer
-    },
-    {
         msg: 'Gas Mask incompatible with Optical Gear',
         timer: shortTimer
     },
     {
-        msg: 'Gas Mask incompatible with Mouth Accessories',
+        msg: 'Face Gear incompatible with EOD',
         timer: shortTimer
     },
     {
-        msg: 'Gas Mask incompatible with Face Gear',
+        msg: 'Face Gear that covers face incompatible with Face Accessories',
+        timer: shortTimer
+    },
+    {
+        msg: 'Face Gear with covered mouth incompatible with Mouth Accessories',
         timer: shortTimer
     },
     {
@@ -191,7 +195,7 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: 'EOD incompatible with Gas Mask',
+        msg: 'EOD incompatible with Face Gear',
         timer: shortTimer
     },
     {
@@ -227,7 +231,7 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: 'Mouth Accessories incompatible with Gas Mask',
+        msg: 'Mouth Accessories incompatible with Face Gear that covers mouth',
         timer: shortTimer
     },
     {
@@ -239,7 +243,7 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: 'Face Accessories incompatible with Gas Mask',
+        msg: 'Face Accessories incompatible with Face Gear that covers full face',
         timer: shortTimer
     },
     {
@@ -264,6 +268,10 @@ export const popupDetailsById = [
     },
     {
         msg: 'Reflective Belt incompatible with "Sleeved Body Gear"',
+        timer: shortTimer
+    },
+    {
+        msg: 'Taller Head Gear incompatible with Tied Antenna',
         timer: shortTimer
     },
     {
@@ -292,10 +300,6 @@ export const popupDetailsById = [
     },
     {
         msg: 'Shrouded Helmet incompatible with Mouth Accessories',
-        timer: shortTimer
-    },
-    {
-        msg: 'Shrouded Helmet incompatible with Tied Antenna',
         timer: shortTimer
     },
     {

@@ -1,19 +1,19 @@
-// nothing goes beneath antenna so bottom non-background layer
+// vehicles go beneath antenna
 const antenna = [
     {
         name: '0-ant-antenna',
         rarity: 0,
-        layerLevel: 1,
+        layerLevel: 2,
     },
     {
         name: '1-tied-antenna',
         rarity: 1,
-        layerLevel: 1,
+        layerLevel: 2,
     },
     {
         name: '2-broken-antenna',
         rarity: 3,
-        layerLevel: 1,
+        layerLevel: 2,
     }
 ]
 
@@ -96,12 +96,14 @@ const headGear = [
         name: '15-uni-hat',
         rarity: 5,
         layerLevel: 7,
+        isTall: true,
         isComingSoon: true
     },
     {
         name: '16-uncle-sam-hat',
         rarity: 6,
         layerLevel: 7,
+        isTall: true,
         isComingSoon: true
     },
     {
@@ -126,6 +128,27 @@ const headGear = [
         name: '20-shrouded-helmet',
         rarity: 8,
         layerLevel: 6,
+        isMidTall: true,
+        isComingSoon: true
+    },
+    {
+        name: '21-chef-hat',
+        rarity: 8,
+        layerLevel: 6,
+        isTall: true,
+        isComingSoon: true
+    },
+    {
+        name: '22-m81-helmet-with-strap',
+        rarity: 8,
+        layerLevel: 6,
+        isComingSoon: true
+    },
+    {
+        name: '23-trucker-cap',
+        rarity: 8,
+        layerLevel: 6,
+        isMidTall: true,
         isComingSoon: true
     }
 ]
@@ -139,12 +162,14 @@ const faceGear = [
         name: '1-surgeon-mask',
         rarity: 1,
         layerLevel: 5,
+        isMouthCovered: true,
         isComingSoon: true
     },
     {
         name: '2-respirator',
         rarity: 1,
         layerLevel: 5,
+        isMouthCovered: true,
         isComingSoon: true
     },
     {
@@ -156,18 +181,21 @@ const faceGear = [
         name: '4-tech-mask',
         rarity: 2,
         layerLevel: 5,
+        isMouthCovered: true,
         isComingSoon: true
     },
     {
         name: '5-desert-tech-mask',
         rarity: 2,
         layerLevel: 5,
+        isMouthCovered: true,
         isComingSoon: true
     },
     {
         name: '6-full-black-mask',
         rarity: 3,
         layerLevel: 5,
+        isMouthCovered: true,
         isComingSoon: true
     },
     {
@@ -180,23 +208,30 @@ const faceGear = [
         name: '8-cold-weather-mask',
         rarity: 4,
         layerLevel: 5,
+        isFaceCovered: true,
+        isMouthCovered: true,
         isComingSoon: true
     },
     {
         name: '9-gas-mask',
         rarity: 4,
         layerLevel: 5,
+        isFaceCovered: true,
+        isMouthCovered: true,
     },
     {
         name: '10-skull-mask',
         rarity: 4,
         layerLevel: 5,
+        isMouthCovered: true,
         isComingSoon: true
     },
     {
         name: '11-gas-mask-bong',
         rarity: 8,
         layerLevel: 5,
+        isFaceCovered: true,
+        isMouthCovered: true,
         isComingSoon: true
     }
 ]
@@ -508,49 +543,76 @@ const bodyGear = [
         layerLevel: 2,
     },
     {
-        name: '11-eod-suit',
+        name: '11-bomber-jacket',
+        rarity: 4,
+        layerLevel: 2,
+        hasSleeves: true,
+        isComingSoon: true
+    },
+    {
+        name: '12-leather-bomber-jacket',
+        rarity: 4,
+        layerLevel: 2,
+        hasSleeves: true,
+        isComingSoon: true
+    },
+    {
+        name: '13-eod-suit',
         rarity: 4,
         layerLevel: 2,
     },
     {
-        name: '12-ghillie',
+        name: '14-ghillie',
         rarity: 4,
         layerLevel: 2,
     },
     {
-        name: '13-uncle-sam-shirt',
+        name: '15-m81-flak-vest',
+        rarity: 4,
+        layerLevel: 2,
+        isComingSoon: true
+    },
+    {
+        name: '16-uncle-sam-shirt',
         rarity: 5,
         layerLevel: 2,
         hasSleeves: true,
         isComingSoon: true
     },
     {
-        name: '14-tiger-plate-carrier',
+        name: '17-tiger-plate-carrier',
         rarity: 5,
         layerLevel: 2,
         isComingSoon: true
     },
     {
-        name: '15-sand-tiger-plate-carrier',
+        name: '18-sand-tiger-plate-carrier',
         rarity: 5,
         layerLevel: 2,
         isComingSoon: true
     },
     {
-        name: '16-uni-plate-carrier',
+        name: '19-chef-uniform',
+        rarity: 5,
+        layerLevel: 2,
+        hasSleeves: true,
+        isComingSoon: true
+    },
+    {
+        name: '20-uni-plate-carrier',
         rarity: 6,
         layerLevel: 2,
         isComingSoon: true
     },
     {
-        name: '17-hoodie-plate-carrier',
+        name: '21-hoodie-plate-carrier',
         rarity: 7,
         layerLevel: 2,
         hasSleeves: true,
         isComingSoon: true
     },
     {
-        name: '18-purp-flak-vest',
+        name: '22-purp-flak-vest',
         rarity: 7,
         layerLevel: 2,
         isComingSoon: true
@@ -680,6 +742,12 @@ const gunsEquipment = [
         rarity: 8,
         layerLevel: 6,
         isComingSoon: true
+    },
+    {
+        name: '18-akimbo-chef-knives',
+        rarity: 8,
+        layerLevel: 6,
+        isComingSoon: true
     }
 ]
 
@@ -780,6 +848,12 @@ const holster = [
         rarity: 5,
         layerLevel: 2,
         isComingSoon: true
+    },
+    {
+        name: '8-americana-holster',
+        rarity: 5,
+        layerLevel: 2,
+        isComingSoon: true
     }
 ]
 
@@ -870,6 +944,12 @@ const abdomenAccessories = [
     },
     {
         name: '16-headshot-crosshair',
+        rarity: 8,
+        layerLevel: 1,
+        isComingSoon: true
+    },
+    {
+        name: '17-dinnertime',
         rarity: 8,
         layerLevel: 1,
         isComingSoon: true
@@ -996,6 +1076,12 @@ const vehicles = [
         rarity: 6,
         layerLevel: 1,
         //730mil
+    },
+    {
+        name: '17-unicorn',
+        rarity: 6,
+        layerLevel: 1,
+        isComingSoon: true
     }
 ]
 

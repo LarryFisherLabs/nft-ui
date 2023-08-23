@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { getViewLevel } from '../utils/deviceType.js'
 import { popupTypes } from '../utils/json-constants/popupInfo.js'
 import { addPopup } from '../redux/slices/connectSlice.js'
-import { eodMaskId_, gasMaskBongId_, gasMaskCheck, gasMaskId_, reflectiveBeltId_, shroudedCheck, shroudedHelmetId_, toggleEod, uncleSamHatId_, uniHatId_ } from '../utils/ant-utils/antCanvasUtils.js'
+import { eodMaskId_, gasMaskBongId_, gasMaskId_, reflectiveBeltId_, shroudedCheck, shroudedHelmetId_, tiedAntennaId_, toggleEod } from '../utils/ant-utils/antCanvasUtils.js'
 
 export const Button = styled.div`
     display: flex;
@@ -91,20 +91,14 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                 else dispatch(removeAntFile({ layerIndex: layerIndex }))
             } else {
                 // if not removing element then check compatability rules for selected option and add
-                if (element.name.includes('-gas-mask')) {
-                    // gas mask incompatible with eod, optical, mouth and face gear
-                    gasMaskCheck(dispatch, selectedIndexes[1], selectedIndexes[3], selectedIndexes[5], selectedIndexes[4])
+                if (element.name.includes('-gas-mask') && selectedIndexes[3] !== 0) {
+                    // gas mask incompatible with optical
+                    dispatch(removeAntFile({ layerIndex: 3 }))
+                    dispatch(addPopup({ id: popupTypes.antConflict.gasMask.optical }))
                 }
                 if (element.name.includes('-eod-')) {
-                    // add eod together eod incompatible with shemagh, gas mask, mouth accessories and bandolier belts
+                    // add eod together eod incompatible with shemagh, face gear, mouth accessories and bandolier belts
                     toggleEod(true, dispatch, layerIndex, selectedIndexes[2], selectedIndexes[6], selectedIndexes[5], selectedIndexes[7], selectedIndexes[3])
-                }
-                if (element.name.includes('-shemagh')) {
-                    // shemagh incompatible with eod
-                    if (selectedIndexes[1] === eodMaskId_) {
-                        toggleEod(false, dispatch)
-                        dispatch(addPopup({ id: popupTypes.antConflict.shemagh.eod }))
-                    }
                 }
                 if (element.name.includes('-tags') && index > 1) {
                     // special dog tags incompatible with shrouded helmet
@@ -113,45 +107,35 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                         dispatch(addPopup({ id: popupTypes.antConflict.tags.shrouded }))
                     }
                 }
-                if (element.name.includes('-uncle-sam-hat') || element.name.includes('-uni-hat')) {
-                    // uncle sam hat, and uni hat incompatible with special antenna
-                    if (selectedIndexes[0] !== 0) {
-                        dispatch(removeAntFile({ layerIndex: 0 }))
-                        dispatch(addPopup({ id: popupTypes.antConflict.tallHeadGear.antenna }))
-                    }
+                if ((staticLayerInfo[1].elements[index].hasOwnProperty('isTall') && selectedIndexes[0] !== 0) || (staticLayerInfo[1].elements[index].hasOwnProperty('isMidTall') && selectedIndexes[0] === tiedAntennaId_)) {
+                    // remove special antenna for selected tall head gear + remove tied antenna for selected mid tall head gear
+                    dispatch(removeAntFile({ layerIndex: 0 }))
+                    if (staticLayerInfo[1].elements[index].hasOwnProperty('isMidTall')) dispatch(addPopup({ id: popupTypes.antConflict.midHeadGear.tiedAntenna }))
+                    else dispatch(addPopup({ id: popupTypes.antConflict.tallHeadGear.antenna }))
                 }
-                if (element.name.includes('-reflective-belt')) {
+                if (element.name.includes('-reflective-belt') && staticLayerInfo[8].elements[selectedIndexes[8]].hasOwnProperty('hasSleeves')) {
                     // reflective belt incompatible with sleeved body gear
-                    if (staticLayerInfo[8].elements[selectedIndexes[8]].hasOwnProperty('hasSleeves')) {
-                        dispatch(removeAntFile({ layerIndex: 8 }))
-                        dispatch(addPopup({ id: popupTypes.antConflict.bandolier.reflective.sleevedBody }))
-                    }
+                    dispatch(removeAntFile({ layerIndex: 8 }))
+                    dispatch(addPopup({ id: popupTypes.antConflict.bandolier.reflective.sleevedBody }))
                 }
                 if (element.name.includes('-shrouded-helmet')) {
-                    // shrouded helmet incompatible with face gear, optical, face accessories, mouth accessories, tied antenna, and special dog tags
-                    shroudedCheck(dispatch, selectedIndexes[2], selectedIndexes[3], selectedIndexes[4], selectedIndexes[5], selectedIndexes[0], selectedIndexes[6])
+                    // shrouded helmet incompatible with face gear, optical, face accessories, mouth accessories, and special dog tags
+                    shroudedCheck(dispatch, selectedIndexes[2], selectedIndexes[3], selectedIndexes[4], selectedIndexes[5], selectedIndexes[6])
                 }
-                if ((element.name.includes('-antenna') && (selectedIndexes[1] === uncleSamHatId_ || selectedIndexes[1] === uniHatId_)) || (element.name.includes('-tied-antenna') && selectedIndexes[1] === shroudedHelmetId_)) {
-                    // special antenna incompatible with uncle sam hat, and uni hat + tied antenna incompatible with shrouded helmet
+                if ((element.name.includes('-antenna') && staticLayerInfo[1].elements[selectedIndexes[1]].hasOwnProperty('isTall')) || (element.name.includes('-tied-antenna') && staticLayerInfo[1].elements[selectedIndexes[1]].hasOwnProperty('isMidTall'))) {
+                    // special antenna incompatible with tall head gear + tied antenna incompatible with mid tall head gear
                     dispatch(removeAntFile({ layerIndex: 1 }))
-                    if (element.name.includes('-tied-antenna')) dispatch(addPopup({ id: popupTypes.antConflict.antenna.shrouded }))
+                    if (selectedIndexes[1] === shroudedHelmetId_) dispatch(addPopup({ id: popupTypes.antConflict.antenna.midHeadGear }))
                     else dispatch(addPopup({ id: popupTypes.antConflict.antenna.tallHeadGear }))
                 }
-                if ((selectedIndexes[2] === gasMaskId_ || selectedIndexes[2] === gasMaskBongId_) && (layerIndex === 3 || layerIndex === 5 || layerIndex === 4)) {
-                    // remove gas mask for optical, mouth or face accessories
+                if ((selectedIndexes[2] === gasMaskId_ || selectedIndexes[2] === gasMaskBongId_) && layerIndex === 3) {
+                    // remove gas mask for optical
                     dispatch(removeAntFile({ layerIndex: 2 }))
                     if (layerIndex === 3) dispatch(addPopup({ id: popupTypes.antConflict.optical.gasMask }))
-                    else if (layerIndex === 5) dispatch(addPopup({ id: popupTypes.antConflict.mouth.gasMask }))
-                    else if (layerIndex === 4) dispatch(addPopup({ id: popupTypes.antConflict.face.gasMask }))
                 }
-                if (selectedIndexes[1] === eodMaskId_ && (layerIndex === 1 || layerIndex === 8 || layerIndex === 5 || layerIndex === 7 || (layerIndex === 3 && staticLayerInfo[3].elements[index].hasOwnProperty('isOverEar')))) {
-                    // remove eod for head, body, mouth accessory, bandolier, or over-ear-optical change
-                    toggleEod(false, dispatch)
-                    if (layerIndex === 1) dispatch(addPopup({ id: popupTypes.antConflict.head.eod }))
-                    else if (layerIndex === 8) dispatch(addPopup({ id: popupTypes.antConflict.body.eod }))
-                    else if (layerIndex === 5) dispatch(addPopup({ id: popupTypes.antConflict.mouth.eod }))
-                    else if (layerIndex === 7) dispatch(addPopup({ id: popupTypes.antConflict.bandolier.eod }))
-                    else if (layerIndex === 3) dispatch(addPopup({ id: popupTypes.antConflict.optical.overEar.eod }))
+                if (selectedIndexes[1] === eodMaskId_ && (layerIndex === 1 || layerIndex === 8 || layerIndex === 5 || layerIndex === 7 || layerIndex === 2 || (layerIndex === 3 && staticLayerInfo[3].elements[index].hasOwnProperty('isOverEar')) || (layerIndex === 6 && element.name.includes('-shemagh')))) {
+                    // remove eod for head, body, mouth accessory, bandolier, face gear, over-ear-optical, or shemagh change
+                    toggleEod(false, dispatch, layerIndex)
                 }
                 if (selectedIndexes[1] === shroudedHelmetId_ && (layerIndex === 2 || layerIndex === 3 || layerIndex === 4 || layerIndex === 5)) {
                     // remove shrouded for face gear, optical, face accessory, or mouth accessory change
@@ -164,6 +148,24 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     // remove reflective belt for sleeved body gear
                     dispatch(removeAntFile({ layerIndex: 7 }))
                     dispatch(addPopup({ id: popupTypes.antConflict.body.sleeved.reflective }))
+                }
+                if (layerIndex === 2) {
+                    if (staticLayerInfo[2].elements[index].hasOwnProperty('isMouthCovered') && selectedIndexes[5] !== 0) {
+                        // remove mouth accessory if selected face gear covers mouth
+                        dispatch(removeAntFile({ layerIndex: 5 }))
+                        dispatch(addPopup({ id: popupTypes.antConflict.faceGear.mouth }))
+                    }
+                    if (staticLayerInfo[2].elements[index].hasOwnProperty('isFaceCovered') && selectedIndexes[4] !== 0) {
+                        // no face accessories if face gear covers face
+                        dispatch(removeAntFile({ layerIndex: 4 }))
+                        dispatch(addPopup({ id: popupTypes.antConflict.faceGear.face }))
+                    }
+                }
+                if ((layerIndex === 5 && staticLayerInfo[2].elements[selectedIndexes[2]].hasOwnProperty('isMouthCovered')) || (layerIndex === 4 && staticLayerInfo[2].elements[selectedIndexes[2]].hasOwnProperty('isFaceCovered'))) {
+                    // remove face gear if it: covers mouth when mouth accessory selected, or covers face when face accessory selected
+                    dispatch(removeAntFile({ layerIndex: 2 }))
+                    if (layerIndex === 5) dispatch(addPopup({ id: popupTypes.antConflict.mouth.faceGear }))
+                    else dispatch(addPopup({ id: popupTypes.antConflict.face.faceGear }))
                 }
                 dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))
             }
