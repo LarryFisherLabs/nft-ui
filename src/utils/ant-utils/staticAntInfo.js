@@ -147,7 +147,7 @@ const headGear = [
     {
         name: '23-trucker-cap',
         rarity: 8,
-        layerLevel: 6,
+        layerLevel: 7,
         isMidTall: true,
         isComingSoon: true
     }
