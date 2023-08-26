@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Button, ButtonBottom, ButtonsPanel, LayerButtons, SectionButtons, ToggledRemove } from "../../components/LayerButtons.js";
-import { ViewStyle, Title, Text, Title2CrossHair, Title4, CenteredText, TitleCrossHair2 } from "../../styles/general.js";
+import { ViewStyle, Title, Text, Title2CrossHair, Title4, CenteredText, TitleCrossHair2, BlackText } from "../../styles/general.js";
 import { getAntPrices, getPartInventories } from "../../redux/thunks/antThunks.js";
 import { removeAntFile, selectAntErrMsg, selectAntStatus, selectDiscountInfo, selectSelectedIndexes, updateCoinInfo } from "../../redux/slices/antSlice.js";
 import { AntCanvas } from "../../components/canvas/AntCanvas.js";
@@ -117,7 +117,8 @@ export const AntBuilder = () => {
               <Title2CrossHair
                 onClick={() => toggleCoinPanel(!isCoinPanelOpen)}
               >
-                {isCoinPanelOpen ? "Coin Discount ∨" : "Coin Discount ∧"}
+                Coin Discount
+                {isCoinPanelOpen ? <BlackText>∨</BlackText> : <BlackText>∧</BlackText>}
               </Title2CrossHair>
               <SectionButtons isOpen={isCoinPanelOpen}>
                 {coinStatus === "succeeded" && coins.length > 0 ? (

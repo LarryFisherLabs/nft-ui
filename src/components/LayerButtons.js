@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { removeAntFile, selectAntFile, selectAntStatus, selectPartStocks, selectSelectedIndexes } from '../redux/slices/antSlice.js'
-import { Title2CrossHair, Title4, Text, SmallText, CanvasPanel } from '../styles/general'
+import { Title2CrossHair, Title4, Text, SmallText, CanvasPanel, BlackText } from '../styles/general'
 import { staticLayerInfo } from '../utils/ant-utils/staticAntInfo.js'
 
 import styled from 'styled-components'
@@ -185,7 +185,8 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
     return (
         <ButtonsPanel>
             <Title2CrossHair onClick={() => toggle(!isOpen)}>
-                {isOpen ? formatFileName(staticLayerInfo[layerIndex].fileName) + " ∨" : formatFileName(staticLayerInfo[layerIndex].fileName) + " ∧"}
+                {formatFileName(staticLayerInfo[layerIndex].fileName)}
+                {isOpen ? <BlackText>∨</BlackText> : <BlackText>∧</BlackText>}
             </Title2CrossHair>
             <SectionButtons isOpen={isOpen}>
                 {staticLayerInfo[layerIndex].elements.map((element, index) => {

@@ -96,7 +96,14 @@ export const Title2 = styled(Title)`
 `
 
 export const Title2CrossHair = styled(Title2)`
+    display: flex;
+    flex-flow: row;
     cursor: crosshair;
+`
+
+export const BlackText = styled(Title2)`
+    padding-left: .5rem;
+    color: black;
 `
 
 export const TitleCrossHair2 = styled(Text)`
