@@ -107,7 +107,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                         dispatch(addPopup({ id: popupTypes.antConflict.tags.shrouded }))
                     }
                 }
-                if ((staticLayerInfo[1].elements[index].hasOwnProperty('isTall') && selectedIndexes[0] !== 0) || (staticLayerInfo[1].elements[index].hasOwnProperty('isMidTall') && selectedIndexes[0] === tiedAntennaId_)) {
+                if (layerIndex === 1 && ((staticLayerInfo[1].elements[index].hasOwnProperty('isTall') && selectedIndexes[0] !== 0) || (staticLayerInfo[1].elements[index].hasOwnProperty('isMidTall') && selectedIndexes[0] === tiedAntennaId_))) {
                     // remove special antenna for selected tall head gear + remove tied antenna for selected mid tall head gear
                     dispatch(removeAntFile({ layerIndex: 0 }))
                     if (staticLayerInfo[1].elements[index].hasOwnProperty('isMidTall')) dispatch(addPopup({ id: popupTypes.antConflict.midHeadGear.tiedAntenna }))
