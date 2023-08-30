@@ -24,8 +24,8 @@ export const baseElements = [
 ]
 
 export const tiedAntennaId_ = 1
-export const eodMaskId_ = 13
-export const shroudedHelmetId_ = 20
+export const eodMaskId_ = 15
+export const shroudedHelmetId_ = 23
 export const gasMaskId_ = 9
 export const gasMaskBongId_ = 11
 export const reflectiveBeltId_ = 1
