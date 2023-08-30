@@ -91,7 +91,7 @@ const headGear = [
     },
     {
         name: '14-helmet-with-webbing',
-        rarity: 3,
+        rarity: 4,
         layerLevel: 6,
     },
     {
