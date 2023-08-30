@@ -1104,7 +1104,7 @@ const backgrounds = [
     },
     {
         name: '3-light-blue',
-        rarity: 7,
+        rarity: 6,
         layerLevel: 0,
         isComingSoon: true
     }
