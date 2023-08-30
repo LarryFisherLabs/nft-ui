@@ -193,16 +193,22 @@ const AntCanvasPanel = styled(Panel)`
         min-width: 380px;
     }
     @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
-        top: 5.1rem;
-        min-width: 360px;
+        min-width: 365px;
     }
     @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        top: 4.7rem;
-        min-width: 355px;
+        min-width: 360px;
     }
     @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
+        min-width: 355px;
+    }
+    @media ${getViewLevel(3)} {
+        top: 5.1rem;
+    }
+    @media ${getViewLevel(4)} {
+        top: 4.7rem;
+    }
+    @media ${getViewLevel(6)} {
         top: 4.2rem;
-        min-width: 340px;
     }
 `
 
@@ -226,8 +232,8 @@ const Col = styled(Row)`
 `
 
 // Vcom, com, rare, Vrare, Erare, special, epic, legendary
-// 5,000, 3,000, 200, 69, 30, 15, 4, 3
-const _prices = [0.0009, 0.0021, 0.006, 0.0169, 0.06, 0.2, 0.55, 0.8]
+// 5,000, 3,000, 200, 84, 36, 18, 9, 3
+const _prices = [0.0009, 0.0021, 0.006, 0.0168, 0.06, 0.201, 0.549, 0.801]
 
 const _traitPointAllowance = 9
 const _eRareTPCost = 1
