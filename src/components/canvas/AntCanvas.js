@@ -25,7 +25,7 @@ const updateAntCanvas = (ctx, indexes) => {
 }
 
 
-export const StickyButton = styled(StyledButton)`
+const StickyButton = styled(StyledButton)`
     margin-top: 5px; 
     @media ${getWidthOrHeightViewLevel(3, 3)} {
         margin-top: 3px; 
@@ -48,7 +48,7 @@ const ErrorText = styled(TextBlock)`
     }
 `
 
-export const ColoredTextBlock = styled(TextBlock)`
+const ColoredTextBlock = styled(TextBlock)`
     display: flex;
     flex-flow: column;
     align-self: center;
@@ -62,55 +62,63 @@ export const ColoredTextBlock = styled(TextBlock)`
     }
 `
 
-export const LargerText = styled.div`
-    color: #fed600;
-    font-size: 1.2rem;
-    font-weight: 600;
-    @media ${getViewLevel(2)} {
-        font-size: 1.1rem;
-    }
-    @media ${getWidthOrHeightViewLevel(3, 0)} {
-        font-size: 1rem;
-    }
-    @media ${getWidthOrHeightViewLevel(4, 2)}, ${getWidthAndHeightViewLevel(3, 1)} {
-        font-size: .9rem;
-    }
-    @media ${getWidthOrHeightViewLevel(5, 3)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        font-size: .8rem;
-    }
-    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 3)} {
-        font-size: .73rem;
-    }
-`
-
-const BlackText = styled.div`
-    color: black;
+const LargerText = styled.div`
     font-size: 1.1rem;
     font-weight: 600;
-    padding-bottom: .2rem;
-    @media ${getViewLevel(1)} {
+    @media ${getWidthOrHeightViewLevel(0, 0)} {
+        font-size: 1rem;
+    }
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
         font-size: .9rem;
     }
-    @media ${getViewLevel(2)} {
-        font-size: .8rem;
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
+        font-size: .81rem;
     }
-    @media ${getWidthOrHeightViewLevel(3, 0)} {
-        font-size: .78rem;
+    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
+        font-size: .77rem;
     }
-    @media ${getWidthOrHeightViewLevel(4, 2)}, ${getWidthAndHeightViewLevel(3, 1)} {
-        font-size: .76rem;
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
+        font-size: .75rem;
     }
-    @media ${getWidthOrHeightViewLevel(5, 3)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        font-size: .74rem;
-    }
-    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 3)} {
+    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
         font-size: .72rem;
     }
 `
 
-const GrayText = styled(BlackText)`
+const SmallerText = styled.div`
+    font-size: 1rem;
+    font-weight: 600;
+    @media ${getWidthOrHeightViewLevel(0, 0)} {
+        font-size: .91rem;
+    }
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
+        font-size: .82rem;
+    }
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
+        font-size: .75rem;
+    }
+    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
+        font-size: .73rem;
+    }
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
+        font-size: .72rem;
+    }
+    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
+        font-size: .71rem;
+    }
+`
+
+const BlackText = styled(LargerText)`
+    color: black;
+    padding-bottom: .2rem;
+`
+
+const ThemeGoldText = styled(BlackText)`
+    color: #fed600;
+`
+
+const GrayText = styled(SmallerText)`
     text-shadow: black 1px 1px 0px;
-    padding-bottom: 0;
     color: lightgray;
 `
 
@@ -130,11 +138,6 @@ const PurpleText = styled(GrayText)`
     color: #54f4fd;
 `
 
-const ThemeGoldText = styled(GrayText)`
-    padding-bottom: .2rem;
-    color: #fed600;
-`
-
 const SpecialText = styled(GrayText)`
     color: #feff00;
 `
@@ -147,9 +150,10 @@ const LegendText = styled(GrayText)`
     color: #eb65ff;
 `
 
-const TopPaddingText = styled(LargerText)`
+const TopPaddingText = styled.div`
     padding-top: .3rem;
     font-size: 1.3rem;
+    font-weight: 600;
     align-self: center;
     @media ${getViewLevel(2)} {
         font-size: 1.2rem;
@@ -172,24 +176,33 @@ const TopPaddingText = styled(LargerText)`
     }
 `
 
-export const AntCanvasPanel = styled(Panel)`
+const AntCanvasPanel = styled(Panel)`
     display: flex;
     flex-flow: column;
     position: sticky;
     height: fit-content;
     top: 4rem;
-    min-width: 42%;
-    @media ${getViewLevel(3)} {
+    min-width: 500px;
+    @media ${getWidthOrHeightViewLevel(0, 0)} {
+        min-width: 450px;
+    }
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
+        min-width: 410px;
+    }
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
+        min-width: 380px;
+    }
+    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
         top: 5.1rem;
-        min-width: 60%;
+        min-width: 360px;
     }
-    @media ${getViewLevel(4)} {
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
         top: 4.7rem;
-        min-width: 80%;
+        min-width: 355px;
     }
-    @media ${getViewLevel(6)} {
+    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
         top: 4.2rem;
-        min-width: 90%;
+        min-width: 340px;
     }
 `
 
