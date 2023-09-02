@@ -166,8 +166,8 @@ export const AntBuilder = () => {
                   <Text>{coinErr}</Text>
                 ) : coinStatus === 'Loading coins...' ? <Text>Loading coins...</Text> : (
                   <Text>
-                    Buy a coin to get up to a 40% discount on an ant as well as
-                    all future collections!
+                    Buy a coin to get up to a 40% discount on an ant as well as discounts on
+                    all future collections! Gold and diamond coins also get extra Trait Points to spend.
                   </Text>
                 )}
                 {areAllCoinsSpent === true ? <Text>All coin discounts used! Mint another from the coin builder.</Text> : null}
