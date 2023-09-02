@@ -233,7 +233,7 @@ const Col = styled(Row)`
 
 // Vcom, com, rare, Vrare, Erare, special, epic, legendary
 // 5,000, 3,000, 200, 84, 36, 18, 9, 3
-const _prices = [0.0009, 0.0021, 0.006, 0.0168, 0.06, 0.15, 0.42, 0.6]
+const _prices = [0.0009, 0.0015, 0.0036, 0.0072, 0.045, 0.108, 0.315, 0.48]
 
 const _traitPointAllowance = 9
 const _eRareTPCost = 1

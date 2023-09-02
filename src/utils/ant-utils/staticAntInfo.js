@@ -50,7 +50,7 @@ const headGear = [
     {
         name: '6-tanker-cap',
         rarity: 1,
-        layerLevel: 6,
+        layerLevel: 7,
     },
     {
         name: '7-trucker-cap',
