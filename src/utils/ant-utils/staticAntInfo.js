@@ -53,39 +53,39 @@ const headGear = [
         layerLevel: 6,
     },
     {
-        name: '23-trucker-cap',
+        name: '7-trucker-cap',
         rarity: 1,
         layerLevel: 7,
         isMidTall: true,
         isComingSoon: true
     },
     {
-        name: '7-boonie',
+        name: '8-boonie',
         rarity: 2,
         layerLevel: 7,
     },
     {
-        name: '8-desert-boonie',
+        name: '9-desert-boonie',
         rarity: 2,
         layerLevel: 7,
     },
     {
-        name: '9-beret',
+        name: '10-beret',
         rarity: 2,
         layerLevel: 6,
     },
     {
-        name: '10-headband',
+        name: '11-headband',
         rarity: 3,
         layerLevel: 6,
     },
     {
-        name: '11-dress-cap',
+        name: '12-dress-cap',
         rarity: 3,
         layerLevel: 7,
     },
     {
-        name: '12-desert-dress-cap',
+        name: '13-desert-dress-cap',
         rarity: 3,
         layerLevel: 7,
     },
@@ -95,57 +95,57 @@ const headGear = [
         layerLevel: 6,
     },
     {
-        name: '13-eod-mask',
+        name: '15-eod-mask',
         rarity: 4,
         layerLevel: 6,
     },
     {
-        name: '22-m81-helmet-with-strap',
+        name: '16-m81-helmet-with-strap',
         rarity: 4,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '15-uni-hat',
+        name: '17-uni-hat',
         rarity: 5,
         layerLevel: 7,
         isTall: true,
         isComingSoon: true
     },
     {
-        name: '21-chef-hat',
+        name: '18-chef-hat',
         rarity: 6,
         layerLevel: 6,
         isTall: true,
         isComingSoon: true
     },
     {
-        name: '16-uncle-sam-hat',
+        name: '19-uncle-sam-hat',
         rarity: 6,
         layerLevel: 7,
         isTall: true,
         isComingSoon: true
     },
     {
-        name: '17-tiger-cap',
+        name: '20-tiger-cap',
         rarity: 6,
         layerLevel: 7,
         isComingSoon: true
     },
     {
-        name: '18-desperado-hat',
+        name: '21-desperado-hat',
         rarity: 6,
         layerLevel: 7,
         isComingSoon: true
     },
     {
-        name: '19-purple-helmet',
+        name: '22-purple-helmet',
         rarity: 7,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '20-shrouded-helmet',
+        name: '23-shrouded-helmet',
         rarity: 8,
         layerLevel: 6,
         isMidTall: true,
@@ -315,37 +315,37 @@ const faceAccessories = [
         name: 'empty',
     },
     {
-        name: '5-black-eye',
+        name: '1-black-eye',
         rarity: 0,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '10-eye-black',
+        name: '2-eye-black',
         rarity: 1,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '11-face-shadow',
+        name: '3-face-shadow',
         rarity: 1,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '9-eye-scar',
+        name: '4-eye-scar',
         rarity: 2,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '4-smooches',
+        name: '5-smooches',
         rarity: 2,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '12-claw-mark',
+        name: '6-claw-mark',
         rarity: 2,
         layerLevel: 1,
         isComingSoon: true
@@ -357,19 +357,19 @@ const faceAccessories = [
         isComingSoon: true
     },
     {
-        name: '3-kiss',
+        name: '8-kiss',
         rarity: 4,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '8-clown',
+        name: '9-clown',
         rarity: 4,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '6-muertos',
+        name: '10-muertos',
         rarity: 4,
         layerLevel: 1,
         isComingSoon: true
@@ -714,37 +714,37 @@ const gunsEquipment = [
         isComingSoon: true
     },
     {
-        name: '18-akimbo-chef-knives',
+        name: '13-akimbo-chef-knives',
         rarity: 6,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '13-uni-shotgun',
+        name: '14-uni-shotgun',
         rarity: 6,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '14-tommygun-smg',
+        name: '15-tommygun-smg',
         rarity: 6,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '15-oldie-assault-rifle',
+        name: '16-oldie-assault-rifle',
         rarity: 6,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '16-intervention',
+        name: '17-intervention',
         rarity: 7,
         layerLevel: 6,
         isComingSoon: true
     },
     {
-        name: '17-blazed-flamethrower',
+        name: '18-blazed-flamethrower',
         rarity: 8,
         layerLevel: 6,
         isComingSoon: true
@@ -919,37 +919,37 @@ const abdomenAccessories = [
         isComingSoon: true
     },
     {
-        name: '17-dinnertime',
+        name: '12-dinnertime',
         rarity: 6,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '12-uni-tat',
+        name: '13-uni-tat',
         rarity: 6,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '13-flag-patch',
+        name: '14-flag-patch',
         rarity: 6,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '14-blued',
+        name: '15-blued',
         rarity: 7,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '15-most-dope',
+        name: '16-most-dope',
         rarity: 7,
         layerLevel: 1,
         isComingSoon: true
     },
     {
-        name: '16-headshot-crosshair',
+        name: '17-headshot-crosshair',
         rarity: 8,
         layerLevel: 1,
         isComingSoon: true
@@ -1060,19 +1060,19 @@ const vehicles = [
         //340mil
     },
     {
-        name: '15-abrams',
+        name: '14-abrams',
         rarity: 5,
         layerLevel: 1,
         //11mil
     },
     {
-        name: '16-stealth-bomber',
+        name: '15-stealth-bomber',
         rarity: 5,
         layerLevel: 1,
         //730mil
     },
     {
-        name: '14-technical',
+        name: '16-technical',
         rarity: 6,
         layerLevel: 1,
         isComingSoon: true
