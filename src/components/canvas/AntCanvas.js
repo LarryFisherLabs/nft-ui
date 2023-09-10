@@ -225,14 +225,11 @@ const AntCanvasPanel = styled(Panel)`
     @media ${getWidthOrHeightViewLevel(2, 2)} {
         min-width: 380px;
     }
-    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
-        min-width: 365px;
-    }
     @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        min-width: 335px;
+        min-width: 340px;
     }
     @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
-        min-width: 310px;
+        min-width: 320px;
     }
     @media ${getViewLevel(3)} {
         top: 5.1rem;
