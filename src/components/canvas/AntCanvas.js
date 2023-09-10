@@ -62,55 +62,114 @@ const ColoredTextBlock = styled(TextBlock)`
     }
 `
 
+const StldPanelTitle = styled.div`
+    font-size: 1.4rem;
+    font-weight: 800;
+    align-self: center;
+    @media ${getWidthOrHeightViewLevel(0, 0)} {
+        font-size: 1.35rem;
+    }
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
+        font-size: 1.3rem;
+    }
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
+        font-size: 1.25rem;
+    }
+    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
+        font-size: 1.15rem;
+    }
+    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+`
+
+const StldBtmPnlTitle = styled.div`
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding-top: .3rem;
+    align-self: center;
+    @media ${getWidthOrHeightViewLevel(0, 0)} {
+        font-size: 1.25rem;
+    }
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
+        font-size: 1.2rem;
+    }
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
+        font-size: 1.15rem;
+    }
+    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
+        font-size: 1.05rem;
+        padding-top: .2rem;
+    }
+    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
+        font-size: 1rem;
+        padding-top: .1rem;
+    }
+`
+
 const LargerText = styled.div`
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 600;
     @media ${getWidthOrHeightViewLevel(0, 0)} {
         font-size: 1rem;
     }
     @media ${getWidthOrHeightViewLevel(1, 1)} {
-        font-size: .9rem;
+        font-size: .94rem;
+    }
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
+        font-size: .87rem;
+    }
+    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
+        font-size: .84rem;
+        font-weight: 550;
+    }
+    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
+        font-size: .74rem;
+    }
+    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
+        font-size: .73rem;
+    }
+`
+
+const SmallerText = styled.div`
+    font-size: 1.1rem;
+    font-weight: 600;
+    @media ${getWidthOrHeightViewLevel(0, 0)} {
+        font-size: .92rem;
+    }
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
+        font-size: .86rem;
     }
     @media ${getWidthOrHeightViewLevel(2, 2)} {
         font-size: .81rem;
     }
     @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
-        font-size: .77rem;
+        font-size: .8rem;
+        font-weight: 550;
     }
     @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        font-size: .75rem;
-    }
-    @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
-        font-size: .72rem;
-    }
-`
-
-const SmallerText = styled.div`
-    font-size: 1rem;
-    font-weight: 600;
-    @media ${getWidthOrHeightViewLevel(0, 0)} {
-        font-size: .91rem;
-    }
-    @media ${getWidthOrHeightViewLevel(1, 1)} {
-        font-size: .82rem;
-    }
-    @media ${getWidthOrHeightViewLevel(2, 2)} {
-        font-size: .75rem;
-    }
-    @media ${getWidthOrHeightViewLevel(4, 3)}, ${getWidthAndHeightViewLevel(3, 1)} {
         font-size: .73rem;
     }
-    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        font-size: .72rem;
-    }
     @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
-        font-size: .71rem;
+        font-size: .72rem;
     }
 `
 
 const BlackText = styled(LargerText)`
     color: black;
     padding-bottom: .2rem;
+    @media ${getWidthOrHeightViewLevel(2, 2)} {
+        padding-bottom: .15rem;
+    }
 `
 
 const ThemeGoldText = styled(BlackText)`
@@ -150,41 +209,15 @@ const LegendText = styled(GrayText)`
     color: #eb65ff;
 `
 
-const TopPaddingText = styled.div`
-    padding-top: .3rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    align-self: center;
-    @media ${getViewLevel(2)} {
-        font-size: 1.2rem;
-    }
-    @media ${getWidthOrHeightViewLevel(3, 0)} {
-        font-size: 1.1rem;
-    }
-    @media ${getWidthOrHeightViewLevel(4, 2)}, ${getWidthAndHeightViewLevel(3, 1)} {
-        font-size: 1rem;
-    }
-    @media ${getWidthOrHeightViewLevel(5, 3)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        font-size: .9rem;
-    }
-    @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 3)} {
-        padding-top: .2rem;
-        font-size: .83rem;
-    }
-    @media ${getViewLevel(6)} {
-        padding-top: .1rem;
-    }
-`
-
 const AntCanvasPanel = styled(Panel)`
     display: flex;
     flex-flow: column;
     position: sticky;
     height: fit-content;
     top: 4rem;
-    min-width: 500px;
+    min-width: 480px;
     @media ${getWidthOrHeightViewLevel(0, 0)} {
-        min-width: 450px;
+        min-width: 420px;
     }
     @media ${getWidthOrHeightViewLevel(1, 1)} {
         min-width: 410px;
@@ -196,10 +229,10 @@ const AntCanvasPanel = styled(Panel)`
         min-width: 365px;
     }
     @media ${getHeightViewLevel(4)}, ${getWidthAndHeightViewLevel(3, 2)} {
-        min-width: 360px;
+        min-width: 335px;
     }
     @media ${getWidthAndHeightViewLevel(3, 3)}, ${getViewLevel(6)} {
-        min-width: 355px;
+        min-width: 310px;
     }
     @media ${getViewLevel(3)} {
         top: 5.1rem;
@@ -217,14 +250,26 @@ const Row = styled.div`
     flex-flow: row;
 `
 
+const StldTextRow = styled(Row)`
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+    @media ${getWidthOrHeightViewLevel(1, 1)} {
+        gap: .6rem;
+    }
+    @media ${getViewLevel(4)} {
+        gap: .3rem;
+    }
+`
+
 const LeftColCont = styled(Row)`
-    width: 50%;
+    width: 47.7%;
     justify-content: center;
     align-items: center;
 `
 
 const RightColCont = styled(LeftColCont)`
-    width: 50%;
+    width: 52.3%;
 `
 
 const Col = styled(Row)`
@@ -308,27 +353,58 @@ export const AntCanvas = () => {
                 No browser support
             </StyledAntCanvas>
             <ColoredTextBlock>
+                <StldPanelTitle>Prices</StldPanelTitle>
                 <Row>
                     <LeftColCont>
-                    <Col>
-                        <BlackText>{"Ant Base Price: " + (prices[0] * 1100000 / 100000) + " eth"}</BlackText>
-                        <GrayText>{"Very Common Price: " + prices[0] + " eth"}</GrayText>
-                        <BrownText>{"Common Price: " + prices[1] + " eth"}</BrownText>
-                        <GreenText>{"Rare Price: " + prices[2] + " eth"}</GreenText>
-                        <GoldText>{"Very Rare Price: " + prices[3] + " eth"}</GoldText>
-                    </Col>
+                        <Col>
+                            <StldTextRow>
+                                <BlackText>{"Ant Base:"}</BlackText>
+                                <BlackText>{(prices[0] * 1100000 / 100000) + " eth"}</BlackText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <GrayText>{"Very Common:"}</GrayText>
+                                <GrayText>{prices[0] + " eth"}</GrayText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <BrownText>{"Common:"}</BrownText>
+                                <BrownText>{prices[1] + " eth"}</BrownText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <GreenText>{"Rare:"}</GreenText>
+                                <GreenText>{prices[2] + " eth"}</GreenText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <GoldText>{"Very Rare:"}</GoldText>
+                                <GoldText>{prices[3] + " eth"}</GoldText>
+                            </StldTextRow>
+                        </Col>
                     </LeftColCont>
                     <RightColCont>
-                    <Col>
-                        <ThemeGoldText>{"Trait Points (TP): " + traitPoints}</ThemeGoldText>
-                        <PurpleText>{"Extra Rare Price: " + prices[4] + " eth + " + _eRareTPCost + " TP"}</PurpleText>
-                        <SpecialText>{"Special Price: " + prices[5] + " eth + " + _specialTPCost + " TP"}</SpecialText>
-                        <EpicText>{"Epic Price: " + prices[6] + " eth + " + _epicTPCost + " TP"}</EpicText>
-                        <LegendText>{"Legendary Price: " + prices[7] + " eth + " + _legendaryTPCost + " TP"}</LegendText>
-                    </Col>
+                        <Col>
+                            <StldTextRow>
+                                <ThemeGoldText>{"Trait Points:"}</ThemeGoldText>
+                                <ThemeGoldText>{traitPoints + " TP"}</ThemeGoldText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <PurpleText>{"Extra Rare:"}</PurpleText>
+                                <PurpleText>{prices[4] + " eth + " + _eRareTPCost + " TP"}</PurpleText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <SpecialText>{"Special:"}</SpecialText>
+                                <SpecialText>{prices[5] + " eth + " + _specialTPCost + " TP"}</SpecialText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <EpicText>{"Epic:"}</EpicText>
+                                <EpicText>{prices[6] + " eth + " + _epicTPCost + " TP"}</EpicText>
+                            </StldTextRow>
+                            <StldTextRow>
+                                <LegendText>{"Legendary:"}</LegendText>
+                                <LegendText>{prices[7] + " eth + " + _legendaryTPCost + " TP"}</LegendText>
+                            </StldTextRow>
+                        </Col>
                     </RightColCont>
                 </Row>
-                <TopPaddingText>{"Total Ant Price: " + totalPrice + " eth"}</TopPaddingText>
+                <StldBtmPnlTitle>{"Ant Total: " + totalPrice + " eth"}</StldBtmPnlTitle>
             </ColoredTextBlock>
             { netId === 0 || netId === 1 ? <ErrorText>Please Change Network</ErrorText> : address === null ? <ErrorText>Please Connect</ErrorText> : null}
             {
