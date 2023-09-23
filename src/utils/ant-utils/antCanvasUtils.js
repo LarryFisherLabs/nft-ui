@@ -24,13 +24,13 @@ export const baseElements = [
 ]
 
 export const tiedAntennaId_ = 1
-export const eodMaskId_ = 15
-export const shroudedHelmetId_ = 23
+export const eodMaskId_ = 19
+export const shroudedHelmetId_ = 39
 export const gasMaskId_ = 9
-export const gasMaskBongId_ = 11
-export const nvgId_ = 5
+export const gasMaskBongId_ = 13
+export const nvgId_ = 7
 export const reflectiveBeltId_ = 1
-export const eodSuitId_ = 13
+export const eodSuitId_ = 17
 
 /**
  * This function is called when the user adds or removes eod gear by clicking on either the eod head gear or the eod
