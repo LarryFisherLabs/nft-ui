@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { getViewLevel } from '../utils/deviceType.js'
 import { popupTypes } from '../utils/json-constants/popupInfo.js'
 import { addPopup } from '../redux/slices/connectSlice.js'
-import { eodMaskId_, gasMaskBongId_, gasMaskId_, reflectiveBeltId_, shroudedCheck, shroudedHelmetId_, tiedAntennaId_, toggleEod } from '../utils/ant-utils/antCanvasUtils.js'
+import { eodMaskId_, gasMaskBongId_, gasMaskId_, shroudedCheck, shroudedHelmetId_, tiedAntennaId_, toggleEod } from '../utils/ant-utils/antCanvasUtils.js'
 
 export const Button = styled.div`
     display: flex;
@@ -113,11 +113,6 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     if (staticLayerInfo[1].elements[index].hasOwnProperty('isMidTall')) dispatch(addPopup({ id: popupTypes.antConflict.midHeadGear.tiedAntenna }))
                     else dispatch(addPopup({ id: popupTypes.antConflict.tallHeadGear.antenna }))
                 }
-                if (element.name.includes('-reflective-belt') && staticLayerInfo[8].elements[selectedIndexes[8]].hasOwnProperty('hasSleeves')) {
-                    // reflective belt incompatible with sleeved body gear
-                    dispatch(removeAntFile({ layerIndex: 8 }))
-                    dispatch(addPopup({ id: popupTypes.antConflict.bandolier.reflective.sleevedBody }))
-                }
                 if (element.name.includes('-shrouded-helmet')) {
                     // shrouded helmet incompatible with face gear, optical, face accessories, mouth accessories, and special dog tags
                     shroudedCheck(dispatch, selectedIndexes[2], selectedIndexes[3], selectedIndexes[4], selectedIndexes[5], selectedIndexes[6])
@@ -133,8 +128,8 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     dispatch(removeAntFile({ layerIndex: 2 }))
                     if (layerIndex === 3) dispatch(addPopup({ id: popupTypes.antConflict.optical.gasMask }))
                 }
-                if (selectedIndexes[1] === eodMaskId_ && (layerIndex === 1 || layerIndex === 8 || layerIndex === 5 || layerIndex === 7 || layerIndex === 2 || (layerIndex === 3 && staticLayerInfo[3].elements[index].hasOwnProperty('isOverEar')) || (layerIndex === 6 && element.name.includes('-shemagh')))) {
-                    // remove eod for head, body, mouth accessory, bandolier, face gear, over-ear-optical, or shemagh change
+                if (selectedIndexes[1] === eodMaskId_ && (layerIndex === 1 || layerIndex === 8 || layerIndex === 5 || layerIndex === 7 || layerIndex === 2 || (layerIndex === 3 && index > 1) || (layerIndex === 6 && element.name.includes('-shemagh')))) {
+                    // remove eod for head, body, mouth accessory, bandolier, face gear, special-non-eye-patch-optical, or shemagh change
                     toggleEod(false, dispatch, layerIndex)
                 }
                 if (selectedIndexes[1] === shroudedHelmetId_ && (layerIndex === 2 || layerIndex === 3 || layerIndex === 4 || layerIndex === 5)) {
@@ -143,11 +138,6 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     if (layerIndex === 2 || layerIndex === 4) dispatch(addPopup({ id: popupTypes.antConflict.face.shrouded }))
                     else if (layerIndex === 3) dispatch(addPopup({ id: popupTypes.antConflict.optical.shrouded }))
                     else if (layerIndex === 5) dispatch(addPopup({ id: popupTypes.antConflict.mouth.shrouded }))
-                }
-                if (layerIndex === 8 && selectedIndexes[7] === reflectiveBeltId_ && staticLayerInfo[8].elements[index].hasOwnProperty('hasSleeves')) {
-                    // remove reflective belt for sleeved body gear
-                    dispatch(removeAntFile({ layerIndex: 7 }))
-                    dispatch(addPopup({ id: popupTypes.antConflict.body.sleeved.reflective }))
                 }
                 if (layerIndex === 2) {
                     if (staticLayerInfo[2].elements[index].hasOwnProperty('isMouthCovered') && selectedIndexes[5] !== 0) {
@@ -166,6 +156,25 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     dispatch(removeAntFile({ layerIndex: 2 }))
                     if (layerIndex === 5) dispatch(addPopup({ id: popupTypes.antConflict.mouth.faceGear }))
                     else dispatch(addPopup({ id: popupTypes.antConflict.face.faceGear }))
+                }
+                if (element.hasOwnProperty('isEODHeadRestrictions')) {
+                    // remove face gear, optical besides eye patch, and mouth accessory for things like welding helmet and racing helmet
+                    if (selectedIndexes[2] !== 0) {
+                        dispatch(addPopup({ id: popupTypes.antConflict.eodLikeHead.faceGear }))
+                        dispatch(removeAntFile({ layerIndex: 2 }))
+                    }
+                    if (selectedIndexes[3] !== 0 && selectedIndexes[3] !== 1) {
+                        dispatch(addPopup({ id: popupTypes.antConflict.eodLikeHead.optical }))
+                        dispatch(removeAntFile({ layerIndex: 3 }))
+                    }
+                    if (selectedIndexes[5] !== 0) {
+                        dispatch(addPopup({ id: popupTypes.antConflict.eodLikeHead.mouth }))
+                        dispatch(removeAntFile({ layerIndex: 5 }))
+                    }
+                }
+                if (staticLayerInfo[1].elements[selectedIndexes[1]].hasOwnProperty('isEODHeadRestrictions') && ((layerIndex === 2 && index !== 0) || (layerIndex === 3 && index > 1) || (layerIndex === 5 && index !== 0))){
+                    dispatch(addPopup({ id: popupTypes.antConflict.eodLikeHead.err }))
+                    dispatch(removeAntFile({ layerIndex: 1 }))
                 }
                 dispatch(selectAntFile({ layerIndex: layerIndex, elementIndex: index }))
             }
@@ -197,7 +206,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                         if (isComingSoon && !isUpcomingDisplayed) return null
                         
                         return (
-                            <Button key={index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected}>
+                            <Button key={'traitButton' + index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected}>
                                 <Title4>{formatFileName(element.name)}</Title4>
                                 <ButtonBottom>
                                     <ToggledRemove isDisabled={isSelected && (element.rarity > 0)}>
