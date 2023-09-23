@@ -70,17 +70,22 @@ export const layerInfo = [
         selectedIndex: 0,
     },
     {
-        // 15-hind-legs
+        // 15-leg-gear
+        partStocks: ['empty', null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        selectedIndex: 0,
+    },
+    {
+        // 16-hind-legs
         partStocks: [null, null, null],
         selectedIndex: 0,
     },
     {
-        // 16-vehicles
+        // 17-vehicles
         partStocks: ['empty', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
         selectedIndex: 0,
     },
     {
-        // 17-backgrounds
+        // 18-backgrounds
         partStocks: [null, null, null, null],
         selectedIndex: 0,
     }
