@@ -1,8 +1,8 @@
 const antConflictsStartIndex = 18
 // end indexes are the next index after that section (really the start index for whatever section comes after)
 const antConflictOpticalEndIndex = antConflictsStartIndex + 14
-const antConflictBandolierEndIndex = antConflictOpticalEndIndex + 10
-const antPartConflictEndIndex = antConflictBandolierEndIndex + 9
+const antConflictBandolierEndIndex = antConflictOpticalEndIndex + 8
+const antPartConflictEndIndex = antConflictBandolierEndIndex + 15
 const shortTimer = 3
 const normTimer = 7
 const longTimer = 10
@@ -40,7 +40,7 @@ export const popupTypes = {
             faceGear: antConflictsStartIndex + 5,
             mouth: antConflictsStartIndex + 6,
             bandolier: antConflictsStartIndex + 7,
-            overEarOptical: antConflictsStartIndex + 8,
+            specialOpticalNonEyePatch: antConflictsStartIndex + 8,
         },
         shemagh: {
             eod: antConflictsStartIndex + 9,
@@ -51,7 +51,7 @@ export const popupTypes = {
         optical: {
             gasMask: antConflictsStartIndex + 11,
             shrouded: antConflictsStartIndex + 12,
-            overEar: {
+            nonEyePatch: {
                 eod: antConflictsStartIndex + 13,
             },
         },
@@ -69,15 +69,9 @@ export const popupTypes = {
         }, 
         body: {
             eod: antConflictOpticalEndIndex + 6,
-            sleeved: {
-                reflective: antConflictOpticalEndIndex + 7,
-            },
         },
         bandolier: {
-            eod: antConflictOpticalEndIndex + 8,
-            reflective: {
-                sleevedBody: antConflictOpticalEndIndex + 9,
-            },
+            eod: antConflictOpticalEndIndex + 7,
         },
         midHeadGear: {
             tiedAntenna: antConflictBandolierEndIndex,
@@ -95,6 +89,18 @@ export const popupTypes = {
             faceAcc: antConflictBandolierEndIndex + 6,
             mouth: antConflictBandolierEndIndex + 7,
             tags: antConflictBandolierEndIndex + 8,
+        },
+        pants: {
+            specialLegs: antConflictBandolierEndIndex + 9,
+        },
+        specialLegs: {
+            pants: antConflictBandolierEndIndex + 10,
+        },
+        eodLikeHead: {
+            faceGear: antConflictBandolierEndIndex + 11,
+            optical: antConflictBandolierEndIndex + 12,
+            mouth: antConflictBandolierEndIndex + 13,
+            err: antConflictBandolierEndIndex + 14,
         },
         traitPoints: antPartConflictEndIndex,
         upcomingSelected: antPartConflictEndIndex + 1,
@@ -207,7 +213,7 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: 'EOD incompatible with "Over Ear Optical Gear"',
+        msg: 'EOD incompatible with special optical besides Eye Patch',
         timer: shortTimer
     },
     {
@@ -227,7 +233,7 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: '"Over Ear Optical Gear" incompatible with EOD',
+        msg: 'Special Optical Gear is incompatible with EOD besides Eye Patch',
         timer: shortTimer
     },
     {
@@ -259,15 +265,7 @@ export const popupDetailsById = [
         timer: shortTimer
     },
     {
-        msg: '"Sleeved Body Gear" incompatible with Reflective Belt',
-        timer: shortTimer
-    },
-    {
         msg: 'Bandolier Belts incompatible with EOD',
-        timer: shortTimer
-    },
-    {
-        msg: 'Reflective Belt incompatible with "Sleeved Body Gear"',
         timer: shortTimer
     },
     {
@@ -304,6 +302,30 @@ export const popupDetailsById = [
     },
     {
         msg: 'Shrouded Helmet incompatible with special dog tags',
+        timer: shortTimer
+    },
+    {
+        msg: 'Pants incompatible with special legs',
+        timer: shortTimer
+    },
+    {
+        msg: 'Special legs incompatible with pants',
+        timer: shortTimer
+    },
+    {
+        msg: 'Face-covering-Head-Gear incompatible with Face Gear',
+        timer: shortTimer
+    },
+    {
+        msg: 'Face-covering-Head-Gear incompatible with Optic besides Eye patch',
+        timer: shortTimer
+    },
+    {
+        msg: 'Face-covering-Head-Gear incompatible with Mouth Accessories',
+        timer: shortTimer
+    },
+    {
+        msg: 'Face Gear, Optical, and Mouth Accessories incompatible with Face-covering-Head-Gear',
         timer: shortTimer
     },
     {
