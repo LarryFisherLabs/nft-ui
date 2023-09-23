@@ -3,7 +3,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import { selectAntStatus, selectRarityPrices, selectSelectedIndexes } from "../../redux/slices/antSlice"
 import { buyAntThunk } from "../../redux/thunks/antThunks"
 import { Panel, StyledAntCanvas, StyledButton, TextBlock } from "../../styles/general"
-import { recursiveDraw, baseElements } from "../../utils/ant-utils/antCanvasUtils"
+import { recursiveDraw, baseElements, reflectiveBeltId_, nvgId_ } from "../../utils/ant-utils/antCanvasUtils"
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo"
 
 import styled from 'styled-components'
@@ -13,15 +13,27 @@ import { popupTypes } from "../../utils/json-constants/popupInfo"
 
 const updateAntCanvas = (ctx, indexes) => {
     ctx.clearRect(0, 0, 328, 328)
-    const fileNameArray = [[], [], [], [], [], [], [], []]
+    const fileNameArray = [[], [], [], [], [], [], [], [], []]
     indexes.forEach((selectedIndex, layerIndex) => {
+        const fileNameEnd = (
+            (
+                (layerIndex === 7) &&
+                (selectedIndex === reflectiveBeltId_) &&
+                staticLayerInfo[8].elements[indexes[8]].hasOwnProperty('hasSleeves')
+            ) || (
+                (layerIndex === 3) &&
+                (selectedIndex === nvgId_) &&
+                staticLayerInfo[1].elements[indexes[1]].name.includes('helmet') &&
+                !(staticLayerInfo[1].elements[indexes[1]].name.includes('shrouded'))
+            )
+        ) ? '-alt.png' : '.png'
         const isEmpty = staticLayerInfo[layerIndex].elements[selectedIndex].name === 'empty'
         const layer = staticLayerInfo[layerIndex]
         if (!isEmpty) {
-            fileNameArray[layer.elements[selectedIndex].layerLevel].push(`ant/${layer.fileName}/${layer.elements[selectedIndex].name}.png`)
+            fileNameArray[layer.elements[selectedIndex].layerLevel].push(`ant/${layer.fileName}/${layer.elements[selectedIndex].name}${fileNameEnd}`)
         }
     })
-    recursiveDraw([...fileNameArray[0], ...baseElements, ...fileNameArray[1], ...fileNameArray[2], ...fileNameArray[3], ...fileNameArray[4], ...fileNameArray[5], ...fileNameArray[6], ...fileNameArray[7]], 0, ctx)
+    recursiveDraw([...fileNameArray[0], ...baseElements, ...fileNameArray[1], ...fileNameArray[2], ...fileNameArray[3], ...fileNameArray[4], ...fileNameArray[5], ...fileNameArray[6], ...fileNameArray[7], ...fileNameArray[8]], 0, ctx)
 }
 
 
@@ -174,6 +186,16 @@ const BlackText = styled(LargerText)`
 
 const ThemeGoldText = styled(BlackText)`
     color: #fed600;
+`
+
+// when the TP count which is displayed in theme gold text goes to zero this is used
+const ThemeGoldBlackAltText = styled(ThemeGoldText)`
+    color: black;
+`
+
+// when the TP count which is displayed in theme gold text goes negative this is used
+const ThemeGoldRedAltText = styled(ThemeGoldText)`
+    color: red;
 `
 
 const GrayText = styled(SmallerText)`
@@ -380,7 +402,11 @@ export const AntCanvas = () => {
                         <Col>
                             <StldTextRow>
                                 <ThemeGoldText>{"Trait Points:"}</ThemeGoldText>
-                                <ThemeGoldText>{traitPoints + " TP"}</ThemeGoldText>
+                                {
+                                    traitPoints > 0 ? <ThemeGoldText>{traitPoints + " TP"}</ThemeGoldText> :
+                                    traitPoints === 0 ? <ThemeGoldBlackAltText>{traitPoints + " TP"}</ThemeGoldBlackAltText> :
+                                    <ThemeGoldRedAltText>{traitPoints + " TP"}</ThemeGoldRedAltText>
+                                }
                             </StldTextRow>
                             <StldTextRow>
                                 <PurpleText>{"Extra Rare:"}</PurpleText>
