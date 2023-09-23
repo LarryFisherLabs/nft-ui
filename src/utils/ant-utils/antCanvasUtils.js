@@ -28,6 +28,7 @@ export const eodMaskId_ = 15
 export const shroudedHelmetId_ = 23
 export const gasMaskId_ = 9
 export const gasMaskBongId_ = 11
+export const nvgId_ = 5
 export const reflectiveBeltId_ = 1
 export const eodSuitId_ = 13
 
@@ -63,10 +64,10 @@ export const toggleEod = (isAdding, dispatch, layerIndex = null, faceGearId = nu
             dispatch(removeAntFile({ layerIndex: 7 }))
             dispatch(addPopup({ id: popupTypes.antConflict.eod.bandolier }))
         }
-        // no over ear optical
-        if (staticLayerInfo[3].elements[opticalId].hasOwnProperty('isOverEar')) {
+        // no special optics besides eye patch which is index 1
+        if (opticalId > 1) {
             dispatch(removeAntFile({ layerIndex: 3 }))
-            dispatch(addPopup({ id: popupTypes.antConflict.eod.overEarOptical }))
+            dispatch(addPopup({ id: popupTypes.antConflict.eod.specialOpticalNonEyePatch }))
         }
         // add eod trait that was not clicked
         if (layerIndex === 8) dispatch(selectAntFile({ layerIndex: 1, elementIndex: eodMaskId_ }))
@@ -79,7 +80,7 @@ export const toggleEod = (isAdding, dispatch, layerIndex = null, faceGearId = nu
         else if (layerIndex === 5) dispatch(addPopup({ id: popupTypes.antConflict.mouth.eod }))
         else if (layerIndex === 7) dispatch(addPopup({ id: popupTypes.antConflict.bandolier.eod }))
         else if (layerIndex === 2) dispatch(addPopup({ id: popupTypes.antConflict.faceGear.eod }))
-        else if (layerIndex === 3) dispatch(addPopup({ id: popupTypes.antConflict.optical.overEar.eod }))
+        else if (layerIndex === 3) dispatch(addPopup({ id: popupTypes.antConflict.optical.nonEyePatch.eod }))
         else if (layerIndex === 6) dispatch(addPopup({ id: popupTypes.antConflict.shemagh.eod }))
     }
 }
