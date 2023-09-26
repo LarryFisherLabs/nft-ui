@@ -10,22 +10,28 @@ const bodyGearLevel = 3
 const backgroundLevel = 0
 
 // CUSTOM
-// Sam: 4
-// Nick: 3
-// Noah: 3
-// Jen: 3
-// Amanda: 3
-// Austin: 2
-// Cole: 4
-// Evrim: 3
-// Alex: 3
-// Justin: 3
-// Ben: 3
-// Johnny: 2
-// Dante: 3
-// Josh: 3
-// Abbi: 3
-// Mike: 3
+// Jimmy: 9 traits, 46 points
+// Tommy: 9, 45 points
+// Hayden: 8, 41 points
+// Jeff: 6, 42 points
+// Giveaway: 6, 33 points
+// Ian: 4, 29 points
+// Sam: 4, 23 points
+// Nick: 3, 18 points
+// Noah: 3, 21 points
+// Jen: 3, 18 points
+// Amanda: 3, 17 points
+// Austin: 2, 14 points
+// Cole: 4, 20 points
+// Evrim: 3, 17 points
+// Alex: 3, 17 points
+// Justin: 3, 20 points
+// Ben: 3, 19 points
+// Johnny: 2, 11 points
+// Dante: 3, 17 points
+// Josh: 3, 16 points
+// Abbi: 3, 16 points
+// Mike: 3, 19 points
 
 // antenna is on top of vehicle
 const antenna = [
@@ -194,7 +200,7 @@ const headGear = [
     {
         // CUSTOM: Johnny
         name: '25-NY-helmet',
-        rarity: 4,
+        rarity: 5,
         layerLevel: helmetAndNvgLevel,
         isComingSoon: true
     },
@@ -412,6 +418,7 @@ const opticalGear = [
     },
     {
         // eye patch should go over face accessories and nothing else
+        // !!! IF EYE PATCH STOPS BEING FIRST INDEX COMPATIBILITY CHANGES MUST BE MADE !!!
         name: '1-eyepatch',
         rarity: 1,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
@@ -423,31 +430,32 @@ const opticalGear = [
         isComingSoon: true
     },
     {
-        name: '3-cool-sunglasses',
+        name: '3-goggles',
+        rarity: 2,
+        layerLevel: faceAndOpticGearAndToolAndWatchLevel,
+    },
+    {
+        name: '4-black-goggles',
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isComingSoon: true
     },
     {
-        name: '4-goggles',
-        rarity: 2,
-        layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-    },
-    {
-        name: '5-black-goggles',
-        rarity: 2,
-        layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
-    },
-    {
-        name: '6-sunglasses',
+        name: '5-sunglasses',
         rarity: 3,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
     },
     {
-        name: '7-nvg',
+        name: '6-nvg',
         rarity: 3,
         layerLevel: helmetAndNvgLevel,
+    },
+    {
+        // CUSTOM: Josh
+        name: '7-cool-sunglasses',
+        rarity: 4,
+        layerLevel: faceAndOpticGearAndToolAndWatchLevel,
+        isComingSoon: true
     },
     {
         // CUSTOM: Tommy
@@ -645,7 +653,7 @@ const neckGear = [
         isComingSoon: true
     },
     {
-        // CUSTOM: All
+        // CUSTOM: All but Ian incompat
         name: '8-gold-dog-tags',
         rarity: 6,
         layerLevel: neckGearLevel,
@@ -1167,6 +1175,7 @@ const watch = [
         isComingSoon: true
     },
     {
+        // CUSTOM: Tommy
         name: '4-silver-watch',
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
@@ -1179,6 +1188,7 @@ const watch = [
         isComingSoon: true
     },
     {
+        // CUSTOM: Jimmy
         name: '6-gold-watch',
         rarity: 4,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
@@ -1311,6 +1321,7 @@ const abdomenAccessories = [
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
     },
     {
+        // CUSTOM: Giveaway
         name: '11-star',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
@@ -1333,14 +1344,14 @@ const abdomenAccessories = [
     {
         // CUSTOM: Amanda
         name: '14-butterfly',
-        rarity: 4,
+        rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
         isComingSoon: true
     },
     {
         // CUSTOM: Alex
         name: '15-oh-brother',
-        rarity: 4,
+        rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
         isComingSoon: true
     },
