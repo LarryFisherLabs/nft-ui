@@ -87,7 +87,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
             if (index === selectedIndexes[layerIndex]) {
                 // if true then remove selected element
                 // remove eod together or remove single element
-                if (element.name.includes('-eod-')) toggleEod(false, dispatch)
+                if (element.name.includes('-EOD-')) toggleEod(false, dispatch)
                 else dispatch(removeAntFile({ layerIndex: layerIndex }))
             } else {
                 // if not removing element then check compatability rules for selected option and add
@@ -96,7 +96,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     dispatch(removeAntFile({ layerIndex: 3 }))
                     dispatch(addPopup({ id: popupTypes.antConflict.gasMask.optical }))
                 }
-                if (element.name.includes('-eod-')) {
+                if (element.name.includes('-EOD-')) {
                     // add eod together eod incompatible with shemagh, face gear, mouth accessories and bandolier belts
                     toggleEod(true, dispatch, layerIndex, selectedIndexes[2], selectedIndexes[6], selectedIndexes[5], selectedIndexes[7], selectedIndexes[3])
                 }

@@ -28,9 +28,9 @@ export const eodMaskId_ = 19
 export const shroudedHelmetId_ = 39
 export const gasMaskId_ = 9
 export const gasMaskBongId_ = 13
-export const nvgId_ = 7
+export const nvgId_ = 6
 export const reflectiveBeltId_ = 1
-export const eodSuitId_ = 17
+export const eodSuitId_ = 18
 
 /**
  * This function is called when the user adds or removes eod gear by clicking on either the eod head gear or the eod
