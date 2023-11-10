@@ -156,7 +156,7 @@ const headGear = [
         layerLevel: helmetAndNvgLevel,
     },
     {
-        name: '19-EOD-mask',
+        name: '19-eod-mask',
         rarity: 4,
         layerLevel: headGearLevel,
     },
@@ -199,7 +199,7 @@ const headGear = [
     },
     {
         // CUSTOM: Johnny
-        name: '25-NY-helmet',
+        name: '25-ny-helmet',
         rarity: 5,
         layerLevel: helmetAndNvgLevel,
         isComingSoon: true
@@ -446,7 +446,7 @@ const opticalGear = [
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
     },
     {
-        name: '6-NVG',
+        name: '6-nvg',
         rarity: 3,
         layerLevel: helmetAndNvgLevel,
     },
@@ -790,7 +790,7 @@ const bodyGear = [
         isComingSoon: true
     },
     {
-        name: '18-EOD-suit',
+        name: '18-eod-suit',
         rarity: 4,
         layerLevel: bodyGearLevel,
     },
@@ -991,7 +991,7 @@ const gunsEquipment = [
         isComingSoon: true
     },
     {
-        name: '4-SMG-SD',
+        name: '4-smg-sd',
         rarity: 1,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
     },
@@ -1012,7 +1012,7 @@ const gunsEquipment = [
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
     },
     {
-        name: '8-LMG',
+        name: '8-lmg',
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
     },
@@ -1114,7 +1114,7 @@ const gunsEquipment = [
     },
     {
         // CUSTOM: Justin
-        name: '25-DDOS',
+        name: '25-ddos',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isComingSoon: true
@@ -1128,7 +1128,7 @@ const gunsEquipment = [
     },
     {
         // CUSTOM: Tommy
-        name: '27-tommygun-SMG',
+        name: '27-tommygun-smg',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isComingSoon: true
@@ -1141,7 +1141,7 @@ const gunsEquipment = [
         isComingSoon: true
     },
     {
-        name: '29-MGL',
+        name: '29-mgl',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isComingSoon: true
@@ -1162,7 +1162,7 @@ const gunsEquipment = [
     },
     {
         // CUSTOM: Alex
-        name: '32-onion-MGL',
+        name: '32-onion-mgl',
         rarity: 7,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isComingSoon: true
@@ -1331,7 +1331,7 @@ const abdomenAccessories = [
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
     },
     {
-        name: '8-BTK',
+        name: '8-btk',
         rarity: 3,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
     },
@@ -1449,7 +1449,7 @@ const legGear = [
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
     },
     {
-        name: '2-PT-shorts',
+        name: '2-pt-shorts',
         rarity: 1,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
     },
@@ -1599,7 +1599,7 @@ const vehicles = [
         name: 'empty',
     },
     {
-        name: '1-DPV',
+        name: '1-dpv',
         rarity: 1,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
         //250k
@@ -1635,7 +1635,7 @@ const vehicles = [
         isComingSoon: true
     },
     {
-        name: '7-MRAP',
+        name: '7-mrap',
         rarity: 2,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
         //800k
@@ -1653,7 +1653,7 @@ const vehicles = [
         //42mil
     },
     {
-        name: '10-LAV',
+        name: '10-lav',
         rarity: 3,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
         //4mil
@@ -1720,7 +1720,7 @@ const vehicles = [
     },
     {
         // CUSTOM: Evrim
-        name: '21-turbo-DPV',
+        name: '21-turbo-dpv',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
         isComingSoon: true

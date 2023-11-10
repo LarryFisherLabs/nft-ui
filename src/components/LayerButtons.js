@@ -87,7 +87,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
             if (index === selectedIndexes[layerIndex]) {
                 // if true then remove selected element
                 // remove eod together or remove single element
-                if (element.name.includes('-EOD-')) toggleEod(false, dispatch)
+                if (element.name.includes('-eod-')) toggleEod(false, dispatch)
                 else dispatch(removeAntFile({ layerIndex: layerIndex }))
             } else {
                 // if not removing element then check compatability rules for selected option and add
@@ -96,7 +96,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     dispatch(removeAntFile({ layerIndex: 3 }))
                     dispatch(addPopup({ id: popupTypes.antConflict.gasMask.optical }))
                 }
-                if (element.name.includes('-EOD-')) {
+                if (element.name.includes('-eod-')) {
                     // add eod together eod incompatible with shemagh, face gear, mouth accessories and bandolier belts
                     toggleEod(true, dispatch, layerIndex, selectedIndexes[2], selectedIndexes[6], selectedIndexes[5], selectedIndexes[7], selectedIndexes[3])
                 }
@@ -181,7 +181,35 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
         }
     }
 
-    const formatFileName = (name) => {
+    const subStrings = [[],
+        ['-eod-', '-ny-'], [],
+        ['-nvg'], [], [], [], [],
+        ['-eod-'], [],
+        ['-smg', '-sd', '-lmg', '-ddos', '-mgl'], [], [],
+        ['-btk'],
+        ['-pt-'], [],
+        ['-dpv', '-mrap', '-lav'], []
+    ]
+    const cappedSubStrings = [[],
+        ['-EOD-', '-NY-'], [],
+        ['-NVG'], [], [], [], [],
+        ['-EOD-'], [],
+        ['-SMG', '-SD', '-LMG', '-DDOS', '-MGL'], [], [],
+        ['-BTK'],
+        ['-PT-'], [],
+        ['-DPV', '-MRAP', '-LAV'], []
+    ]
+    // level id not needed for section title
+    const formatFileName = (name, isSecTitle, levelId = null) => {
+        if (isSecTitle === false) {
+            for (let i = 0; i < subStrings[levelId].length; i++) {
+                const subId = name.indexOf(subStrings[levelId][i])
+                if (subId !== -1) {
+                    const subRemoved = name.split(subStrings[levelId][i])
+                    name = subRemoved[0] + cappedSubStrings[levelId][i] + (subRemoved.length > 1 ? subRemoved[1] : '')
+                }
+            }
+        }
         let formattedName = ""
         const splitName = name.split("-")
         for (let i = 1; i < splitName.length; i++) {
@@ -194,7 +222,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
     return (
         <ButtonsPanel>
             <Title2CrossHair onClick={() => toggle(!isOpen)}>
-                {formatFileName(staticLayerInfo[layerIndex].fileName)}
+                {formatFileName(staticLayerInfo[layerIndex].fileName, true)}
                 {isOpen ? <BlackText>∨</BlackText> : <BlackText>∧</BlackText>}
             </Title2CrossHair>
             <SectionButtons isOpen={isOpen}>
@@ -207,7 +235,7 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                         
                         return (
                             <Button key={'traitButton' + index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected}>
-                                <Title4>{formatFileName(element.name)}</Title4>
+                                <Title4>{formatFileName(element.name, false, layerIndex)}</Title4>
                                 <ButtonBottom>
                                     <ToggledRemove isDisabled={isSelected && (element.rarity > 0)}>
                                         <Text>Remove</Text>
