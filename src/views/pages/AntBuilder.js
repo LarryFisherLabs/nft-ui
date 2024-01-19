@@ -60,6 +60,24 @@ export const AntBuilder = () => {
   const [areAllCoinsSpent, setAreCoinsSpent] = useState(null)
   const [isUpcomingDisplayed, setIsUpcomingDis] = useState(true)
 
+  // This code will get you arrays of all part rarities in console log for use in contracts
+  //
+  // const [isLogged, setIsLogged] = useState(false)
+  // useEffect(() => {
+  //   if (isLogged === false) {
+  //     setIsLogged(true)
+  //     for (let i = 0; i < 18; i++) {
+  //       let arr = []
+  //       for (let j = 0; j < staticLayerInfo[i].elements.length; j++) {
+  //         if (staticLayerInfo[i].elements[j].name !== 'empty') arr.push(staticLayerInfo[i].elements[j].rarity)
+  //         else arr.push(0)
+  //       }
+  //       console.log('level ' + i + ' arr: ' + arr)
+  //       console.log('level ' + i + ' count: ' + staticLayerInfo[i].elements.length)
+  //     }
+  //   }
+  // }, [isLogged])
+
   const coinClick = (coinId, coinColor) => {
     if (antStatus !== "Buying ant...") {
       if (selectedCoinInfo[1] === coinId) {

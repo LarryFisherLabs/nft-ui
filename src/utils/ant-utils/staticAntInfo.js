@@ -740,6 +740,7 @@ const bodyGear = [
         name: '9-tactical-sweater',
         rarity: 2,
         layerLevel: bodyGearLevel,
+        hasSleeves: true,
         isComingSoon: true
     },
     {

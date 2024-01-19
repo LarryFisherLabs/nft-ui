@@ -23,7 +23,7 @@ const updateAntCanvas = (ctx, indexes) => {
             ) || (
                 (layerIndex === 3) &&
                 (selectedIndex === nvgId_) &&
-                staticLayerInfo[1].elements[indexes[1]].name.includes('helmet') &&
+                staticLayerInfo[1].elements[indexes[1]].name.includes('helm') &&
                 !(staticLayerInfo[1].elements[indexes[1]].name.includes('shrouded'))
             )
         ) ? '-alt.png' : '.png'
