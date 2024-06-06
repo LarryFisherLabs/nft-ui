@@ -12,6 +12,15 @@ const AppWrapper = styled.div`
   min-height: 100vh;
 `
 
+// Different app states:
+//   Offline:
+//     desc: user does not have a recognized browser wallet
+//     tell: connect slice status will be "offline"
+//   Not Connected:
+//     desc: user has a recognized browser wallet but it is not connected
+//     tell: connect slice status will be "succeeded" but connect slice account variable is null
+// TODO: Add other states!
+
 function App() {
   // run all initial hooks
   useAppHooks()

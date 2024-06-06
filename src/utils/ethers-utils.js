@@ -5,6 +5,7 @@ import ERC721 from "../contracts/ERC721.json"
 import TestBitDao from "../contracts/TestBitDao.json"
 import ERC20 from "../contracts/ERC20.json"
 import { netInfo } from "./json-constants/networkInfo"
+import { getUrlParam } from "./url-utils/getUrlParam"
 
 export const getProvider = () => {
     return new ethers.providers.Web3Provider(window.ethereum)
@@ -23,14 +24,16 @@ export const getNetId = async () => {
     return (await getNetAndProvider())[0]
 }
 
-export const getAntContractAddress = async () => {
+export const getAntContractAddress = async (version = null) => {
     const netId = await getNetId()
-    return netInfo[netId].antContract
+    if (version === null) version = getUrlParam("version", true)
+    return (version === 0) ? netInfo[netId].antContracts.og : netInfo[netId].antContracts.v0000
 }
 
-export const getCoinContractAddress = async () => {
+export const getCoinContractAddress = async (version = null) => {
     const netId = await getNetId()
-    return netInfo[netId].coinContract
+    if (version === null) version = getUrlParam("version", true)
+    return (version === 0) ? netInfo[netId].coinContracts.og : netInfo[netId].coinContracts.v0000
 }
 
 export const getBitDaoContractAddress = async () => {
@@ -38,14 +41,16 @@ export const getBitDaoContractAddress = async () => {
     return netInfo[netId].testBitDaoContract
 }
 
-export const getCoinContract = async () => {
+export const getCoinContract = async (version = 1) => {
     const [netId, provider] = await getNetAndProvider()
-    return new ethers.Contract(netInfo[netId].coinContract, Coins.abi, provider.getSigner())
+    const contractAddy = (version === 0) ? netInfo[netId].coinContracts.og : netInfo[netId].coinContracts.v0000
+    return new ethers.Contract(contractAddy, Coins.abi, provider.getSigner())
 }
 
-export const getAntContract = async () => {
+export const getAntContract = async (version = 1) => {
     const [netId, provider] = await getNetAndProvider()
-    return new ethers.Contract(netInfo[netId].antContract, Ants.abi, provider.getSigner())
+    const contractAddy = (version === 0) ? netInfo[netId].antContracts.og : netInfo[netId].antContracts.v0000
+    return new ethers.Contract(contractAddy, Ants.abi, provider.getSigner())
 }
 
 export const getBitDaoContract = async () => {

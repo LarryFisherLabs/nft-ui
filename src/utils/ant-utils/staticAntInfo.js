@@ -92,7 +92,7 @@ const headGear = [
         rarity: 1,
         layerLevel: headGearLevel,
         isMidTall: true,
-        isComingSoon: true
+
     },
     {
         name: '8-boonie',
@@ -115,7 +115,7 @@ const headGear = [
         layerLevel: headGearLevel,
         isMidTall: true,
         isEODHeadRestrictions: true,
-        isComingSoon: true
+
     },
     {
         name: '12-headband',
@@ -136,19 +136,19 @@ const headGear = [
         name: '15-combat-headset',
         rarity: 3,
         layerLevel: headGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '16-black-helmet-with-strap',
         rarity: 3,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         name: '17-helmet-with-headset',
         rarity: 4,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         name: '18-helmet-with-webbing',
@@ -164,7 +164,7 @@ const headGear = [
         name: '20-m81-helmet-with-strap',
         rarity: 4,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
@@ -172,7 +172,7 @@ const headGear = [
         rarity: 5,
         layerLevel: headGearLevel,
         isTall: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Evrim
@@ -181,35 +181,35 @@ const headGear = [
         layerLevel: headGearLevel,
         isMidTall: true,
         isEODHeadRestrictions: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Abbi
         name: '23-monarch-helmet',
         rarity: 5,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Amanda
         name: '24-heart-helmet',
         rarity: 5,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Johnny
         name: '25-ny-helmet',
         rarity: 5,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Cole
         name: '26-painted-helmet',
         rarity: 5,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Sam
@@ -217,7 +217,7 @@ const headGear = [
         rarity: 6,
         layerLevel: headGearLevel,
         isTall: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Giveaway
@@ -225,7 +225,7 @@ const headGear = [
         rarity: 6,
         layerLevel: headGearLevel,
         isTall: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Ben
@@ -233,7 +233,7 @@ const headGear = [
         rarity: 6,
         layerLevel: headGearLevel,
         isMidTall: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jen
@@ -241,42 +241,42 @@ const headGear = [
         rarity: 6,
         layerLevel: helmetAndNvgLevel,
         isMidTall: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Dante
         name: '31-orange-headband',
         rarity: 6,
         layerLevel: headGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Mike
         name: '32-fishing-boonie',
         rarity: 6,
         layerLevel: headGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '33-tiger-cap',
         rarity: 6,
         layerLevel: headGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Josh
         name: '34-peace-sign-m81-helm',
         rarity: 6,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '35-desperado-hat',
         rarity: 6,
         layerLevel: headGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Nick
@@ -284,20 +284,20 @@ const headGear = [
         rarity: 7,
         layerLevel: headGearLevel,
         isEODHeadRestrictions: true,
-        isComingSoon: true
+
     },
     {
         name: '37-cavalry-cover',
         rarity: 7,
         layerLevel: headGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jeff
         name: '38-purple-helmet',
         rarity: 7,
         layerLevel: helmetAndNvgLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Ian
@@ -305,7 +305,7 @@ const headGear = [
         rarity: 8,
         layerLevel: headGearLevel,
         isMidTall: true,
-        isComingSoon: true
+
     }
 ]
 
@@ -319,14 +319,14 @@ const faceGear = [
         rarity: 1,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         name: '2-respirator',
         rarity: 1,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         name: '3-balaclava',
@@ -338,28 +338,28 @@ const faceGear = [
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         name: '5-desert-tech-mask',
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         name: '6-full-black-mask',
         rarity: 3,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '7-bandito-balaclava',
         rarity: 3,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '8-cold-weather-mask',
@@ -367,7 +367,7 @@ const faceGear = [
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isFaceCovered: true,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         name: '9-gas-mask',
@@ -381,7 +381,7 @@ const faceGear = [
         rarity: 4,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Cole
@@ -390,7 +390,7 @@ const faceGear = [
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isFaceCovered: true,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Justin
@@ -398,7 +398,7 @@ const faceGear = [
         rarity: 7,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isMouthCovered: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jeff
@@ -407,7 +407,7 @@ const faceGear = [
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
         isFaceCovered: true,
         isMouthCovered: true,
-        isComingSoon: true
+
     }
 ]
 
@@ -427,7 +427,7 @@ const opticalGear = [
         name: '2-nerd-glasses',
         rarity: 1,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '3-goggles',
@@ -438,7 +438,7 @@ const opticalGear = [
         name: '4-black-goggles',
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '5-sunglasses',
@@ -455,47 +455,47 @@ const opticalGear = [
         name: '7-cool-sunglasses',
         rarity: 4,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '8-trooper-shades',
         rarity: 4,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
         name: '9-uni-shades',
         rarity: 5,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '10-drone-op-headset',
         rarity: 5,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '11-general-sunglasses',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Giveaway
         name: '12-uncle-sam-glasses',
         rarity: 7,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '13-vaquero-sunglasses',
         rarity: 7,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -508,68 +508,68 @@ const faceAccessories = [
         name: '1-black-eye',
         rarity: 0,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '2-eye-black',
         rarity: 1,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '3-face-shadow',
         rarity: 1,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '4-eye-scar',
         rarity: 2,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '5-smooches',
         rarity: 2,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '6-claw-mark',
         rarity: 2,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '7-skull',
         rarity: 3,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '8-kiss',
         rarity: 4,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '9-clown',
         rarity: 4,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '10-muertos',
         rarity: 4,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Alex
         name: '11-tear',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -588,7 +588,7 @@ const mouthAccessories = [
         name: '2-cigarillo',
         rarity: 3,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '3-cigar',
@@ -600,7 +600,7 @@ const mouthAccessories = [
         name: '4-cuban-cigar',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -615,7 +615,7 @@ const neckGear = [
         name: '1-tags-with-bumper',
         rarity: 0,
         layerLevel: neckGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '2-shemagh',
@@ -626,38 +626,38 @@ const neckGear = [
         name: '3-green-shemagh',
         rarity: 1,
         layerLevel: neckGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '4-white-shemagh',
         rarity: 2,
         layerLevel: neckGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '5-yellow-shemagh',
         rarity: 2,
         layerLevel: neckGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '6-royal-shemagh',
         rarity: 3,
         layerLevel: neckGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '7-ancient-dog-tags',
         rarity: 4,
         layerLevel: neckGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: All but Ian incompat
         name: '8-gold-dog-tags',
         rarity: 6,
         layerLevel: neckGearLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -715,14 +715,14 @@ const bodyGear = [
         rarity: 1,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         name: '6-pilot-jumpsuit-top',
         rarity: 2,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         name: '7-dress-uniform',
@@ -741,14 +741,14 @@ const bodyGear = [
         rarity: 2,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         name: '10-command-uniform',
         rarity: 3,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         name: '11-plate-carrier',
@@ -774,21 +774,21 @@ const bodyGear = [
         name: '15-black-plate-carrier',
         rarity: 4,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '16-bomber-jacket',
         rarity: 4,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         name: '17-leather-bomber-jacket',
         rarity: 4,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         name: '18-eod-suit',
@@ -804,7 +804,7 @@ const bodyGear = [
         name: '20-m81-flak-vest',
         rarity: 4,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Giveaway
@@ -812,14 +812,14 @@ const bodyGear = [
         rarity: 5,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Ben
         name: '22-tee-shirt-with-cigs',
         rarity: 5,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Cole
@@ -827,21 +827,21 @@ const bodyGear = [
         rarity: 5,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '24-tiger-plate-carrier',
         rarity: 5,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '25-sand-tiger-plate-carrier',
         rarity: 5,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Sam
@@ -849,34 +849,34 @@ const bodyGear = [
         rarity: 5,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Amanda
         name: '27-pink-tank-top',
         rarity: 5,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         name: '28-comms-plate-carrier',
         rarity: 6,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Johnny, Josh
         name: '29-northeast-plate-carrier',
         rarity: 6,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
         name: '30-uni-plate-carrier',
         rarity: 6,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Abbi
@@ -884,7 +884,7 @@ const bodyGear = [
         rarity: 6,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Ian
@@ -892,7 +892,7 @@ const bodyGear = [
         rarity: 6,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Dante
@@ -900,7 +900,7 @@ const bodyGear = [
         rarity: 6,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Austin
@@ -908,7 +908,7 @@ const bodyGear = [
         rarity: 7,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Noah
@@ -916,28 +916,28 @@ const bodyGear = [
         rarity: 7,
         layerLevel: bodyGearLevel,
         hasSleeves: true,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jen
         name: '36-road-warrior-jacket',
         rarity: 7,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jeff
         name: '37-purp-flak-vest',
         rarity: 7,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Justin
         name: '38-hacker-plate-carrier',
         rarity: 7,
         layerLevel: bodyGearLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -957,13 +957,13 @@ const leftForeleg = [
         name: '2-camo-prosthetic-foreleg',
         rarity: 4,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '3-silver-prosthetic-foreleg',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -978,7 +978,7 @@ const gunsEquipment = [
         name: '1-shovel',
         rarity: 0,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '2-uzi',
@@ -989,7 +989,7 @@ const gunsEquipment = [
         name: '3-e-tool',
         rarity: 1,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '4-smg-sd',
@@ -1005,7 +1005,7 @@ const gunsEquipment = [
         name: '6-walkie-talkie',
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '7-shotgun',
@@ -1021,13 +1021,13 @@ const gunsEquipment = [
         name: '9-field-reciever',
         rarity: 3,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '10-battle-rifle',
         rarity: 3,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '11-bazooka',
@@ -1053,7 +1053,7 @@ const gunsEquipment = [
         name: '15-tactical-tablet',
         rarity: 4,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '16-anti-materiel-rifle',
@@ -1069,111 +1069,111 @@ const gunsEquipment = [
         name: '18-gold-rifle',
         rarity: 5,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Abbi
         name: '19-hippy-battle-rifle',
         rarity: 5,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Giveaway
         name: '20-fireworks-gun',
         rarity: 5,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Evrim
         name: '21-flamed-fireworks-gun',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Nick
         name: '22-welding-torch',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Sam
         name: '23-akimbo-chef-knives',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Mike
         name: '24-bowie-knife',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Justin
         name: '25-ddos',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
         name: '26-uni-shotgun',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '27-tommygun-smg',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '28-retro-assault-rifle',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '29-mgl',
         rarity: 6,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Noah
         name: '30-future-rifle',
         rarity: 7,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Ian
         name: '31-intervention',
         rarity: 7,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Alex
         name: '32-onion-mgl',
         rarity: 7,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jeff
         name: '33-blazed-flamethrower',
         rarity: 8,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -1186,40 +1186,40 @@ const watch = [
         name: '1-green-watch',
         rarity: 0,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '2-black-watch',
         rarity: 1,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '3-full-black-watch',
         rarity: 2,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '4-silver-watch',
         rarity: 3,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '5-gold-watch',
         rarity: 4,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
         name: '6-gold-uni-watch',
         rarity: 5,
         layerLevel: faceAndOpticGearAndToolAndWatchLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -1234,60 +1234,60 @@ const holster = [
         name: '1-green-holster',
         rarity: 1,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '2-brown-holster',
         rarity: 1,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
         name: '3-uni-holster',
         rarity: 2,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '4-tan-holster',
         rarity: 4,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '5-leather-holster',
         rarity: 5,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '6-revolver-holster',
         rarity: 5,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jeff
         name: '7-purp-holster',
         rarity: 5,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '8-santa-maria-holster',
         rarity: 5,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Giveaway
         name: '9-americana-holster',
         rarity: 5,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -1351,91 +1351,91 @@ const abdomenAccessories = [
         name: '11-star',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Nick
         name: '12-hockey-sticks',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Dante
         name: '13-bball',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Amanda
         name: '14-butterfly',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Alex
         name: '15-oh-brother',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Sam
         name: '16-dinnertime',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
         name: '17-uni-tat',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '18-flag-patch',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Austin
         name: '19-live-free',
         rarity: 7,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Mike
         name: '20-big-weenie',
         rarity: 7,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jimmy
         name: '21-blued',
         rarity: 7,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Jeff
         name: '22-most-dope',
         rarity: 7,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Ian
         name: '23-headshot-crosshair',
         rarity: 8,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -1478,7 +1478,7 @@ const legGear = [
         name: '7-sneaker-jeans',
         rarity: 2,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '8-pilot-jumpsuit-pants',
@@ -1494,7 +1494,7 @@ const legGear = [
         name: '10-cavalry-pants',
         rarity: 3,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '11-command-uniform-pants',
@@ -1516,7 +1516,7 @@ const legGear = [
         name: '14-boot-jeans',
         rarity: 4,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         name: '15-black-tac-pants',
@@ -1539,7 +1539,7 @@ const legGear = [
         name: '18-cyber-legs',
         rarity: 7,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Noah
@@ -1558,7 +1558,7 @@ const legGear = [
         name: '21-purp-tac-pants',
         rarity: 8,
         layerLevel: antennaAndHolsterAndLegGearAndEyePatchLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -1578,19 +1578,19 @@ const hindLegs = [
         name: '2-silver-hind-prosthetic',
         rarity: 3,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '3-black-hind-prosthetics',
         rarity: 4,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '4-silver-hind-prosthetics',
         rarity: 4,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -1621,19 +1621,19 @@ const vehicles = [
         name: '4-water-buffalo',
         rarity: 1,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '5-bulldozer',
         rarity: 2,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '6-tanker-truck',
         rarity: 2,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '7-mrap',
@@ -1699,13 +1699,13 @@ const vehicles = [
         name: '17-mine-layer',
         rarity: 4,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '18-artillery',
         rarity: 5,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '19-abrams',
@@ -1724,27 +1724,27 @@ const vehicles = [
         name: '21-turbo-dpv',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Tommy
         name: '22-technical',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         name: '23-drone',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     },
     {
         // CUSTOM: Hayden
         name: '24-unicorn',
         rarity: 6,
         layerLevel: faceAndMouthAccAndVehicleAndArmAndTatAndLegsLevel,
-        isComingSoon: true
+
     }
 ]
 
@@ -1770,7 +1770,7 @@ const backgrounds = [
         name: '3-light-blue',
         rarity: 6,
         layerLevel: backgroundLevel,
-        isComingSoon: true
+
     }
 ]
 

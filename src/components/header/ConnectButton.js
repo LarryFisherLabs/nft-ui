@@ -30,6 +30,7 @@ const StyledConnectButton = styled(StyledButton)`
   }
 `
 
+// connect button is used twice each one has its own index
 // index 0 is inline connect button for desktop/larger screen
 // index 1 is below nav for phone/smaller screen
 // only one index should be showing at a time

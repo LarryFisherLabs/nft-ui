@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { antBalanceOf, antOwnerOf, createAnt, createDiscountAnt, getDnaPrice, getPartInventory, getRarityPrices } from "../../apis/antContractApi";
+import { antBalanceOf, antOwnerOf, createAnt, createDiscountAnt, getPartInventory } from "../../apis/antContractApi";
 import { getOwnersNfts } from "../../apis/coinDbApi";
 import { staticLayerInfo } from "../../utils/ant-utils/staticAntInfo";
 import { getAntContract } from "../../utils/ethers-utils";
 import { popupTypes } from "../../utils/json-constants/popupInfo";
-import { antError, updateAntIds, updatePartAvailability, updateRarityPrices } from "../slices/antSlice";
+import { antError, updateAntIds, updatePartAvailability } from "../slices/antSlice";
 import { addPopup } from "../slices/connectSlice";
 
 // loadAntBuilder
@@ -12,13 +12,11 @@ export const getPartInventories = createAsyncThunk(
   "antSlice/getPartInventory",
   async (_, { dispatch }) => {
     try {
-      const prices = await getRarityPrices(0)
-      dispatch(updateRarityPrices({ prices: prices }))
       for (let layerIndex = 0; layerIndex < staticLayerInfo.length; layerIndex++) {
         const parts = staticLayerInfo[layerIndex].elements
         for (let partIndex = 0; partIndex < parts.length; partIndex++) {
           const part = parts[partIndex]
-          const available = (part.rarity > 2 && !part.hasOwnProperty('isComingSoon')) ? await getPartInventory(layerIndex, partIndex) : 10000
+          const available = (part.rarity > 2) ? await getPartInventory(layerIndex, partIndex) : 10000
           dispatch(updatePartAvailability({
             layerIndex: layerIndex,
             elementIndex: partIndex,
@@ -26,18 +24,6 @@ export const getPartInventories = createAsyncThunk(
           }))
         }
       }
-    } catch (err) {
-      dispatch(antError({error: err.message}))
-    }
-  }
-)
-
-export const getAntPrices = createAsyncThunk(
-  "antSlice/getAntPrices",
-  async ({ discountIndex }, { dispatch }) => {
-    try {
-      const prices = await getRarityPrices(discountIndex)
-      dispatch(updateRarityPrices({ prices: prices }))
     } catch (err) {
       dispatch(antError({error: err.message}))
     }
@@ -99,8 +85,6 @@ export const buyAntThunk = createAsyncThunk(
     try {
       const discountIndex = getState().antSlice.discountIndex
       const coinId = getState().antSlice.coinId
-      const dnaPrice = await getDnaPrice(selectedIndexes, discountIndex)
-      if (dnaPrice.toString() !== totalPrice.toString()) throw new Error("Price does not match!" + dnaPrice.toString() + " " + totalPrice.toString())
       const tx = discountIndex === 0 ? await createAnt(selectedIndexes, totalPrice) : await createDiscountAnt(coinId, selectedIndexes, totalPrice)
       dispatch(addPopup({ id: popupTypes.buyingAnt }))
       dispatch(addPopup({ id: popupTypes.profileRedirect }))

@@ -18,10 +18,11 @@ export const updateBaseCoinURI = async (newURI) => {
     return await coinContract.updateBaseURI(newURI)
 }
 
-export const updateFee = async (newFee) => {
-    const coinContract = await getCoinContract()
-    return await coinContract.updateFee(newFee)
-}
+// removed
+// export const updateFee = async (newFee) => {
+//     const coinContract = await getCoinContract()
+//     return await coinContract.updateFee(newFee)
+// }
 
 export const withdraw = async () => {
     const coinContract = await getCoinContract()
@@ -30,24 +31,24 @@ export const withdraw = async () => {
 
 // buy functions
 
-export const createExactCoin = async (value, color) => {
-    const coinContract = await getCoinContract()
-    return await coinContract.createExactCoin(color, { value: ethers.utils.parseEther(`${value}`) })
-}
-
 export const createFounderCoin = async (value) => {
     const coinContract = await getCoinContract()
     return await coinContract.createFounderCoin({ value: ethers.utils.parseEther(`${value}`) })
 }
 
-export const createCoin = async (value) => {
+export const createDiscountCoin = async (value, color, founderCoinId) => {
     const coinContract = await getCoinContract()
-    return await coinContract.createCoin({ value: ethers.utils.parseEther(`${value}`) })
+    return await coinContract.createDiscountCoin(color, founderCoinId, { value: ethers.utils.parseEther(`${value}`) })
+}
+
+export const createCoin = async (value, color) => {
+    const coinContract = await getCoinContract()
+    return await coinContract.createCoin(color, { value: ethers.utils.parseEther(`${value}`) })
 }
 
 // general view functions
 
-export const owner = async () => {
+export const coinOwner = async () => {
     try {
         const coinContract = await getCoinContract()
         const owner = await coinContract.owner()
@@ -79,12 +80,13 @@ export const getCounters = async () => {
     return finalCounts
 }
 
-export const getFounder = async (address) => {
-    const coinContract = await getCoinContract()
-    const founder = await coinContract.getFounder(address)
-    const value = parseFloat(ethers.utils.formatEther(founder[0]))
-    return [value, founder[1], founder[2]]
-}
+// removed
+// export const getFounder = async (address) => {
+//     const coinContract = await getCoinContract()
+//     const founder = await coinContract.getFounder(address)
+//     const value = parseFloat(ethers.utils.formatEther(founder[0]))
+//     return [value, founder[1], founder[2]]
+// }
 
 export const getTierPrices = async (isDiscounted) => {
     const coinContract = await getCoinContract()
@@ -95,9 +97,14 @@ export const getTierPrices = async (isDiscounted) => {
     return ethPrices 
 }
 
-export const isOnFounderList = async (address) => {
+export const getFounderMiniVal = async (address) => {
     const coinContract = await getCoinContract()
-    return await coinContract.isOnFounderList(address)
+    return parseInt(await coinContract.getFounderMiniVal(address))
+}
+
+export const isDiscountMintAvail = async (founderCoinId) => {
+    const coinContract = await getCoinContract()
+    return await coinContract.isDiscountMintAvail(founderCoinId)
 }
 
 export const ownerOf = async (id) => {
@@ -110,7 +117,8 @@ export const coinTokenURI = async (id) => {
     return await coinContract.tokenURI(id)
 }
 
-export const coinBaseURI = async () => {
-    const coinContract = await getCoinContract()
-    return await coinContract.baseURI()
-}
+// not found
+// export const coinBaseURI = async () => {
+//     const coinContract = await getCoinContract()
+//     return await coinContract.baseURI()
+// }

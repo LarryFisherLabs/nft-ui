@@ -7,14 +7,15 @@ export const getPartInventory = async (sectionIndex, partIndex) => {
     return parseInt(stock)
 }
 
-export const getRarityPrices = async (discountIndex) => {
-    const antContract = await getAntContract()
-    const rawPrices = await antContract.getRarityPrices(discountIndex)
-    const prices = rawPrices.map((price) => {
-        return ethers.utils.formatEther(price)
-    })
-    return prices
-}
+// removed
+// export const getRarityPrices = async (discountIndex) => {
+//     const antContract = await getAntContract()
+//     const rawPrices = await antContract.getRarityPrices(discountIndex)
+//     const prices = rawPrices.map((price) => {
+//         return ethers.utils.formatEther(price)
+//     })
+//     return prices
+// }
 
 export const antWithdraw = async () => {
     const antContract = await getAntContract()
@@ -23,7 +24,7 @@ export const antWithdraw = async () => {
 
 export const isDiscountUsed = async (coinId) => {
     const antContract = await getAntContract()
-    return await antContract.isDiscountUsed(coinId)
+    return await antContract.isDiscountUsedByCoin(coinId)
 }
 
 export const createAnt = async (dna, value) => {
@@ -36,11 +37,12 @@ export const createDiscountAnt = async (coinId, dna, value) => {
     return await antContract.createDiscountAnt(coinId, dna, { value: ethers.utils.parseEther(value.toString()) })
 }
 
-export const getDnaPrice = async (dna, discountIndex) => {
-    const antContract = await getAntContract()
-    const price = await antContract.getDnaPrice(dna, discountIndex)
-    return parseFloat(ethers.utils.formatEther(price))
-}
+// removed
+// export const getDnaPrice = async (dna, discountIndex) => {
+//     const antContract = await getAntContract()
+//     const price = await antContract.getDnaPrice(dna, discountIndex)
+//     return parseFloat(ethers.utils.formatEther(price))
+// }
 
 export const getAnt = async (id) => {
     const antContract = await getAntContract()
@@ -72,12 +74,13 @@ export const antTokenURI = async (id) => {
     return await antContract.tokenURI(id)
 }
 
-export const antBaseURI = async () => {
-    const antContract = await getAntContract()
-    return await antContract.baseURI()
-}
+// not found
+// export const antBaseURI = async () => {
+//     const antContract = await getAntContract()
+//     return await antContract.baseURI()
+// }
 
-export const changeName = async (id, newName) => {
+export const changeName = async (id, newName, value) => {
     const antContract = await getAntContract()
-    return await antContract.changeName(id, newName)
+    return await antContract.changeName(id, newName, { value: ethers.utils.parseEther(value.toString()) })
 }

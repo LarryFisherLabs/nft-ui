@@ -16,8 +16,8 @@ const useLastNetIdFromCookie = () => {
         // there is a different useEffect for netId 0 (aka wrong net) popup so that it occurs on every load
         if (netId !== 0) dispatch(addPopup({ id: netInfo[netId].popupId }))
         Cookies.set('netId', netId, { expires: 40 })
-        setCookieNetId(netId)
-      } else setCookieNetId(netId)
+      }
+      setCookieNetId(netId)
     }
   }, [dispatch, netId, cookieNetId])
 }

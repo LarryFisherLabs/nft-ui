@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { layerInfo } from '../../utils/ant-utils/antInfo'
-import { buyAntThunk, getAntIds, getAntPrices, getPartInventories, loadAntIdsOffline } from '../thunks/antThunks'
+import { buyAntThunk, getAntIds, getPartInventories, loadAntIdsOffline } from '../thunks/antThunks'
 
 const initialState = {
   antStatus: 'idle',
   antIds: [],
-  rarityPrices: [null, null, null, null, null, null],
   antPartsInfo: [...layerInfo],
   discountIndex: 0,
   coinId: null,
@@ -22,11 +21,6 @@ export const antSlice = createSlice({
     updateAntIds: (state, action) => {
       for (let i = 0; i < action.payload.antIds.length; i++) {
         state.antIds.push(action.payload.antIds[i])
-      }
-    },
-    updateRarityPrices: (state, action) => {
-      for (let i = 0; i < 6; i++) {
-        state.rarityPrices[i] = action.payload.prices[i]
       }
     },
     updatePartAvailability: (state, action) => {
@@ -61,12 +55,6 @@ export const antSlice = createSlice({
       .addCase(getAntIds.fulfilled, state => {
         if (state.antStatus === 'Loading ants...') state.antStatus = 'succeeded'
       })
-      .addCase(getAntPrices.pending, state => {
-        if (state.antStatus === 'succeeded') state.antStatus = 'Loading prices...'
-      })
-      .addCase(getAntPrices.fulfilled, state => {
-        if (state.antStatus === 'Loading prices...') state.antStatus = 'succeeded'
-      })
       .addCase(buyAntThunk.pending, state => {
         state.antStatus = 'Buying ant...'
       })
@@ -87,7 +75,6 @@ export default antSlice.reducer
 
 export const selectAntStatus = state => state.antSlice.antStatus
 export const selectAntIds = state => state.antSlice.antIds
-export const selectRarityPrices = state => state.antSlice.rarityPrices
 export const selectDiscountInfo = state => [state.antSlice.discountIndex, state.antSlice.coinId]
 export const selectAntErrMsg = state => state.antSlice.antErrMsg
 export const selectSelectedIndexes = state => state.antSlice.antPartsInfo.map(layer => layer.selectedIndex)

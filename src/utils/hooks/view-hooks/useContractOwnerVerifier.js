@@ -10,8 +10,10 @@ const useContractOwnerVerifier = () => {
     const [isSupportedNet, setIsSupportedNet] = useState(null)
 
     useEffect(() => {
-        if (netId !== null && netId !== 0 && netId !== 1) setIsSupportedNet(true)
-        else if (netId !== null) setIsSupportedNet(false)
+        if (netId !== null) {
+            if (netId !== 0 && netId !== 1) setIsSupportedNet(true)
+            else setIsSupportedNet(false)
+        }
     }, [netId])
     
     useEffect(() => {

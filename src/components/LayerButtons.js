@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { getViewLevel } from '../utils/deviceType.js'
 import { popupTypes } from '../utils/json-constants/popupInfo.js'
 import { addPopup } from '../redux/slices/connectSlice.js'
-import { eodMaskId_, gasMaskBongId_, gasMaskId_, shroudedCheck, shroudedHelmetId_, tiedAntennaId_, toggleEod } from '../utils/ant-utils/antCanvasUtils.js'
+import { eodMaskId_, shroudedCheck, shroudedHelmetId_, tiedAntennaId_, toggleEod } from '../utils/ant-utils/antCanvasUtils.js'
 
 export const Button = styled.div`
     display: flex;
@@ -49,6 +49,7 @@ export const ButtonsPanel = styled(CanvasPanel)`
     min-width: 100px;
     padding-bottom: 1.2rem;
     max-width: 100%;
+    width: auto;
     @media ${getViewLevel(3)} {
         margin-bottom: .6rem;
     }
@@ -74,7 +75,7 @@ export const ButtonBottom = styled.div`
     flex-flow: column nowrap;
 `
 
-export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
+export const LayerButtons = ({ layerIndex }) => {
     const dispatch = useDispatch()
     const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
     const partStocks = useSelector(selectPartStocks, shallowEqual)
@@ -248,8 +249,6 @@ export const LayerButtons = ({ layerIndex, isUpcomingDisplayed }) => {
                     if (element.name !== 'empty') {
                         const srcFile = `ant/${staticLayerInfo[layerIndex].fileName}/${element.name}.png`
                         const isSelected = selectedIndexes[layerIndex] === index
-                        const isComingSoon = element.hasOwnProperty('isComingSoon')
-                        if (isComingSoon && !isUpcomingDisplayed) return null
                         
                         return (
                             <Button key={'traitButton' + index} onClick={() => clickAction(element, index)} srcFile={srcFile} isSelected={isSelected}>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { isDiscountUsed } from '../../apis/antContractApi'
-import { balanceOf, createExactCoin, createFounderCoin, getCoin, getCounters, getFounder, getTierPrices, isOnFounderList, ownerOf } from '../../apis/coinContractApi'
+import { balanceOf, createCoin, createDiscountCoin, createFounderCoin, getCoin, getCounters, getFounderMiniVal, getTierPrices, isDiscountMintAvail, ownerOf } from '../../apis/coinContractApi'
 import { getOwnersNfts } from '../../apis/coinDbApi'
 import { getCoinContract } from '../../utils/ethers-utils'
 import { popupTypes } from '../../utils/json-constants/popupInfo'
@@ -25,9 +25,7 @@ const _getCoinIds = async (account) => {
                 const owner = await ownerOf(coins[i])
                 if (owner !== account) {
                     coins.splice(i, 1)
-                }
-                if (coins.length === coinBalance) {
-                    i = coins.length
+                    if (coins.length === coinBalance) i = coins.length
                 }
             }
         }
@@ -35,23 +33,27 @@ const _getCoinIds = async (account) => {
     return coins
 }
 
-const _getFounder = async (account) => {
-    const isAccountFounder = await isOnFounderList(account)
-
-    let founder = {
-        value: 0,
-        isFCMinted: false,
-        isFCDiscountUsed: false,
+const _getFounderAndBalance = async (account, _coinIds = null) => {
+    const founderVal = await getFounderMiniVal(account)
+    const coinIds = _coinIds || await _getCoinIds(account)
+    const userBalance = coinIds.length
+    let founderCoinIds = []
+    let isDiscounted = false
+    let founderWDiscount = null
+    for (let i = 0; i < userBalance; i++) if ((await getCoin(coinIds[i]))[1] === 4) founderCoinIds.push(coinIds[i])
+    for (let i = 0; i < founderCoinIds.length; i++) {
+        if ((await isDiscountMintAvail(founderCoinIds[i])) === true) {
+            isDiscounted = true
+            founderWDiscount = founderCoinIds[i]
+            i = founderCoinIds.length
+        }
     }
-
-    if (isAccountFounder) {
-        const rawFounder = await getFounder(account)
-        founder.value = rawFounder[0]
-        founder.isFCMinted = rawFounder[1]
-        founder.isFCDiscountUsed = rawFounder[2]
+    const founder = {
+        value: (founderVal > 0) ? founderVal / 10**4 : null,
+        isFCMinted: (founderVal > 0) ? false : (founderCoinIds.length > 0) ? true : null,
+        isFCDiscountUsed: (isDiscounted === true) ? false : (founderCoinIds.length > 0) ? true : null
     }
-
-    return founder
+    return [founder, userBalance, founderWDiscount]
 }
 
 export const loadCoinIdsOffline = createAsyncThunk(
@@ -60,7 +62,8 @@ export const loadCoinIdsOffline = createAsyncThunk(
         try {
             const address = remoteAddress || getState().connectSlice.account
             const coinIds = await getOwnersNfts(getState().connectSlice.netId, address, 0)
-            dispatch(updateCoins({ coins: coinIds }))
+            const oldCoinIds = await getOwnersNfts(getState().connectSlice.netId, address, 0, 0)
+            dispatch(updateCoins({ coins: coinIds, oldCoins: oldCoinIds }))
         } catch (err) {
             dispatch(coinError({ error: err.message }))
         }
@@ -102,10 +105,9 @@ export const coinsConnect = createAsyncThunk(
         try {
             const account = remoteAddress || getState().connectSlice.account
             const coinIds = await _getCoinIds(account)
-            const founder = await _getFounder(account)
+            const founder = (await _getFounderAndBalance(account, coinIds))[0]
 
             let coins = []
-            
 
             for (let i = 0; i < coinIds.length; i++) {
                 const rawCoin = await getCoin(coinIds[i])
@@ -136,17 +138,18 @@ export const loadBuilder = createAsyncThunk(
     async (_, { dispatch, getState }) => {
         try {
             const account = getState().connectSlice.account
-            const founder = await _getFounder(account)
             const counters = await getCounters()
-            const userBalance = await balanceOf(account)
-            let isDicounted = founder.value > 0 && founder.isFCMinted && !founder.isFCDiscountUsed
-            const prices = await getTierPrices(isDicounted)
+            const [founder, userBalance, founderCoinId] = await _getFounderAndBalance(account)
+            const isDiscounted = (founder.isFCDiscountUsed === false) ? true : false
+            
+            const prices = await getTierPrices(isDiscounted)
 
             return {
                 founder: founder,
                 prices: prices,
                 counters: counters,
                 userBalance: userBalance,
+                founderCoinId: founderCoinId,
             };
         } catch (err) {
             return {
@@ -161,9 +164,9 @@ export const buyCoin = createAsyncThunk(
     'coinSlice/buyCoin',
     async({ value, color }, { dispatch, getState }) => {
         try {
-            const account = getState().connectSlice.account
-            const founder = await _getFounder(account)
-            const isFounder = founder.value > 0
+            const founder = getState().coinSlice.founder
+            const founderCoinId = getState().coinSlice.founderCoinId
+            const isFounder = founder.value > 0 || founder.isFCMinted
             const statePrices = getState().coinSlice.prices
             const statePricesAsArray = [statePrices.bronze, statePrices.silver, statePrices.gold, statePrices.diamond]
             let tx
@@ -202,7 +205,8 @@ export const buyCoin = createAsyncThunk(
                         }
                     }
                 } else {
-                    tx = await createExactCoin(value, color)
+                    if (isFounder && founder.isFCDiscountUsed === false) tx = await createDiscountCoin(value, color, founderCoinId)
+                    else tx = await createCoin(value, color)
                     dispatch(addPopup({ id: popupTypes.buyingCoin }))
                     dispatch(addPopup({ id: popupTypes.profileRedirect }))
                 }

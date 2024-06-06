@@ -5,7 +5,7 @@ import { CanvasPanel, CenteredLargeText, CenteredText, IndentedText, LargeText, 
 import { selectPrices, selectFounder, selectUserBalance, selectCoinErr, selectCoinStatus } from '../../redux/slices/coinSlice'
 import { buyCoin, loadBuilder } from '../../redux/thunks/coinThunk'
 import { CoinCanvas, getColor } from '../../components/canvas/CoinCanvas'
-import { addPopup, selectAccount, selectNetId } from '../../redux/slices/connectSlice'
+import { addPopup, selectAccount, selectNetId, selectStatus } from '../../redux/slices/connectSlice'
 import styled from 'styled-components'
 import { popupTypes } from '../../utils/json-constants/popupInfo'
 import { ProfilePanel } from './ToolsPage'
@@ -31,6 +31,7 @@ const DiamondText = styled(BronzeText)`
 
 export const CoinBuilder = () => {
     const dispatch = useDispatch()
+    const status = useSelector(selectStatus)
     const netId = useSelector(selectNetId)
     const coinStatus = useSelector(selectCoinStatus)
     const minPrices = useSelector(selectPrices, shallowEqual)
@@ -80,10 +81,8 @@ export const CoinBuilder = () => {
     }, [coinStatus, dispatch, netId, address])
 
     useEffect(() => {
-        if (founder.value > 0) {
-            updateIsFCB(founder.isFCMinted === false)
-            updateIsDCB(founder.isFCMinted === true && founder.isFCDiscountUsed === false)
-        }
+        updateIsFCB(founder.isFCMinted === false)
+        updateIsDCB(founder.isFCMinted === true && founder.isFCDiscountUsed === false)
     }, [founder])        
 
     return (
@@ -93,8 +92,11 @@ export const CoinBuilder = () => {
                 (coinStatus === 'failed') ? <ProfilePanel><CenteredText>{errorMsg}</CenteredText></ProfilePanel> : (
                     <ViewStyle>
                         <Title2>{
-                            userBalance > 0 ? "Add to your collection" :
-                            "Join the BitCow community!"
+                            (userBalance === null && status === 'offline') || userBalance === 0 ? "Join the BitCow community!" :
+                            (status === 'succeeded' && address === null) ? "Please Connect!" :
+                            userBalance === null ? "Loading..." :
+                            userBalance > 0 ? "Add to your collection." :
+                            "YOu sHOulD n3VErH4v3 Se3N ThIs!"
                         }</Title2>
                         <CanvasPanel>
                             {

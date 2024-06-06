@@ -10,6 +10,7 @@ import { getViewLevel } from "../../utils/deviceType"
 import { getHref, goToNftView } from "../../utils/redirect"
 import { useDefaultNetwork } from "../../utils/hooks/hooks-general"
 import { ProfilePanel } from "./ToolsPage"
+import { urls } from "../../utils/json-constants/urls"
 
 const NftPanel = styled(CanvasPanel)`
     align-items: center;
@@ -53,7 +54,7 @@ const FixedTextLink = styled(TextLink)`
 // nftType
 // 0 - coins
 // 1 - ants
-export const NftView = () => {
+export const NftView = ({ versionId = 1 }) => {
     const nftType = window.location.pathname.split('/')[1] === 'coin' ? 0 : 1
     const nftIndex = window.location.pathname.split('/')[2]
     const dispatch = useDispatch()
@@ -129,8 +130,8 @@ export const NftView = () => {
                         </TextRow>
                         {
                             nftType === 0 ? 
-                                <LargeCoinImg src={'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + nftIndex} /> :                                    
-                                <LargeAntImg src={'https://nft-api-bphk.onrender.com/' + netId + '/ants/images/' + nftIndex} />
+                                <LargeCoinImg src={urls.web2BackEnd + 'coins/' + netId + '/' + versionId + '/images/' + nftIndex} /> :                                    
+                                <LargeAntImg src={urls.web2BackEnd + 'ants/' + netId + '/' + versionId + '/images/' + nftIndex} />
                         }
                         {
                             nftType === 0 ? 

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
-import { selectAntStatus, selectRarityPrices, selectSelectedIndexes } from "../../redux/slices/antSlice"
+import { selectAntStatus, selectDiscountInfo, selectSelectedIndexes } from "../../redux/slices/antSlice"
 import { buyAntThunk } from "../../redux/thunks/antThunks"
 import { Panel, StyledAntCanvas, StyledButton, TextBlock } from "../../styles/general"
 import { recursiveDraw, baseElements, reflectiveBeltId_, nvgId_ } from "../../utils/ant-utils/antCanvasUtils"
@@ -295,9 +295,9 @@ const Col = styled(Row)`
     flex-flow: column;
 `
 
-// Vcom, com, rare, Vrare, Erare, special, epic, legendary
+// ant base price, Vcom, com, rare, Vrare, Erare, special, epic, legendary
 // 5,000, 3,000, 200, 84, 36, 18, 9, 3
-const _prices = [0.0009, 0.0015, 0.0036, 0.0072, 0.045, 0.108, 0.315, 0.48]
+const _prices = [.0099, 0.0009, 0.0015, 0.0036, 0.0072, 0.045, 0.108, 0.315, 0.48]
 
 const _traitPointAllowance = 9
 const _eRareTPCost = 1
@@ -310,18 +310,42 @@ export const AntCanvas = () => {
     const address = useSelector(selectAccount)
     const netId = useSelector(selectNetId)
     const selectedIndexes = useSelector(selectSelectedIndexes, shallowEqual)
+    const selectedCoinInfo = useSelector(selectDiscountInfo, shallowEqual);
     const antStatus = useSelector(selectAntStatus)
-    const pricesFromState = useSelector(selectRarityPrices, shallowEqual)
     const canvas = useRef()
     const [totalPrice, updatePrice] = useState(0.0099)
-    const [prices, updatePrices] = useState([..._prices])
     const [traitPoints, setTraitPoints] = useState(_traitPointAllowance)
     const [isTPNeg, setIsTPNeg] = useState(false)
+    const [displayDiscount, setDisplayDiscount] = useState(100)
 
     useEffect(() => {
+        if (isTPNeg) dispatch(addPopup({ id: popupTypes.antConflict.traitPoints }))
+    }, [isTPNeg, dispatch])
+
+    useEffect(() => {
+        //   coin    discount    extra trait points
+        //  bronze     10%              0
+        //  silver     20%              0
+        //   gold      30%              1
+        // diamond     40%              2
+        // founder     80%              5
+        const discountPercent = selectedCoinInfo[0] < 5 ? (100 - selectedCoinInfo[0] * 10) : 20
+        const extraTP = selectedCoinInfo[0] < 3 ? 0 : selectedCoinInfo[0] < 5 ? selectedCoinInfo[0] - 2 : 5
+        let price = 0
+
+        if (displayDiscount !== discountPercent) setDisplayDiscount(discountPercent)
+
+        selectedIndexes.forEach((partIndex, sectionIndex) => {
+            const indexRarity = staticLayerInfo[sectionIndex].elements[partIndex].rarity
+            if (indexRarity > 0) {
+                price += _prices[indexRarity] * 1000000 * discountPercent
+            }
+        })
+        updatePrice((_prices[0] * 1000000 * discountPercent + price) / 100000000)
+
         const ctx = canvas.current.getContext('2d')
         updateAntCanvas(ctx, selectedIndexes)
-        let _traitPoints = _traitPointAllowance
+        let _traitPoints = _traitPointAllowance + extraTP
         for (let i = 0; i < selectedIndexes.length; i++) {
             if (staticLayerInfo[i].elements[selectedIndexes[i]].name !== 'empty' && staticLayerInfo[i].elements[selectedIndexes[i]].rarity > 4) {
                 if (staticLayerInfo[i].elements[selectedIndexes[i]].rarity === 5) _traitPoints = _traitPoints - _eRareTPCost
@@ -333,37 +357,11 @@ export const AntCanvas = () => {
         if (_traitPoints < 0) setIsTPNeg(true)
         else setIsTPNeg(false)
         setTraitPoints(_traitPoints)
-    }, [selectedIndexes, dispatch])
-
-    useEffect(() => {
-        if (isTPNeg) dispatch(addPopup({ id: popupTypes.antConflict.traitPoints }))
-    }, [isTPNeg, dispatch])
-
-    useEffect(() => {
-        if (pricesFromState[0] !== null) updatePrices([...pricesFromState])
-    }, [pricesFromState])
-
-    useEffect(() => {
-        let price = 0
-        selectedIndexes.forEach((partIndex, sectionIndex) => {
-            if (staticLayerInfo[sectionIndex].elements[partIndex].rarity > 0) {
-                price += parseFloat(prices[staticLayerInfo[sectionIndex].elements[partIndex].rarity - 1]) * 100000
-            }
-        })
-        updatePrice((price + parseFloat(prices[0]) * 1100000) / 100000)
-    }, [selectedIndexes, prices])
+    }, [selectedIndexes, selectedCoinInfo, displayDiscount])
 
     const buyAnt = () => {
-        let isUpcomingSelected = false
-        for (let i = 0; i < selectedIndexes.length; i++) {
-            if (staticLayerInfo[i].elements[selectedIndexes[i]].hasOwnProperty('isComingSoon')) {
-                isUpcomingSelected = true
-            }
-        }
-        if (isUpcomingSelected) {
-            dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))
-            dispatch(addPopup({ id: popupTypes.txWaiting }))
-        } else dispatch(addPopup({ id: popupTypes.antConflict.upcomingSelected}))
+        dispatch(buyAntThunk({ selectedIndexes: selectedIndexes, totalPrice: totalPrice }))
+        dispatch(addPopup({ id: popupTypes.txWaiting }))
     }
 
     return (
@@ -378,23 +376,23 @@ export const AntCanvas = () => {
                         <Col>
                             <StldTextRow>
                                 <BlackText>{"Ant Base:"}</BlackText>
-                                <BlackText>{(prices[0] * 1100000 / 100000) + " eth"}</BlackText>
+                                <BlackText>{(_prices[0] * 1000000 * displayDiscount / 100000000) + " eth"}</BlackText>
                             </StldTextRow>
                             <StldTextRow>
                                 <GrayText>{"Very Common:"}</GrayText>
-                                <GrayText>{prices[0] + " eth"}</GrayText>
+                                <GrayText>{(_prices[1] * 1000000 * displayDiscount / 100000000) + " eth"}</GrayText>
                             </StldTextRow>
                             <StldTextRow>
                                 <BrownText>{"Common:"}</BrownText>
-                                <BrownText>{prices[1] + " eth"}</BrownText>
+                                <BrownText>{(_prices[2] * 1000000 * displayDiscount / 100000000) + " eth"}</BrownText>
                             </StldTextRow>
                             <StldTextRow>
                                 <GreenText>{"Rare:"}</GreenText>
-                                <GreenText>{prices[2] + " eth"}</GreenText>
+                                <GreenText>{(_prices[3] * 1000000 * displayDiscount / 100000000) + " eth"}</GreenText>
                             </StldTextRow>
                             <StldTextRow>
                                 <GoldText>{"Very Rare:"}</GoldText>
-                                <GoldText>{prices[3] + " eth"}</GoldText>
+                                <GoldText>{(_prices[4] * 1000000 * displayDiscount / 100000000) + " eth"}</GoldText>
                             </StldTextRow>
                         </Col>
                     </LeftColCont>
@@ -410,19 +408,19 @@ export const AntCanvas = () => {
                             </StldTextRow>
                             <StldTextRow>
                                 <PurpleText>{"Extra Rare:"}</PurpleText>
-                                <PurpleText>{prices[4] + " eth + " + _eRareTPCost + " TP"}</PurpleText>
+                                <PurpleText>{(_prices[5] * 1000000 * displayDiscount / 100000000) + " eth + " + _eRareTPCost + " TP"}</PurpleText>
                             </StldTextRow>
                             <StldTextRow>
                                 <SpecialText>{"Special:"}</SpecialText>
-                                <SpecialText>{prices[5] + " eth + " + _specialTPCost + " TP"}</SpecialText>
+                                <SpecialText>{(_prices[6] * 1000000 * displayDiscount / 100000000) + " eth + " + _specialTPCost + " TP"}</SpecialText>
                             </StldTextRow>
                             <StldTextRow>
                                 <EpicText>{"Epic:"}</EpicText>
-                                <EpicText>{prices[6] + " eth + " + _epicTPCost + " TP"}</EpicText>
+                                <EpicText>{(_prices[7] * 1000000 * displayDiscount / 100000000) + " eth + " + _epicTPCost + " TP"}</EpicText>
                             </StldTextRow>
                             <StldTextRow>
                                 <LegendText>{"Legendary:"}</LegendText>
-                                <LegendText>{prices[7] + " eth + " + _legendaryTPCost + " TP"}</LegendText>
+                                <LegendText>{(_prices[8] * 1000000 * displayDiscount / 100000000) + " eth + " + _legendaryTPCost + " TP"}</LegendText>
                             </StldTextRow>
                         </Col>
                     </RightColCont>

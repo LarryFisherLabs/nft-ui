@@ -4,8 +4,8 @@ import { Text, Title2, ViewStyle } from '../../styles/general.js'
 import { ethers } from 'ethers'
 import { getAntContract, getCoinContract, getProvider } from '../../utils/ethers-utils.js'
 import { selectCoinErr } from '../../redux/slices/coinSlice.js'
-import { addFounder, coinBaseURI, updateBaseCoinURI, withdraw } from '../../apis/coinContractApi.js'
-import { antBaseURI, antWithdraw, updateBaseAntURI } from '../../apis/antContractApi.js'
+import { addFounder, coinTokenURI, updateBaseCoinURI, withdraw } from '../../apis/coinContractApi.js'
+import { antTokenURI, antWithdraw, updateBaseAntURI } from '../../apis/antContractApi.js'
 import { selectAntErrMsg } from '../../redux/slices/antSlice.js'
 
 export const AdminPage = () => {
@@ -63,12 +63,12 @@ export const AdminPage = () => {
     }
 
     const refreshCoinURI = async () => {
-        const uri = await coinBaseURI()
+        const uri = await coinTokenURI(0)
         setCoinURI(uri)
     }
 
     const refreshAntURI = async () => {
-        const uri = await antBaseURI()
+        const uri = await antTokenURI()
         setAntURI(uri)
     }
 

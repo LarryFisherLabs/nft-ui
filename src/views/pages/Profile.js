@@ -10,8 +10,9 @@ import { getAntIds, loadAntIdsOffline } from '../../redux/thunks/antThunks'
 import { selectAccount, selectNetId, selectStatus } from '../../redux/slices/connectSlice'
 import { goTo, goToNftView } from '../../utils/redirect'
 import { useDefaultNetwork } from '../../utils/hooks/hooks-general'
+import { urls } from '../../utils/json-constants/urls'
 
-export const MappedCoins = () => {
+export const MappedCoins = ({ versionId = 1 }) => {
     const coinStatus = useSelector(selectCoinStatus)
     const coinErrMsg = useSelector(selectCoinErr)
     const coins = useSelector(selectCoins, shallowEqual)
@@ -30,7 +31,7 @@ export const MappedCoins = () => {
                 <NftGrid>{
                     coins.map((coin, i) => {
                         const coinId = isNaN(coin) ? coin.id : coin
-                        const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/coins/images/' + coinId 
+                        const imgSrc = urls.web2BackEnd + 'coins/' + netId + '/' + versionId + '/images/' + coin.id
                         return (
                             <CoinImg onClick={() => goToNftView('coin', coinId)} src={imgSrc} key={i} />
                         )
@@ -51,7 +52,7 @@ export const MappedCoins = () => {
     }
 }
 
-export const MappedAnts = () => {
+export const MappedAnts = ({ versionId = 1 }) => {
     const antStatus = useSelector(selectAntStatus)
     const antErrMsg = useSelector(selectAntErrMsg)
     const antIds = useSelector(selectAntIds, shallowEqual)
@@ -67,7 +68,7 @@ export const MappedAnts = () => {
             )
         } else {
             return (<NftGrid>{antIds.map((antId, i) => {
-                const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/ants/images/' + antId
+                const imgSrc = urls.web2BackEnd + 'ants/' + netId + '/' + versionId + '/images/' + antId
                 return (
                     <AntImg onClick={() => goToNftView('ant', antId)} src={imgSrc} key={i} />
                 )
@@ -102,6 +103,7 @@ export const Profile = ({ remoteAddress = null }) => {
     const netId = useSelector(selectNetId)
 
     useEffect(() => {
+        // isAdmin gets set once address gets set if wallet is connected then contract connect is triggered here
         if (coinStatus === 'idle' && isAdmin !== null) {
             dispatch(coinsConnect(remoteAddress))
         } else if ((remoteAddress !== null && coinStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))) || ((netId === 1 || netId === 0) && coinStatus === 'idle' && account !== null)) {
@@ -110,6 +112,7 @@ export const Profile = ({ remoteAddress = null }) => {
     }, [coinStatus, dispatch, isAdmin, remoteAddress, status, account, netId])
 
     useEffect(() => {
+        // isAdmin gets set once address gets set if wallet is connected then contract connect is triggered here
         if (antStatus === 'idle' && isAdmin !== null) {
             dispatch(getAntIds(remoteAddress))
         } else if ((remoteAddress !== null && antStatus === 'idle' && (status === 'offline' || (status === 'succeeded' && account === null))) || ((netId === 1 || netId === 0) && antStatus === 'idle' && account !== null)) {
@@ -130,10 +133,9 @@ export const Profile = ({ remoteAddress = null }) => {
             {
                 remoteAddress === null ?
                     <TopMarginBtn onClick={() => goTo('/coin-builder')}>{
-                        founder.value > 0 ?
-                            !founder.isFCMinted ? 'Mint Founder Coin' :
-                            !founder.isFCDiscountUsed ? 'Mint Discounted Coin' :
-                            'Mint Coin' : 'Mint Coin'
+                        (founder.isFCMinted === false && founder.value > 0) ? 'Mint Founder Coin' :
+                        (founder.isFCDiscountUsed === false && founder.isFCMinted === true) ? 'Mint Discounted Coin' :
+                        'Mint Coin'
                     }</TopMarginBtn> :
                     null
             }

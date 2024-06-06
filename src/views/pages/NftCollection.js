@@ -9,10 +9,11 @@ import { AntImg, CenteredText, CoinImg, NftGrid, Panel, Text, Title, ViewStyle }
 import { goToCollectionView, goToNftView } from "../../utils/redirect"
 import { useDefaultNetwork } from "../../utils/hooks/hooks-general"
 import { ProfilePanel } from "./ToolsPage"
+import { urls } from "../../utils/json-constants/urls"
 
 const nftsPerPage = 8
 
-export const MappedNfts = ({ startIndex, finishIndex }) => {
+export const MappedNfts = ({ startIndex, finishIndex, versionId = 1 }) => {
     if (finishIndex < startIndex) goToCollectionView(window.location.pathname.split('/')[1], (Math.floor(finishIndex / 8) + 1))
     const stateNetId = useSelector(selectNetId)
     const [netId, setNetId] = useState(null)
@@ -23,7 +24,7 @@ export const MappedNfts = ({ startIndex, finishIndex }) => {
 
     for (let i = startIndex; i < finishIndex + 1; i++) {
         const pathName = nftType === 0 ? 'coins' : 'ants'
-        const imgSrc = 'https://nft-api-bphk.onrender.com/' + netId + '/' + pathName + '/images/' + i
+        const imgSrc = urls.web2BackEnd + pathName + '/' + netId + '/' + versionId + '/images/' + i
         nftSrcArray.push(imgSrc)
     }
 

@@ -6,6 +6,11 @@
           "internalType": "address",
           "name": "_coinAddr",
           "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "denyListAddress_",
+          "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
@@ -65,6 +70,25 @@
       "anonymous": false,
       "inputs": [
         {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "antId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "dna",
+          "type": "uint256"
+        }
+      ],
+      "name": "DnaChange",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
           "indexed": true,
           "internalType": "address",
           "name": "owner",
@@ -73,7 +97,7 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "id",
+          "name": "antId",
           "type": "uint256"
         }
       ],
@@ -129,28 +153,9 @@
       "name": "COUNTER",
       "outputs": [
         {
-          "internalType": "uint16",
-          "name": "",
-          "type": "uint16"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
-        }
-      ],
-      "name": "ants",
-      "outputs": [
-        {
-          "internalType": "uint104",
-          "name": "",
-          "type": "uint104"
         }
       ],
       "stateMutability": "view",
@@ -178,7 +183,7 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "owner",
+          "name": "owner_",
           "type": "address"
         }
       ],
@@ -195,12 +200,25 @@
     },
     {
       "inputs": [],
-      "name": "baseURI",
+      "name": "coinAddr",
       "outputs": [
         {
-          "internalType": "string",
+          "internalType": "address",
           "name": "",
-          "type": "string"
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "commander",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         }
       ],
       "stateMutability": "view",
@@ -252,25 +270,6 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "_discountIndex",
-          "type": "uint256"
-        }
-      ],
-      "name": "getRarityPrices",
-      "outputs": [
-        {
-          "internalType": "uint256[4]",
-          "name": "prices",
-          "type": "uint256[4]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
           "internalType": "address",
           "name": "owner",
           "type": "address"
@@ -300,6 +299,19 @@
           "internalType": "string",
           "name": "",
           "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "nameFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -416,6 +428,32 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "denyAddress_",
+          "type": "address"
+        }
+      ],
+      "name": "setDenyContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "uriAddress_",
+          "type": "address"
+        }
+      ],
+      "name": "setURIContract",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "bytes4",
           "name": "interfaceId",
           "type": "bytes4"
@@ -457,7 +495,7 @@
       "outputs": [
         {
           "internalType": "string",
-          "name": "",
+          "name": "URI",
           "type": "string"
         }
       ],
@@ -501,42 +539,23 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "withdraw",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint16",
-          "name": "_id",
-          "type": "uint16"
-        }
-      ],
-      "name": "isDiscountUsed",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
           "internalType": "string",
-          "name": "_newURI",
+          "name": "newURI_",
           "type": "string"
         }
       ],
       "name": "updateBaseURI",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "payable",
       "type": "function"
     },
     {
@@ -555,17 +574,12 @@
     {
       "inputs": [
         {
-          "internalType": "uint16",
-          "name": "_id",
-          "type": "uint16"
-        },
-        {
-          "internalType": "string",
-          "name": "_newName",
-          "type": "string"
+          "internalType": "address",
+          "name": "_commander",
+          "type": "address"
         }
       ],
-      "name": "changeName",
+      "name": "updateCommander",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -573,9 +587,124 @@
     {
       "inputs": [
         {
-          "internalType": "uint256[15]",
+          "internalType": "uint256[18]",
           "name": "_dna",
-          "type": "uint256[15]"
+          "type": "uint256[18]"
+        },
+        {
+          "internalType": "address",
+          "name": "_recipient",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "_isAirDrop",
+          "type": "bool"
+        }
+      ],
+      "name": "addPromotionalAnt",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "commanderTransfer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_antId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "_isRented",
+          "type": "bool"
+        }
+      ],
+      "name": "toggleRental",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_sender",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_antId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_coolDownDuration",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_layerId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_partId",
+          "type": "uint256"
+        }
+      ],
+      "name": "changeDna",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_newName",
+          "type": "bytes"
+        }
+      ],
+      "name": "changeName",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[18]",
+          "name": "_dna",
+          "type": "uint256[18]"
         }
       ],
       "name": "createAnt",
@@ -586,14 +715,14 @@
     {
       "inputs": [
         {
-          "internalType": "uint16",
+          "internalType": "uint256",
           "name": "_coinId",
-          "type": "uint16"
+          "type": "uint256"
         },
         {
-          "internalType": "uint256[15]",
+          "internalType": "uint256[18]",
           "name": "_dna",
-          "type": "uint256[15]"
+          "type": "uint256[18]"
         }
       ],
       "name": "createDiscountAnt",
@@ -602,18 +731,7 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_recipient",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256[15]",
-          "name": "_dna",
-          "type": "uint256[15]"
-        }
-      ],
+      "inputs": [],
       "name": "createPromotionalAnt",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -622,22 +740,30 @@
     {
       "inputs": [
         {
-          "internalType": "uint256[15]",
-          "name": "_dna",
-          "type": "uint256[15]"
-        },
-        {
           "internalType": "uint256",
-          "name": "_discountIndex",
+          "name": "_antId",
           "type": "uint256"
         }
       ],
-      "name": "getDnaPrice",
-      "outputs": [
+      "name": "toggleAntLock",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
         {
           "internalType": "uint256",
-          "name": "price",
+          "name": "_id",
           "type": "uint256"
+        }
+      ],
+      "name": "isDiscountUsedByCoin",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -646,27 +772,37 @@
     {
       "inputs": [
         {
-          "internalType": "uint16",
-          "name": "_id",
-          "type": "uint16"
+          "internalType": "uint256",
+          "name": "_antId",
+          "type": "uint256"
         }
       ],
       "name": "getAnt",
       "outputs": [
         {
-          "internalType": "uint256[15]",
+          "internalType": "uint256[18]",
           "name": "dna",
-          "type": "uint256[15]"
+          "type": "uint256[18]"
         },
         {
-          "internalType": "uint256[15]",
+          "internalType": "uint256[18]",
           "name": "rarities",
-          "type": "uint256[15]"
+          "type": "uint256[18]"
         },
         {
-          "internalType": "string",
+          "internalType": "bytes",
           "name": "antName",
-          "type": "string"
+          "type": "bytes"
+        },
+        {
+          "internalType": "bool",
+          "name": "isUnlocked",
+          "type": "bool"
+        },
+        {
+          "internalType": "bool",
+          "name": "isRentLocked",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",

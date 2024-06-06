@@ -4,11 +4,13 @@ import { buyCoin, coinsConnect, loadBuilder, loadCoinIdsOffline, loadCoinsForAnt
 const initialState = {
   coinStatus: 'idle',
   coins: [],
+  oldCoins: [],
   isCoinAdmin: null,
+  founderCoinId: null,
   founder: {
     value: 0,
-    isFCMinted: false,
-    isFCDiscountUsed: false,
+    isFCMinted: null,
+    isFCDiscountUsed: null,
   },
   prices: {
     bronze: null,
@@ -35,9 +37,8 @@ export const coinSlice = createSlice({
       state.isCoinAdmin = action.payload.isAdmin
     },
     updateCoins: (state, action) => {
-      for (let i = 0; i < action.payload.coins.length; i++) {
-        state.coins.push(action.payload.coins[i])
-      }
+      for (let i = 0; i < action.payload.coins.length; i++) state.coins.push(action.payload.coins[i])
+      if (action.payload.hasOwnProperty("oldCoins")) for (let i = 0; i < action.payload.coins.length; i++) state.oldCoins.push(action.payload.oldCoins[i])
     },
     coinError: (state, action) => {
       state.coinStatus = 'failed'
@@ -87,6 +88,7 @@ export const coinSlice = createSlice({
           state.coinCounters.gold = action.payload.counters[3]
           state.coinCounters.diamond = action.payload.counters[4]
           state.userBalance = action.payload.userBalance
+          state.founderCoinId = action.payload.founderCoinId
         }
       })
       .addCase(buyCoin.pending, state => {
@@ -128,6 +130,7 @@ export default coinSlice.reducer
 export const selectCoinStatus = state => state.coinSlice.coinStatus
 export const selectCoins = state => state.coinSlice.coins
 export const selectIsCoinAdmin = state => state.coinSlice.isCoinAdmin
+export const selectFounderCoinId = state => state.coinSlice.founderCoinId
 export const selectFounder = state => state.coinSlice.founder
 export const selectPrices = state => state.coinSlice.prices
 export const selectTotalCount = state => state.coinSlice.coinCounters.total

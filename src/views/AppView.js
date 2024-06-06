@@ -21,7 +21,7 @@ export const AppView = () => {
   const errorMsg = useSelector(selectErr)
   const isAdmin = useSelector(selectIsCoinAdmin)
 
-  // once user's wallet address is set in redux figure out if user is owner
+  // once user's wallet address is set in redux figure out if user is owner / won't run offline since address won't be set
   useContractOwnerVerifier()
 
   return (
