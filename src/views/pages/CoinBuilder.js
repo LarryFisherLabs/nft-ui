@@ -15,6 +15,7 @@ const BronzeText = styled(LargeText)`
     color: #ff912f;
     font-size: 1.2rem;
     text-shadow: black 1px 1px 0px;
+    cursor: pointer;
 `
 
 const SilverText = styled(BronzeText)`
@@ -41,6 +42,7 @@ export const CoinBuilder = () => {
     const errorMsg = useSelector(selectCoinErr)
 
     const [canvasAmount, updateAmount] = useState('')
+    const [canvasColor, updateColor] = useState(null)
     const [isFounderCoinBuilder, updateIsFCB] = useState(null)
     const [isDiscountedCoinBuilder, updateIsDCB] = useState()
 
@@ -49,6 +51,17 @@ export const CoinBuilder = () => {
     //         window.location.reload()
     //     }
     // })
+
+    const colorClick = (colorId) => {
+        let priceArray = [minPrices.bronze, minPrices.silver, minPrices.gold, minPrices.diamond]
+        if (canvasColor ===  colorId && canvasAmount === priceArray[colorId]) {
+            updateColor(null)
+            updateAmount('')
+        } else {
+            if (canvasColor !== colorId) updateColor(colorId)
+            if (canvasAmount !== priceArray[colorId]) updateAmount(priceArray[colorId])
+        }
+    }
 
     const onInputChange = (event) => {
         if (coinStatus !== 'buying coin') {
@@ -60,8 +73,18 @@ export const CoinBuilder = () => {
                 const isFormatted = (decimalIndex === -1) || (finalValString.length < decimalIndex + 5)
                 const formattedVal = isFormatted ? finalVal : parseFloat(finalValString.slice(0, decimalIndex + 5))
                 if (canvasAmount !== formattedVal) updateAmount(formattedVal)
-            } else if (isNaN(val)) updateAmount('')
-            else if (val === 0) updateAmount(0)
+                if (isFounderCoinBuilder === false) {
+                    let _color = getColor(formattedVal, minPrices)
+                    if (_color !== canvasColor) updateColor(_color)
+                }
+            } else if (isNaN(val)) {
+                updateAmount('')
+                updateColor(null)
+            }
+            else if (val === 0) {
+                updateAmount(0)
+                updateColor(null)
+            }
         }
     }
 
@@ -112,14 +135,14 @@ export const CoinBuilder = () => {
                                     </TextBlock>) : (
                                     <TextBlock>
                                         <LargeText>{minPrices.bronze === null ? 'Demo ' : null}Minimum Prices:</LargeText>
-                                        <BronzeText>Bronze coin: {minPrices.bronze || .001} eth</BronzeText>
-                                        <SilverText>Silver coin: {minPrices.silver || .002} eth</SilverText>
-                                        <GoldText>Gold coin: {minPrices.gold || .003} eth</GoldText>
-                                        <DiamondText>Diamond coin: {minPrices.diamond || .004} eth</DiamondText>
+                                        <BronzeText onClick={() => colorClick(0)}>Bronze coin: {minPrices.bronze || .001} eth</BronzeText>
+                                        <SilverText onClick={() => colorClick(1)}>Silver coin: {minPrices.silver || .002} eth</SilverText>
+                                        <GoldText onClick={() => colorClick(2)}>Gold coin: {minPrices.gold || .003} eth</GoldText>
+                                        <DiamondText onClick={() => colorClick(3)}>Diamond coin: {minPrices.diamond || .004} eth</DiamondText>
                                     </TextBlock>
                                 )
                             }
-                            <CoinCanvas amount={canvasAmount}/>
+                            <CoinCanvas amount={canvasAmount} passedColor={canvasColor} />
                             <IndentedText>Amount of eth to send:</IndentedText>
                             <StyledInput type="number" step=".0001" value={canvasAmount} onChange={onInputChange} />
                             {
