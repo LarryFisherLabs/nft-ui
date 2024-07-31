@@ -111,7 +111,7 @@ export const StyledCoinCanvas = styled(Canvas)`
   }
 `
 
-export const CoinCanvas = ({ amount }) => {
+export const CoinCanvas = ({ amount, passedColor }) => {
   const id = useSelector(selectTotalCount)
   const prices = useSelector(selectPrices, shallowEqual)
   const founder = useSelector(selectFounder, shallowEqual)
@@ -121,14 +121,14 @@ export const CoinCanvas = ({ amount }) => {
   useEffect(() => {
     const isFCBuilder = founder.value > 0 && !founder.isFCMinted
     const isDiscounted = founder.value > 0 && founder.isFCMinted && !founder.isFCDiscountUsed
-    const color = isFCBuilder ? 4 : getColor(amount, prices)
+    const color = isFCBuilder ? 4 : passedColor
     const finalAmount = isFCBuilder ? amount > 0 ? amount + founder.value : founder.value : isDiscounted ? amount * 2 : amount
     const ctx = canvas.current.getContext('2d');
     const bronzePrice = prices.bronze || .001
     if ((finalAmount >= bronzePrice) && !isCanvasVisible) toggleCanvas(true)
     else if (!(finalAmount >= bronzePrice) && isCanvasVisible) toggleCanvas(false)
     updateCoinCanvas({ ctx: ctx, color: color, amount: finalAmount, id: id })
-  }, [amount, founder, id, prices, isCanvasVisible])
+  }, [amount, founder, id, prices, isCanvasVisible, passedColor])
 
   return (
     <StyledCoinCanvas ref={canvas} height={2000} width={2000} isDisabled={isCanvasVisible} >
