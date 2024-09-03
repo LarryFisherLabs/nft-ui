@@ -123,6 +123,9 @@ export const AntBuilder = ({ versionId = 1 }) => {
                   coins.map((coin, index) => {
                     const srcFile = urls.web2BackEnd + 'coins/' + netId + '/' + versionId + '/images/' + coin.id;
                     const isSelected = selectedCoinInfo[1] === coin.id;
+
+
+                    //!!!!!!! THIS NEEDS TO CHANGE !!!!!!!!
                     if (coin.isDiscountUsed) {
                       if (index === coins.length - 1 && areAllCoinsSpent === null) setAreCoinsSpent(true)
                       return null
