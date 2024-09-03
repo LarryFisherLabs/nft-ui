@@ -90,7 +90,7 @@ export const CoinBuilder = () => {
 
     const sendTransaction = () => {
         const amount = canvasAmount ? canvasAmount : 0
-        const color = isFounderCoinBuilder ? 4 : getColor(canvasAmount, minPrices)
+        const color = isFounderCoinBuilder ? 4 : canvasColor !== null ? canvasColor : getColor(canvasAmount, minPrices)
         if (color !== -1){
             dispatch(buyCoin({ value: amount, color: color }))
             dispatch(addPopup({ id: popupTypes.txWaiting }))
